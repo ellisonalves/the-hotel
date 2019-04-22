@@ -3,15 +3,13 @@ package com.ellisonalves.thehotel.domain.entities;
 import com.ellisonalves.thehotel.domain.types.GenderType;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String documentNumber;

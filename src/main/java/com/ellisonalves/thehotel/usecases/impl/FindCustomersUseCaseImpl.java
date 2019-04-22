@@ -1,16 +1,16 @@
-package com.ellisonalves.thehotel.usecases;
+package com.ellisonalves.thehotel.usecases.impl;
 
 import com.ellisonalves.thehotel.domain.entities.Customer;
 import com.ellisonalves.thehotel.domain.repositories.CustomerRepository;
+import com.ellisonalves.thehotel.usecases.FindCustomersUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FindCustomersUseCaseImpl implements FindCustomersUseCase {
+class FindCustomersUseCaseImpl implements FindCustomersUseCase {
 
     private CustomerRepository customerRepository;
 
