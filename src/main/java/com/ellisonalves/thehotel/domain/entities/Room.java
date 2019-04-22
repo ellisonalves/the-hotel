@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Entity
 public class Room {
     @Id
-    private String doorNumber;
+    private Integer doorNumber;
     @Enumerated(EnumType.STRING)
     private RoomType type;
     private BigDecimal pricePerDay;
