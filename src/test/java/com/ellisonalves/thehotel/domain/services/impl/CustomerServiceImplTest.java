@@ -1,5 +1,6 @@
 package com.ellisonalves.thehotel.domain.services.impl;
 
+import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
 import com.ellisonalves.thehotel.domain.entities.Customer;
 import com.ellisonalves.thehotel.domain.repositories.CustomerRepository;
 import org.junit.Test;
@@ -39,7 +40,7 @@ public class CustomerServiceImplTest {
         verify(customerRepository).findAll();
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = ResourceNotFoundException.class)
     public void findOneThrowsExceptionWhenEntityNotFound() {
         customerService.findOne(CUSTOMER_ID);
         verify(customerRepository).findById(CUSTOMER_ID);

@@ -1,5 +1,6 @@
 package com.ellisonalves.thehotel.domain.services.impl;
 
+import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
 import com.ellisonalves.thehotel.domain.entities.Room;
 import com.ellisonalves.thehotel.domain.repositories.RoomRepository;
 import com.ellisonalves.thehotel.domain.services.RoomService;
@@ -30,7 +31,7 @@ class RoomServiceImpl implements RoomService {
 
     @Override
     public Room findOne(Integer doorNumber) {
-        return roomRepository.findById(doorNumber).orElseThrow(() -> new RuntimeException("Not found"));
+        return roomRepository.findById(doorNumber).orElseThrow(() -> new ResourceNotFoundException());
     }
 
     @Override

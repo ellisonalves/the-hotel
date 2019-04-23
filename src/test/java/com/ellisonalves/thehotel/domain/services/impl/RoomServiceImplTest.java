@@ -1,5 +1,6 @@
 package com.ellisonalves.thehotel.domain.services.impl;
 
+import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
 import com.ellisonalves.thehotel.domain.entities.Room;
 import com.ellisonalves.thehotel.domain.repositories.RoomRepository;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.verify;
 public class RoomServiceImplTest {
 
     private static final Integer ROOM_DOOR_NUMBER = 100;
+
     @InjectMocks
     private RoomServiceImpl roomService;
 
@@ -30,7 +32,7 @@ public class RoomServiceImplTest {
         verify(roomRepository).findAll();
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = ResourceNotFoundException.class)
     public void findOneThrowsExceptionWhenEntityNotFound() {
         roomService.findOne(ROOM_DOOR_NUMBER);
         verify(roomRepository).findById(ROOM_DOOR_NUMBER);
