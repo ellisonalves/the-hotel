@@ -1,9 +1,9 @@
 package com.ellisonalves.thehotel.interfaces.endpoints;
 
+import com.ellisonalves.thehotel.domain.services.RoomService;
 import com.ellisonalves.thehotel.domain.types.RoomType;
 import com.ellisonalves.thehotel.interfaces.dtos.RoomDTO;
 import com.ellisonalves.thehotel.interfaces.mapper.RoomMapper;
-import com.ellisonalves.thehotel.usecases.FindRoomsUseCase;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 public class RoomControllerITCase extends AbstractIntegrationTestController {
 
     @Autowired
-    private FindRoomsUseCase findRoomsUseCase;
+    private RoomService roomService;
 
     @Autowired
     private RoomMapper roomMapper;
@@ -56,7 +56,7 @@ public class RoomControllerITCase extends AbstractIntegrationTestController {
 
     @Test
     public void shouldUpdateAnExistingRoom() throws Exception {
-        RoomDTO roomtDTO = roomMapper.toDTO(findRoomsUseCase.findOne(104));
+        RoomDTO roomtDTO = roomMapper.toDTO(roomService.findOne(104));
         roomtDTO.setType(RoomType.PRESIDENT);
         roomtDTO.setPricePerDay(new BigDecimal("330.40"));
 

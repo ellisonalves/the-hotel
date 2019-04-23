@@ -1,11 +1,10 @@
 package com.ellisonalves.thehotel.interfaces.endpoints;
 
 
+import com.ellisonalves.thehotel.domain.services.CustomerService;
 import com.ellisonalves.thehotel.interfaces.dtos.CustomerDTO;
 import com.ellisonalves.thehotel.interfaces.dtos.CustomerListDTO;
 import com.ellisonalves.thehotel.interfaces.mapper.CustomerMapper;
-import com.ellisonalves.thehotel.usecases.FindCustomersUseCase;
-import com.ellisonalves.thehotel.usecases.PersistCustomersUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,38 +16,34 @@ import java.net.URI;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private FindCustomersUseCase findCustomersUseCase;
-
-    private PersistCustomersUseCase persitCustomersUseCase;
-
-    private CustomerMapper customerMapper;
+    private final CustomerService customerService;
+    private final CustomerMapper customerMapper;
 
     @Autowired
-    public CustomerController(FindCustomersUseCase findCustomersUseCase, PersistCustomersUseCase persitCustomersUseCase, CustomerMapper customerMapper) {
-        this.findCustomersUseCase = findCustomersUseCase;
-        this.persitCustomersUseCase = persitCustomersUseCase;
+    public CustomerController(CustomerService customerService, CustomerMapper customerMapper) {
+        this.customerService = customerService;
         this.customerMapper = customerMapper;
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CustomerDTO find(@PathVariable Long id) {
-        return customerMapper.toDTO(findCustomersUseCase.findOne(id).orElseThrow(() -> new RuntimeException("User Not Found!")));
+        return customerMapper.toDTO(customerService.findOne(id));
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CustomerListDTO find() {
-        return customerMapper.toCustomerListDTO(findCustomersUseCase.findAll());
+        return customerMapper.toCustomerListDTO(customerService.findAll());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CustomerDTO> create(@RequestBody CustomerDTO customerDTO) {
-        CustomerDTO saved = customerMapper.toDTO(persitCustomersUseCase.save(customerMapper.toEntity(customerDTO)));
+        CustomerDTO saved = customerMapper.toDTO(customerService.save(customerMapper.toEntity(customerDTO)));
         return ResponseEntity.created(URI.create("/customers/" + saved.getId())).body(saved);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CustomerDTO> update(@RequestBody CustomerDTO customerDTO) {
-        CustomerDTO updated = customerMapper.toDTO(persitCustomersUseCase.save(customerMapper.toEntity(customerDTO)));
+        CustomerDTO updated = customerMapper.toDTO(customerService.save(customerMapper.toEntity(customerDTO)));
         return ResponseEntity.ok(updated);
     }
 

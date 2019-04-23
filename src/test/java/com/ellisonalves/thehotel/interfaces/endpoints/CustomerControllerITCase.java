@@ -1,9 +1,9 @@
 package com.ellisonalves.thehotel.interfaces.endpoints;
 
+import com.ellisonalves.thehotel.domain.services.CustomerService;
 import com.ellisonalves.thehotel.domain.types.GenderType;
 import com.ellisonalves.thehotel.interfaces.dtos.CustomerDTO;
 import com.ellisonalves.thehotel.interfaces.mapper.CustomerMapper;
-import com.ellisonalves.thehotel.usecases.FindCustomersUseCase;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 public class CustomerControllerITCase extends AbstractIntegrationTestController {
 
     @Autowired
-    private FindCustomersUseCase findCustomersUseCase;
+    private CustomerService customerService;
 
     @Autowired
     private CustomerMapper customerMapper;
@@ -58,7 +58,7 @@ public class CustomerControllerITCase extends AbstractIntegrationTestController 
 
     @Test
     public void shouldUpdateAGivenCustomer() throws Exception {
-        CustomerDTO customerDTO = customerMapper.toDTO(findCustomersUseCase.findOne(1l).get());
+        CustomerDTO customerDTO = customerMapper.toDTO(customerService.findOne(1l));
         customerDTO.setNationality("GERMAN");
 
         MockHttpServletRequestBuilder put = MockMvcRequestBuilders.put("/customers");
