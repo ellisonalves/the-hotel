@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 @Data
 public class RoomDTO {
+
     @NotNull
     private Integer doorNumber;
 

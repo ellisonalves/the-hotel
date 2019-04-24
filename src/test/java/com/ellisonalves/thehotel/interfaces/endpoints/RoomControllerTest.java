@@ -2,7 +2,7 @@ package com.ellisonalves.thehotel.interfaces.endpoints;
 
 import com.ellisonalves.thehotel.application.config.JacksonConfig;
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
-import com.ellisonalves.thehotel.application.exceptions.handlers.ErrorInfo;
+import com.ellisonalves.thehotel.application.exceptions.pojos.MessageSeverity;
 import com.ellisonalves.thehotel.domain.services.RoomService;
 import com.ellisonalves.thehotel.interfaces.dtos.RoomDTO;
 import com.ellisonalves.thehotel.interfaces.endpoints.shared.UnitTestUtils;
@@ -43,8 +43,8 @@ public class RoomControllerTest {
     public void findByIdInvalid() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/rooms/INVALID"))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message", CoreMatchers.notNullValue()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.severity", CoreMatchers.is(ErrorInfo.Severity.ERROR.toString())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].message", CoreMatchers.notNullValue()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].severity", CoreMatchers.is(MessageSeverity.ERROR.toString())));
     }
 
     @Test
@@ -52,13 +52,13 @@ public class RoomControllerTest {
         Mockito.when(roomService.findOne(Mockito.anyInt())).thenThrow(new ResourceNotFoundException());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/rooms/100"))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message", CoreMatchers.notNullValue()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.severity", CoreMatchers.is(ErrorInfo.Severity.ERROR.toString())));
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].message", CoreMatchers.notNullValue()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].severity", CoreMatchers.is(MessageSeverity.ERROR.toString())));
     }
 
     @Test
-    public void shouldFailWhenTryingToCreateRoomWithoutCorrectValues() throws Exception {
+    public void shouldFailWhenTryingToCreateRoomWithIncorrectValues() throws Exception {
         RoomDTO roomDTO = new RoomDTO();
 
         MockHttpServletRequestBuilder post = MockMvcRequestBuilders.post("/rooms");
