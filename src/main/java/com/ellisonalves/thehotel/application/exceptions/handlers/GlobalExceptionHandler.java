@@ -1,39 +1,103 @@
 package com.ellisonalves.thehotel.application.exceptions.handlers;
 
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
+import com.ellisonalves.thehotel.application.exceptions.pojos.Message;
+import com.ellisonalves.thehotel.application.exceptions.pojos.MessageSeverity;
+import com.ellisonalves.thehotel.application.exceptions.pojos.Messages;
+import com.ellisonalves.thehotel.application.exceptions.pojos.ValidationMessages;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.util.WebUtils;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.asList;
 
 @Slf4j
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(NumberFormatException.class)
-    public ResponseEntity<ErrorInfo> handleNumberFormatException(HttpServletRequest request, Exception exception) {
-        debugException(request, exception);
-
-        return createBadRequestError(exception);
-    }
+    @Autowired
+    private MessageSourceAccessor messageSourceAccessor;
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorInfo> handleResourceNotFoundException(HttpServletRequest request, Exception exception) {
-        debugException(request, exception);
+    public ResponseEntity<Object> handleResourceNotFoundException(Exception ex, WebRequest request) {
+        debugException(ex, request);
 
-        return createBadRequestError(exception);
+
+        return createMessagesResponseEntity(ex, HttpStatus.NOT_FOUND, MessageSeverity.ERROR);
     }
 
-    private ResponseEntity<ErrorInfo> createBadRequestError(Exception exception) {
-        ErrorInfo errorInfo = new ErrorInfo(exception.getMessage(), ErrorInfo.Severity.ERROR);
-        return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        List<Messages> errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(fieldError ->
+                        {
+                            List<Message> messages = asList(fieldError.getCodes())
+                                    .stream()
+                                    .map(code -> {
+                                        try {
+                                            return new Message(messageSourceAccessor.getMessage(code), MessageSeverity.ERROR);
+                                        } catch (NoSuchMessageException e) {
+                                            // do nothing
+                                            // if a message doesnt exist just don't use it.
+                                        }
+                                        return null;
+                                    })
+                                    .filter(message -> message != null)
+                                    .collect(Collectors.toList());
+
+                            return new Messages(fieldError.getField(), messages);
+                        }
+                )
+                .collect(Collectors.toList());
+
+        return handleExceptionInternal(ex, new ValidationMessages(errors), headers, HttpStatus.BAD_REQUEST, request);
     }
 
-    private void debugException(HttpServletRequest request, Exception exception) {
-        log.debug("requestURI = {}, exception message = {}", request.getRequestURI(), exception.getMessage());
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        debugException(ex, request);
+
+        if (body == null) {
+            if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status))
+                request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
+
+            return createMessagesResponseEntity(ex, headers, status, MessageSeverity.ERROR);
+        }
+
+        return super.handleExceptionInternal(ex, body, headers, status, request);
+
+    }
+
+    private ResponseEntity<Object> createMessagesResponseEntity(Exception ex, HttpHeaders headers, HttpStatus status, MessageSeverity severity) {
+        return new ResponseEntity<>(
+                new Messages(ex.getMessage(), severity),
+                headers,
+                status
+        );
+    }
+
+    private ResponseEntity<Object> createMessagesResponseEntity(Exception ex, HttpStatus status, MessageSeverity severity) {
+        HttpHeaders headers = new HttpHeaders();
+        return createMessagesResponseEntity(ex, headers, status, severity);
+    }
+
+    private void debugException(Exception exception, WebRequest request) {
+        log.debug("requestURI = {}, exception message = {}", request, exception.getMessage());
     }
 
 }

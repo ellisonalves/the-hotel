@@ -1,1 +1,8 @@
-
+spring:
+  mvc:
+    locale-resolver: ACCEPT_HEADER
+    locale: en_US
+  messages:
+    basename: messages
+    cache-duration: -1
+    encoding: UTF-8
