@@ -7,6 +7,6 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class ValidationErrors {
-    private List<FieldErrorMessages> validationErrors;
+public class FieldMessages {
+    private List<Messages> messages;
 }
