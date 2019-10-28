@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Customer {
+public class Guest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

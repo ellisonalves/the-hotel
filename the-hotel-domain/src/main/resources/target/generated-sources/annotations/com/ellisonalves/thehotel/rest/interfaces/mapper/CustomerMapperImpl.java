@@ -1,6 +1,6 @@
 package com.ellisonalves.thehotel.rest.interfaces.mapper;
 
-import com.ellisonalves.thehotel.domain.entities.Customer;
+import com.ellisonalves.thehotel.domain.entities.Guest;
 import com.ellisonalves.thehotel.rest.interfaces.dtos.CustomerDTO;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ import javax.annotation.Generated;
 public class CustomerMapperImpl implements CustomerMapper {
 
     @Override
-    public CustomerDTO toDTO(Customer entity) {
+    public CustomerDTO toDTO(Guest entity) {
         if (entity == null) {
             return null;
         }
@@ -35,22 +35,22 @@ public class CustomerMapperImpl implements CustomerMapper {
     }
 
     @Override
-    public Customer toEntity(CustomerDTO dto) {
+    public Guest toEntity(CustomerDTO dto) {
         if (dto == null) {
             return null;
         }
 
-        Customer customer = new Customer();
+        Guest guest = new Guest();
 
-        customer.setId(dto.getId());
-        customer.setName(dto.getName());
-        customer.setDocumentNumber(dto.getDocumentNumber());
-        customer.setNationality(dto.getNationality());
-        customer.setGender(dto.getGender());
-        customer.setEmail(dto.getEmail());
-        customer.setAddress(dto.getAddress());
-        customer.setPhone(dto.getPhone());
+        guest.setId(dto.getId());
+        guest.setName(dto.getName());
+        guest.setDocumentNumber(dto.getDocumentNumber());
+        guest.setNationality(dto.getNationality());
+        guest.setGender(dto.getGender());
+        guest.setEmail(dto.getEmail());
+        guest.setAddress(dto.getAddress());
+        guest.setPhone(dto.getPhone());
 
-        return customer;
+        return guest;
     }
 }

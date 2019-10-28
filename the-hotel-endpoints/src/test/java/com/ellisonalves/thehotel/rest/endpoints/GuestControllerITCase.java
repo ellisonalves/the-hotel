@@ -1,6 +1,6 @@
 package com.ellisonalves.thehotel.rest.endpoints;
 
-import com.ellisonalves.thehotel.domain.services.CustomerService;
+import com.ellisonalves.thehotel.domain.services.GuestService;
 import com.ellisonalves.thehotel.domain.types.GenderType;
 import com.ellisonalves.thehotel.rest.AbstractIntegrationTestController;
 import com.ellisonalves.thehotel.rest.interfaces.dtos.CustomerDTO;
@@ -13,10 +13,10 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-public class CustomerControllerITCase extends AbstractIntegrationTestController {
+public class GuestControllerITCase extends AbstractIntegrationTestController {
 
     @Autowired
-    private CustomerService customerService;
+    private GuestService guestService;
 
     @Autowired
     private CustomerMapper customerMapper;
@@ -59,7 +59,7 @@ public class CustomerControllerITCase extends AbstractIntegrationTestController 
 
     @Test
     public void shouldUpdateAGivenCustomer() throws Exception {
-        CustomerDTO customerDTO = customerMapper.toDTO(customerService.findOne(1l).get());
+        CustomerDTO customerDTO = customerMapper.toDTO(guestService.findOne(1l).get());
         customerDTO.setNationality("GERMAN");
 
         MockHttpServletRequestBuilder put = MockMvcRequestBuilders.put("/customers");

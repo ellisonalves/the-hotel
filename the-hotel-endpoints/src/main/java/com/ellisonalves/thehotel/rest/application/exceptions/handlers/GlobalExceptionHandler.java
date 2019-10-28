@@ -1,10 +1,11 @@
 package com.ellisonalves.thehotel.rest.application.exceptions.handlers;
 
 import com.ellisonalves.thehotel.rest.application.exceptions.ResourceNotFoundException;
-import com.ellisonalves.thehotel.rest.application.exceptions.pojos.FieldMessages;
-import com.ellisonalves.thehotel.rest.application.exceptions.pojos.Message;
+import com.ellisonalves.thehotel.rest.application.exceptions.pojos.Error;
+import com.ellisonalves.thehotel.rest.application.exceptions.pojos.Errors;
 import com.ellisonalves.thehotel.rest.application.exceptions.pojos.MessageSeverity;
-import com.ellisonalves.thehotel.rest.application.exceptions.pojos.Messages;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
@@ -40,23 +41,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        List<Messages> errors = ex.getBindingResult()
+        List<Errors> fieldErrorMessages = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(fieldError ->
                         {
-                            List<Message> messages = asList(fieldError.getCodes())
+                            List<Error> errors = asList(fieldError.getCodes())
                                     .stream()
                                     .map(code -> getMessage(code))
-                                    .filter(message -> message != null)
+                                    .filter(error -> error != null)
                                     .collect(Collectors.toList());
 
-                            return new Messages(fieldError.getField(), messages);
+                            return new Errors(fieldError.getField(), errors);
                         }
                 )
                 .collect(Collectors.toList());
 
-        return handleExceptionInternal(ex, new FieldMessages(errors), headers, HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, new FieldErrors(fieldErrorMessages), headers, HttpStatus.BAD_REQUEST, request);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ResponseEntity<Object> createMessagesResponseEntity(Exception ex, HttpHeaders headers, HttpStatus status, MessageSeverity severity) {
-        Messages body = new Messages(ex.getMessage(), severity);
+        Errors body = new Errors(ex.getMessage(), severity);
         return new ResponseEntity<>(
                 body,
                 headers,
@@ -91,14 +92,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.debug("requestURI = {}, exception message = {}", request, exception.getMessage());
     }
 
-    private Message getMessage(String code) {
+    private Error getMessage(String code) {
         try {
-            return new Message(messageSourceAccessor.getMessage(code), MessageSeverity.ERROR);
+            return new Error(messageSourceAccessor.getMessage(code), MessageSeverity.ERROR);
         } catch (NoSuchMessageException e) {
             // do nothing
             // if a message doesnt exist just don't use it.
         }
         return null;
+    }
+
+    @Data
+    @AllArgsConstructor
+    private static class FieldErrors {
+        private List<Errors> messages;
     }
 
 }

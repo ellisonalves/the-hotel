@@ -1,6 +1,6 @@
 package com.ellisonalves.thehotel.rest.endpoints;
 
-import com.ellisonalves.thehotel.domain.services.CustomerService;
+import com.ellisonalves.thehotel.domain.services.GuestService;
 import com.ellisonalves.thehotel.rest.UnitTestUtils;
 import com.ellisonalves.thehotel.rest.application.exceptions.ResourceNotFoundException;
 import com.ellisonalves.thehotel.rest.application.exceptions.pojos.MessageSeverity;
@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CustomerControllerTest {
+public class GuestControllerTest {
 
     private MockMvc mockMvc;
 
@@ -25,7 +25,7 @@ public class CustomerControllerTest {
     private CustomerController customerController;
 
     @Mock
-    private CustomerService customerService;
+    private GuestService guestService;
 
     @Before
     public void setup() {
@@ -36,17 +36,17 @@ public class CustomerControllerTest {
     public void findByIdInvalid() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/customers/INVALID"))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].message", CoreMatchers.notNullValue()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].severity", CoreMatchers.is(MessageSeverity.ERROR.toString())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0].message", CoreMatchers.notNullValue()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0].severity", CoreMatchers.is(MessageSeverity.ERROR.toString())));
     }
 
     @Test
     public void findOneThrowsBadRequestWhenCustomerDoesNotExist() throws Exception {
-        Mockito.when(customerService.findOne(Mockito.anyLong())).thenThrow(new ResourceNotFoundException());
+        Mockito.when(guestService.findOne(Mockito.anyLong())).thenThrow(new ResourceNotFoundException());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/customers/1"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].message", CoreMatchers.notNullValue()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].severity", CoreMatchers.is(MessageSeverity.ERROR.toString())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0].message", CoreMatchers.notNullValue()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0].severity", CoreMatchers.is(MessageSeverity.ERROR.toString())));
     }
 }

@@ -1,9 +1,9 @@
 package com.ellisonalves.thehotel.domain.repositories;
 
-import com.ellisonalves.thehotel.domain.entities.Customer;
+import com.ellisonalves.thehotel.domain.entities.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface BookingRepository extends JpaRepository<Booking, Long> {
 }

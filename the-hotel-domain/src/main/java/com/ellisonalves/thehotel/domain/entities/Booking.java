@@ -7,12 +7,12 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-public class Book {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Customer customer;
+    private Guest guest;
     @ManyToOne
     private Room room;
     private LocalDate startDate;

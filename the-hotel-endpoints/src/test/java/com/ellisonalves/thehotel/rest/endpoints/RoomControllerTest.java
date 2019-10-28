@@ -43,8 +43,8 @@ public class RoomControllerTest {
     public void findByIdInvalid() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/rooms/INVALID"))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].message", CoreMatchers.notNullValue()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].severity", CoreMatchers.is(MessageSeverity.ERROR.toString())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0].message", CoreMatchers.notNullValue()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0].severity", CoreMatchers.is(MessageSeverity.ERROR.toString())));
     }
 
     @Test
@@ -53,8 +53,8 @@ public class RoomControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/rooms/100"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].message", CoreMatchers.notNullValue()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.messages[0].severity", CoreMatchers.is(MessageSeverity.ERROR.toString())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0].message", CoreMatchers.notNullValue()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0].severity", CoreMatchers.is(MessageSeverity.ERROR.toString())));
     }
 
     @Test

@@ -9,15 +9,15 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class Messages {
+public class Errors {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String field;
 
-    private List<Message> messages;
+    private List<Error> errors;
 
-    public Messages(String message, MessageSeverity error) {
-        this.messages = Arrays.asList(new Message(message, error));
+    public Errors(String message, MessageSeverity error) {
+        this.errors = Arrays.asList(new Error(message, error));
     }
 
 }

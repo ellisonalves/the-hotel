@@ -8,15 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class CustomerRepositoryITCase {
+public class BookingRepositoryITCase {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private BookingRepository bookingRepository;
 
     @Test
-    public void shouldExistCustomer() {
-        Assert.assertThat(customerRepository.findAll(), CoreMatchers.notNullValue());
+    public void shouldExistBook() {
+        Assert.assertThat(bookingRepository.findAll(), CoreMatchers.is(CoreMatchers.notNullValue()));
     }
 }
