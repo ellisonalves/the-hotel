@@ -1,7 +1,13 @@
 package com.ellisonalves.thehotel.domain;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.ellisonalves.thehotel.domain.*")
+@SpringBootApplication
 public class DomainApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DomainApplication.class, args);
+    }
+
 }

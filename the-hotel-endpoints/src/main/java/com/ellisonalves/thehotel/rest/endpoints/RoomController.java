@@ -7,14 +7,15 @@ import com.ellisonalves.thehotel.rest.interfaces.mapper.RoomMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+
 @Slf4j
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping(value = "/rooms", produces = APPLICATION_JSON_UTF8_VALUE)
 class RoomController {
 
     private RoomService roomService;
@@ -27,25 +28,25 @@ class RoomController {
         this.roomMapper = roomMapper;
     }
 
-    @GetMapping(value = "{doorNumber}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "{doorNumber}")
     @ResponseStatus(HttpStatus.OK)
     public RoomDTO find(@PathVariable Integer doorNumber) {
         return roomMapper.toDTO(roomService.findOne(doorNumber).get());
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public RoomListDTO find() {
         return roomMapper.toRoomListDTO(roomService.findAll());
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public RoomDTO create(@RequestBody @Valid RoomDTO room) {
         return roomMapper.toDTO(roomService.save(roomMapper.toEntity(room)));
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public RoomDTO update(@RequestBody RoomDTO room) {
         return roomMapper.toDTO(roomService.save(roomMapper.toEntity(room)));

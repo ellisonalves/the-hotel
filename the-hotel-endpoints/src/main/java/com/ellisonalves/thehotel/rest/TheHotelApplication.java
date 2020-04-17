@@ -3,7 +3,7 @@ package com.ellisonalves.thehotel.rest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.ellisonalves.thehotel.*")
+@SpringBootApplication
 public class TheHotelApplication {
 
     public static void main(String[] args) {
