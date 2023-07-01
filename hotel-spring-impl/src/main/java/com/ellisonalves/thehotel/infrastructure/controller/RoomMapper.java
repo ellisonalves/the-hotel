@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
 
-@Mapper
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface RoomMapper {
 
-    RoomMapper INSTANCE = Mappers.getMapper(RoomMapper.class);
+    // RoomMapper INSTANCE = Mappers.getMapper(RoomMapper.class);
 
     RoomJpa toEntity(RoomRequest dto);
 
