@@ -15,8 +15,6 @@ import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface RoomMapper {
 
-    // RoomMapper INSTANCE = Mappers.getMapper(RoomMapper.class);
-
     RoomJpa toEntity(RoomRequest dto);
 
     RoomRequest toDto(Room room);
