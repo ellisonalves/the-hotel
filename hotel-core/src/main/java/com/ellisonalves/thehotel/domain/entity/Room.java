@@ -1,13 +1,14 @@
 package com.ellisonalves.thehotel.domain.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 
-public abstract class Room {
+public abstract class Room implements Serializable {
 
-    protected UUID id;
+    private UUID id;
 
     private String doorNumber;
 

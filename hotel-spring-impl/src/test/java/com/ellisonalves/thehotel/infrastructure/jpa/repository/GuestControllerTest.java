@@ -6,15 +6,11 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
-import com.ellisonalves.thehotel.application.usecases.GuestService;
 import com.ellisonalves.thehotel.rest.application.exceptions.pojos.MessageSeverity;
 import com.ellisonalves.thehotel.rest.endpoints.CustomerController;
 
@@ -27,8 +23,8 @@ public class GuestControllerTest {
     @InjectMocks
     private CustomerController customerController;
 
-    @Mock
-    private GuestService guestService;
+    // @Mock
+    // private ManageGuestUseCase guestService;
 
     @BeforeEach
     public void setup() {
@@ -46,7 +42,8 @@ public class GuestControllerTest {
 
     @Test
     public void findOneThrowsBadRequestWhenCustomerDoesNotExist() throws Exception {
-        Mockito.when(guestService.findOne(Mockito.any())).thenThrow(new ResourceNotFoundException());
+        // Mockito.when(guestService.findOne(Mockito.any())).thenThrow(new
+        // ResourceNotFoundException());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/customers/1"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())

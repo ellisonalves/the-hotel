@@ -1,6 +1,5 @@
 package com.ellisonalves.thehotel.infrastructure.jpa.entity;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 //@Entity
