@@ -26,7 +26,7 @@ public class ManageRoomUseCaseTest {
     private ManageRoomUseCase useCase;
 
     @Mock
-    private RoomRepository<Room, UUID> repository;
+    private RoomRepository repository;
 
     private UUID roomId = UUID.randomUUID();
 

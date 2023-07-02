@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import com.ellisonalves.thehotel.domain.entity.Guest;
 
-public interface GuestRepository extends Persistable<Guest, UUID> {
+public interface GuestRepository {
 
     public void save(Guest guest);
 

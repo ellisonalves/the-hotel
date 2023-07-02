@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 
-public abstract class Room implements Serializable {
+public class Room implements Serializable {
 
     private UUID id;
 

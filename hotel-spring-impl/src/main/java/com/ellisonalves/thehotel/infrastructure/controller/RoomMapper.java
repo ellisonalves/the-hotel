@@ -15,6 +15,22 @@ import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface RoomMapper {
 
+    RoomJpa toEntity(Room dto);
+
+    Room toDto(RoomJpa room);
+
+    default List<RoomJpa> toEntityList(Collection<Room> entities) {
+        return entities.stream()
+                .map(dto -> toEntity(dto))
+                .collect(Collectors.toList());
+    }
+
+    default List<Room> toDtoList(Collection<RoomJpa> entities) {
+        return entities.stream()
+                .map(dto -> toEntity(dto))
+                .collect(Collectors.toList());
+    }
+
     RoomJpa toEntity(RoomRequest dto);
 
     RoomRequest toDto(Room room);

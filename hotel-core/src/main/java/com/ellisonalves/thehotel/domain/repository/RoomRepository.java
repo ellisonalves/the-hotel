@@ -2,19 +2,20 @@ package com.ellisonalves.thehotel.domain.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.ellisonalves.thehotel.domain.entity.Room;
 
-public interface RoomRepository<T extends Room, ID> {
+public interface RoomRepository {
 
-    void persist(T room);
+    void persist(Room room);
 
-    Optional<T> findById(ID id);
+    Optional<Room> findById(UUID id);
 
-    void deleteById(ID id);
+    void deleteById(UUID id);
 
-    List<T> findAll();
+    List<Room> findAll();
 
-    Optional<T> findByDoorNumber(String doorNumber);
+    Optional<Room> findByDoorNumber(String doorNumber);
 
 }

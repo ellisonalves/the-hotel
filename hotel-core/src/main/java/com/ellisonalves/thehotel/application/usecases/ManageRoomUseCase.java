@@ -9,9 +9,9 @@ import com.ellisonalves.thehotel.domain.repository.RoomRepository;
 
 public class ManageRoomUseCase {
 
-    private final RoomRepository<Room, UUID> repository;
+    private final RoomRepository repository;
 
-    public ManageRoomUseCase(RoomRepository<Room, UUID> repository) {
+    public ManageRoomUseCase(RoomRepository repository) {
         this.repository = repository;
     }
 
