@@ -1,4 +1,4 @@
-spring:
+spring: 
   mvc:
     locale-resolver: ACCEPT_HEADER
     locale: en_US
