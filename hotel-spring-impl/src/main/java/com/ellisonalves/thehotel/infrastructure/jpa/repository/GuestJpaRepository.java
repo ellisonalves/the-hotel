@@ -3,6 +3,7 @@ package com.ellisonalves.thehotel.infrastructure.jpa.repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,35 +18,35 @@ import com.ellisonalves.thehotel.infrastructure.mappers.GuestMapper;
 public class GuestJpaRepository implements GuestRepository {
 
     private final GuestSpringJpaRepository repository;
-    private final GuestMapper guestMapper;
+    private final GuestMapper mapper;
 
     @Autowired
     public GuestJpaRepository(GuestSpringJpaRepository repository, GuestMapper guestMapper) {
         this.repository = repository;
-        this.guestMapper = guestMapper;
+        this.mapper = guestMapper;
     }
 
     @Override
-    public void save(Guest guest) {
-        repository.save(guestMapper.toEntity(guest));
+    public void persist(Guest guest) {
+        repository.save(mapper.toJpa(guest));
     }
 
     @Override
     public Optional<Guest> findById(UUID id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        return repository.findById(id).map(m -> mapper.toDomain(m));
     }
 
     @Override
     public void delete(UUID id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        repository.deleteById(id);
     }
 
     @Override
     public List<Guest> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        return repository.findAll()
+                .stream()
+                .map(guest -> mapper.toDomain(guest))
+                .collect(Collectors.toList());
     }
 }
 

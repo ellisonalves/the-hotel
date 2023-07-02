@@ -8,5 +8,9 @@ import com.ellisonalves.thehotel.infrastructure.jpa.entity.GuestJpa;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface GuestMapper {
-    GuestJpa toEntity(Guest dto);
+    
+    GuestJpa toJpa(Guest dto);
+
+    Guest toDomain(GuestJpa entity);
+    
 }

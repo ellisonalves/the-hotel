@@ -16,7 +16,7 @@ public class ManageGuestUseCase {
     }
 
     public void save(Guest guest) {
-        repository.save(guest);
+        repository.persist(guest);
     }
 
     public Optional<Guest> findById(UUID id) {

@@ -49,7 +49,7 @@ public class ManageGuestUseCaseTest {
         var guest = new GuestStub();
         useCase.save(guest);
 
-        verify(repository, only()).save(guest);
+        verify(repository, only()).persist(guest);
     }
 
     private static class GuestStub extends Guest {

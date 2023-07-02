@@ -1,27 +1,21 @@
 package com.ellisonalves.thehotel.domain.entity;
 
-import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 import com.ellisonalves.thehotel.domain.aggregates.GenderType;
 
-public abstract class Guest implements Serializable {
+public class Guest extends BaseEntity<UUID> {
 
     private UUID id;
-
     private String documentNumber;
-
     private String name;
-
     private String nationality;
-
     private GenderType genderType;
-
     private String email;
-
     private String address;
-
     private String phone;
+    private Long version;
 
     public UUID getId() {
         return id;
@@ -85,6 +79,21 @@ public abstract class Guest implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    @Override
+    public boolean equalTo(Object o) {
+        Guest other = (Guest) o;
+        return Objects.equals(this.getId(), other.getId());
     }
 
 }

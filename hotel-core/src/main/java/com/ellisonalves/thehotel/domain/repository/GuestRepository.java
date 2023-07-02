@@ -8,7 +8,7 @@ import com.ellisonalves.thehotel.domain.entity.Guest;
 
 public interface GuestRepository {
 
-    public void save(Guest guest);
+    public void persist(Guest guest);
 
     public Optional<Guest> findById(UUID id);
 
