@@ -2,8 +2,6 @@ package com.ellisonalves.thehotel.infrastructure.controller.room;
 
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ellisonalves.thehotel.application.usecases.ManageRoomUseCase;
 import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapper;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)

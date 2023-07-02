@@ -2,13 +2,13 @@ package com.ellisonalves.thehotel.infrastructure.jpa.entity;
 
 import java.util.UUID;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-
 import com.ellisonalves.thehotel.domain.aggregates.GenderType;
 import com.ellisonalves.thehotel.domain.entity.Guest;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 
 @Entity
 public class GuestJpa extends Guest {

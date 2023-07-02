@@ -116,7 +116,7 @@ public class RoomControllerTest {
 
         @Test
         public void shouldReturnAnEmptyListOfRooms() throws Exception {
-                mockMvc.perform(get("/rooms/"))
+                mockMvc.perform(get("/rooms"))
                                 .andExpect(status().isOk())
                                 .andExpect(
                                                 content().json("""

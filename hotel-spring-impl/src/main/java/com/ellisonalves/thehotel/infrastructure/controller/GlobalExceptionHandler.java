@@ -10,6 +10,7 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -39,7 +40,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-            HttpHeaders headers, HttpStatus status, WebRequest request) {
+            HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         List<Errors> fieldErrorMessages = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -60,7 +61,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
+            HttpStatusCode status, WebRequest request) {
         debugException(ex, request);
 
         if (body == null) {
@@ -73,7 +74,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleExceptionInternal(ex, body, headers, status, request);
     }
 
-    private ResponseEntity<Object> createMessagesResponseEntity(Exception ex, HttpHeaders headers, HttpStatus status,
+    private ResponseEntity<Object> createMessagesResponseEntity(Exception ex, HttpHeaders headers,
+            HttpStatusCode status,
             MessageSeverity severity) {
         Errors body = new Errors(ex.getMessage(), severity);
         return new ResponseEntity<>(

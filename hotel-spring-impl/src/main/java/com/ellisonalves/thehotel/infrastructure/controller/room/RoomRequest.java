@@ -2,10 +2,10 @@ package com.ellisonalves.thehotel.infrastructure.controller.room;
 
 import java.math.BigDecimal;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class RoomRequest {
 
