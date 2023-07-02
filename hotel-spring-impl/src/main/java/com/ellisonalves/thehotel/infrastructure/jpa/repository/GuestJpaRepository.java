@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +19,6 @@ public class GuestJpaRepository implements GuestRepository {
     private final GuestSpringJpaRepository repository;
     private final GuestMapper mapper;
 
-    @Autowired
     public GuestJpaRepository(GuestSpringJpaRepository repository, GuestMapper guestMapper) {
         this.repository = repository;
         this.mapper = guestMapper;

@@ -1,20 +1,18 @@
 package com.ellisonalves.thehotel.domain.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 
-public class Room implements Serializable {
+public class Room extends BaseEntity<UUID> {
 
     private UUID id;
-
     private String doorNumber;
-
     private RoomType roomType;
-
     private BigDecimal pricePerDay;
+    private Long version;
 
     public UUID getId() {
         return id;
@@ -46,6 +44,17 @@ public class Room implements Serializable {
 
     public void setPricePerDay(BigDecimal pricePerDay) {
         this.pricePerDay = pricePerDay;
+    }
+
+    @Override
+    public Long getVersion() {
+        return version;
+    }
+
+    @Override
+    public boolean equalTo(Object o) {
+        Room other = (Room) o;
+        return Objects.equals(this.getId(), other.getId());
     }
 
 }
