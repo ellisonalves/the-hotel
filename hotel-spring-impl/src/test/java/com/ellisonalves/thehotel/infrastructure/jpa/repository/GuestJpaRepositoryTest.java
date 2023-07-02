@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
-import com.ellisonalves.thehotel.config.JpaRepositoryConfig;
+import com.ellisonalves.thehotel.config.JpaRepositoryTestConfig;
 import com.ellisonalves.thehotel.domain.aggregates.GenderType;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.GuestJpa;
 
 @DataJpaTest
-@Import(JpaRepositoryConfig.class)
+@Import(JpaRepositoryTestConfig.class)
 public class GuestJpaRepositoryTest {
 
     @Autowired

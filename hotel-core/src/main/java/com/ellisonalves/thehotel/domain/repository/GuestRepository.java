@@ -1,6 +1,5 @@
 package com.ellisonalves.thehotel.domain.repository;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +16,4 @@ public interface GuestRepository extends Persistable<Guest, UUID> {
 
     public List<Guest> findAll();
 
-}
-
-interface Persistable<T extends Serializable, ID extends Serializable> {
 }

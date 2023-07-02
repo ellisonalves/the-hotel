@@ -11,20 +11,23 @@ import org.springframework.stereotype.Repository;
 import com.ellisonalves.thehotel.domain.entity.Guest;
 import com.ellisonalves.thehotel.domain.repository.GuestRepository;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.GuestJpa;
+import com.ellisonalves.thehotel.infrastructure.mappers.GuestMapper;
 
 @Repository
 public class GuestJpaRepository implements GuestRepository {
 
-    private GuestSpringJpaRepository repository;
+    private final GuestSpringJpaRepository repository;
+    private final GuestMapper guestMapper;
 
     @Autowired
-    public GuestJpaRepository(GuestSpringJpaRepository repository) {
+    public GuestJpaRepository(GuestSpringJpaRepository repository, GuestMapper guestMapper) {
         this.repository = repository;
+        this.guestMapper = guestMapper;
     }
 
     @Override
     public void save(Guest guest) {
-        repository.save((GuestJpa) guest);
+        repository.save(guestMapper.toEntity(guest));
     }
 
     @Override
@@ -43,7 +46,7 @@ public class GuestJpaRepository implements GuestRepository {
     public List<Guest> findAll() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-    } // extends JpaRepository<Guest, UUID> {
+    }
 }
 
 interface GuestSpringJpaRepository extends JpaRepository<GuestJpa, UUID> {
