@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.rest.application.exceptions.pojos;
+package com.ellisonalves.thehotel.pojos;
 
 public record Error(
     String message,

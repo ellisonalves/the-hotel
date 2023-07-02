@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller;
+package com.ellisonalves.thehotel.infrastructure.mappers;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,6 +10,8 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 
 import com.ellisonalves.thehotel.domain.entity.Room;
+import com.ellisonalves.thehotel.infrastructure.controller.room.RoomRequest;
+import com.ellisonalves.thehotel.infrastructure.controller.room.RoomResponse;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)

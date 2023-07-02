@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller;
+package com.ellisonalves.thehotel.infrastructure.controller.room;
 
 import java.util.UUID;
 
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ellisonalves.thehotel.application.usecases.ManageRoomUseCase;
+import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapper;
 
 @RestController
 @RequestMapping(value = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)

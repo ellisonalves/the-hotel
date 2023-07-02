@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.ellisonalves.thehotel.application.usecases.ManageGuestUseCase;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
+import com.ellisonalves.thehotel.infrastructure.controller.guest.GuestController;
 
 @WebMvcTest({ GuestController.class, MessagesConfig.class })
 public class GuestControllerTest {

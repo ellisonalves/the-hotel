@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.application.usescases;
+package com.ellisonalves.thehotel.application.usecases;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.only;

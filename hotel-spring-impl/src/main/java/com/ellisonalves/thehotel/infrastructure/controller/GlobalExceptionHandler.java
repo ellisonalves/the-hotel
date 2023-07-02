@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.rest.application.exceptions.handlers;
+package com.ellisonalves.thehotel.infrastructure.controller;
 
 import static java.util.Arrays.asList;
 
@@ -20,9 +20,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.web.util.WebUtils;
 
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
-import com.ellisonalves.thehotel.rest.application.exceptions.pojos.Error;
-import com.ellisonalves.thehotel.rest.application.exceptions.pojos.Errors;
-import com.ellisonalves.thehotel.rest.application.exceptions.pojos.MessageSeverity;
+import com.ellisonalves.thehotel.pojos.Error;
+import com.ellisonalves.thehotel.pojos.Errors;
+import com.ellisonalves.thehotel.pojos.MessageSeverity;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {

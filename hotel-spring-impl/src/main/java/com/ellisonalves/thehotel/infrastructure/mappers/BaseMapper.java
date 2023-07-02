@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.rest.interfaces.mapper;
+package com.ellisonalves.thehotel.infrastructure.mappers;
 
 import java.util.Collection;
 import java.util.List;

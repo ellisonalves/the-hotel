@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.domain.repository.RoomRepository;
-import com.ellisonalves.thehotel.infrastructure.controller.RoomMapper;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
+import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapper;
 
 @Repository
 public class RoomJpaRepository implements RoomRepository {

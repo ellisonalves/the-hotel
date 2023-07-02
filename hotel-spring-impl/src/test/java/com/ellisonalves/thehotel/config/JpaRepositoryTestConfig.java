@@ -4,10 +4,10 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.ellisonalves.thehotel.infrastructure.controller.RoomMapper;
-import com.ellisonalves.thehotel.infrastructure.controller.RoomMapperImpl;
 import com.ellisonalves.thehotel.infrastructure.mappers.GuestMapper;
 import com.ellisonalves.thehotel.infrastructure.mappers.GuestMapperImpl;
+import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapper;
+import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapperImpl;
 
 @TestConfiguration
 @ComponentScan("com.ellisonalves.thehotel.infrastructure.jpa")

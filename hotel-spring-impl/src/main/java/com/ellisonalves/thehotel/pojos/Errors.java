@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.rest.application.exceptions.pojos;
+package com.ellisonalves.thehotel.pojos;
 
 import java.util.Arrays;
 import java.util.List;

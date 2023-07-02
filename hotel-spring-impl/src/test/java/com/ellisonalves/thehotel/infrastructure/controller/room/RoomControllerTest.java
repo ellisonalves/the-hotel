@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller;
+package com.ellisonalves.thehotel.infrastructure.controller.room;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -28,7 +28,8 @@ import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
-import com.ellisonalves.thehotel.rest.application.exceptions.pojos.MessageSeverity;
+import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapperImpl;
+import com.ellisonalves.thehotel.pojos.MessageSeverity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest({ RoomController.class })
