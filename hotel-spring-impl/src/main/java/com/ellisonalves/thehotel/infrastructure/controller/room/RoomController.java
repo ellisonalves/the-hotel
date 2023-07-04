@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ellisonalves.thehotel.application.usecases.ManageRoomUseCase;
-import com.ellisonalves.thehotel.infrastructure.controller.room.mappers.RoomModelViewMapper;
 import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomCreateDto;
 import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomList;
 import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomUpdateDto;
@@ -25,40 +23,34 @@ import jakarta.validation.Valid;
 @RequestMapping(value = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
 class RoomController {
 
-    private final ManageRoomUseCase manageRoomUseCase;
+    private final RoomAdapter adapter;
 
-    private final RoomModelViewMapper mapper;
-
-    public RoomController(final ManageRoomUseCase saveRoomUseCase, RoomModelViewMapper mapper) {
-        this.manageRoomUseCase = saveRoomUseCase;
-        this.mapper = mapper;
+    public RoomController(final RoomAdapter roomAdapter) {
+        this.adapter = roomAdapter;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody @Valid RoomCreateDto room) {
-        manageRoomUseCase.save(mapper.toModel(room));
+        adapter.createRoom(room);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void create(@PathVariable UUID id, @RequestBody @Valid RoomUpdateDto request) {
-        var persisted = manageRoomUseCase.findById(id);
-        mapper.updateRoom(request, persisted);
-        manageRoomUseCase.save(persisted);
+        adapter.updateRoom(id, request);
     }
 
     @GetMapping("/{doorNumber}")
     @ResponseStatus(HttpStatus.OK)
     public RoomList findByDoorNumber(@PathVariable String doorNumber) {
-        var room = manageRoomUseCase.findByDoorNumber(doorNumber);
-        return mapper.toResponse(room);
+        return adapter.findByDoorNumber(doorNumber);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public RoomList findAll() {
-        return new RoomList(mapper.toResponse(manageRoomUseCase.findAll()));
+        return adapter.findAll();
     }
 
 }

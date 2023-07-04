@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller.room.mappers;
+package com.ellisonalves.thehotel.infrastructure.controller.room;
 
 import java.util.Arrays;
 import java.util.Collection;
