@@ -13,7 +13,7 @@ public class RoomUpdateDto {
     private String doorNumber;
 
     @NotNull
-    private RoomType type;
+    private RoomType roomType;
 
     @NotNull
     private BigDecimal pricePerDay;
@@ -26,12 +26,12 @@ public class RoomUpdateDto {
         this.doorNumber = doorNumber;
     }
 
-    public RoomType getType() {
-        return type;
+    public RoomType getRoomType() {
+        return roomType;
     }
 
-    public void setType(RoomType type) {
-        this.type = type;
+    public void setRoomType(RoomType type) {
+        this.roomType = type;
     }
 
     public BigDecimal getPricePerDay() {

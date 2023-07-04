@@ -12,8 +12,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.ellisonalves.thehotel.application.usecases.ManageGuestUseCase;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
 
-@WebMvcTest({ GuestController.class, MessagesConfig.class })
-public class GuestControllerTest {
+@WebMvcTest({GuestController.class, MessagesConfig.class})
+class GuestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -22,7 +22,7 @@ public class GuestControllerTest {
     private ManageGuestUseCase guestService;
 
     @Test
-    public void findByIdInvalid() throws Exception {
+    void findByIdInvalid() throws Exception {
         mockMvc.perform(get("/guests"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }

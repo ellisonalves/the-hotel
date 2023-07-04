@@ -33,9 +33,9 @@ import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
 import com.ellisonalves.thehotel.pojos.MessageSeverity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest({ RoomController.class })
-@Import({ RoomModelViewMapperImpl.class, MessagesConfig.class })
-public class RoomControllerTest {
+@WebMvcTest({RoomController.class})
+@Import({RoomModelViewMapperImpl.class, MessagesConfig.class})
+class RoomControllerTest {
 
         @Autowired
         private MockMvc mockMvc;
@@ -46,12 +46,12 @@ public class RoomControllerTest {
         @MockBean
         private ManageRoomUseCase mockUseCase;
 
-        @Test
-        public void shouldPostSuccessfuly() throws Exception {
+    @Test
+    void shouldPostSuccessfuly() throws Exception {
                 var request = new RoomCreateDto();
                 request.setDoorNumber("123");
                 request.setPricePerDay(BigDecimal.TEN);
-                request.setType(RoomType.STANDARD);
+                request.setRoomType(RoomType.STANDARD);
 
                 MockHttpServletRequestBuilder post = post("/rooms");
                 post
@@ -63,13 +63,13 @@ public class RoomControllerTest {
                                 .andExpect(status().isCreated());
         }
 
-        @Test
-        public void shouldPutSuccessfuly() throws Exception {
+    @Test
+    void shouldPutSuccessfuly() throws Exception {
                 var roomId = UUID.randomUUID();
                 var request = new RoomCreateDto();
                 request.setDoorNumber("123");
                 request.setPricePerDay(BigDecimal.TEN);
-                request.setType(RoomType.STANDARD);
+                request.setRoomType(RoomType.STANDARD);
 
                 Room persisted = new RoomJpa();
                 persisted.setDoorNumber(request.getDoorNumber());
@@ -88,8 +88,8 @@ public class RoomControllerTest {
                                 .andExpect(status().isNoContent());
         }
 
-        @Test
-        public void shouldFailWhenTryingToCreateRoomWithInvalidValues() throws Exception {
+    @Test
+    void shouldFailWhenTryingToCreateRoomWithInvalidValues() throws Exception {
                 RoomCreateDto roomDTO = new RoomCreateDto();
 
                 MockHttpServletRequestBuilder post = post("/rooms");
@@ -102,8 +102,8 @@ public class RoomControllerTest {
                                 .andExpect(status().isBadRequest());
         }
 
-        @Test
-        public void shouldReturnBadRequestWhenRoomIsNotFound() throws Exception {
+    @Test
+    void shouldReturnBadRequestWhenRoomIsNotFound() throws Exception {
                 var doorNumber = "NOT_FOUND";
                 when(mockUseCase.findByDoorNumber(doorNumber)).thenThrow(new ResourceNotFoundException());
 
@@ -115,8 +115,8 @@ public class RoomControllerTest {
                                                 is(MessageSeverity.ERROR.toString())));
         }
 
-        @Test
-        public void shouldReturnAnEmptyListOfRooms() throws Exception {
+    @Test
+    void shouldReturnAnEmptyListOfRooms() throws Exception {
                 mockMvc.perform(get("/rooms"))
                                 .andExpect(status().isOk())
                                 .andExpect(

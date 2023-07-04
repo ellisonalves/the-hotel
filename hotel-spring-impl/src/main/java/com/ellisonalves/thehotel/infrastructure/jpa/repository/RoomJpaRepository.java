@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +18,6 @@ public class RoomJpaRepository implements RoomRepository {
     private final RoomSpringJpaRepository repository;
     private final RoomJpaMapper mapper;
 
-    @Autowired
     public RoomJpaRepository(RoomSpringJpaRepository roomSpringJpaRepository, RoomJpaMapper mapper) {
         this.repository = roomSpringJpaRepository;
         this.mapper = mapper;

@@ -15,7 +15,7 @@ import com.ellisonalves.thehotel.infrastructure.jpa.entity.GuestJpa;
 
 @DataJpaTest
 @Import(JpaRepositoryTestConfig.class)
-public class GuestJpaRepositoryTest {
+class GuestJpaRepositoryTest {
 
     @Autowired
     private GuestJpaRepository repository;
@@ -23,7 +23,7 @@ public class GuestJpaRepositoryTest {
     private UUID id = UUID.randomUUID();
 
     @Test
-    public void shouldPersistAndFindGuest() {
+    void shouldPersistAndFindGuest() {
         var id = UUID.randomUUID();
 
         persistGuest(id);
@@ -32,13 +32,13 @@ public class GuestJpaRepositoryTest {
     }
 
     @Test
-    public void shouldFindNoGuest() {
+    void shouldFindNoGuest() {
         var id = UUID.randomUUID();
         assertThat(repository.findById(id)).isNotPresent();
     }
 
     @Test
-    public void shouldDeleteGuest() {
+    void shouldDeleteGuest() {
         persistGuest(id);
 
         repository.delete(id);
@@ -47,12 +47,12 @@ public class GuestJpaRepositoryTest {
     }
 
     @Test
-    public void shouldFindAllWithNoGuest() {
+    void shouldFindAllWithNoGuest() {
         assertThat(repository.findAll()).isEmpty();
     }
 
     @Test
-    public void shouldFindAllGuests() {
+    void shouldFindAllGuests() {
         persistGuest(UUID.randomUUID());
         persistGuest(UUID.randomUUID());
         persistGuest(UUID.randomUUID());

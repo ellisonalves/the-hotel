@@ -3,7 +3,6 @@ package com.ellisonalves.thehotel.infrastructure.controller.guest;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,6 @@ public class GuestController {
 
     private final ManageGuestUseCase manageGuestUseCase;
 
-    @Autowired
     public GuestController(ManageGuestUseCase manageGuestUseCase) {
         this.manageGuestUseCase = manageGuestUseCase;
     }

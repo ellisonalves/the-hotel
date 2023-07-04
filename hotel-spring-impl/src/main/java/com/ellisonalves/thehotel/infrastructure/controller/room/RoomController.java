@@ -2,7 +2,6 @@ package com.ellisonalves.thehotel.infrastructure.controller.room;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +29,6 @@ class RoomController {
 
     private final RoomModelViewMapper mapper;
 
-    @Autowired
     public RoomController(final ManageRoomUseCase saveRoomUseCase, RoomModelViewMapper mapper) {
         this.manageRoomUseCase = saveRoomUseCase;
         this.mapper = mapper;
@@ -44,7 +42,7 @@ class RoomController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void create(@PathVariable("id") UUID id, @RequestBody @Valid RoomUpdateDto request) {
+    public void create(@PathVariable UUID id, @RequestBody @Valid RoomUpdateDto request) {
         var persisted = manageRoomUseCase.findById(id);
         mapper.updateRoom(request, persisted);
         manageRoomUseCase.save(persisted);

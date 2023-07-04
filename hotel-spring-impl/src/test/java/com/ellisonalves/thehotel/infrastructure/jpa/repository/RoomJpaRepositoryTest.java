@@ -16,7 +16,7 @@ import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
 
 @DataJpaTest
 @Import(JpaRepositoryTestConfig.class)
-public class RoomJpaRepositoryTest {
+class RoomJpaRepositoryTest {
 
     @Autowired
     private RoomJpaRepository repository;

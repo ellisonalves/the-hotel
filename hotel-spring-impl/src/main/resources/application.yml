@@ -1,7 +1,4 @@
-spring: 
-  mvc:
-    locale-resolver: ACCEPT_HEADER
-    locale: en_US
+spring:
   messages:
     basename: messages
     cache-duration: -1
@@ -23,4 +20,6 @@ spring:
 
   sql:
     init:
-      platform: h2
+      platform: h2 
+  web.locale: en_US 
+  web.locale-resolver: ACCEPT_HEADER
