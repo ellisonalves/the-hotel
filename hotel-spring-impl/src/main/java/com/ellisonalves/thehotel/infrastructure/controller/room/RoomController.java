@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ellisonalves.thehotel.application.usecases.ManageRoomUseCase;
-import com.ellisonalves.thehotel.infrastructure.controller.mappers.RoomModelViewMapper;
+import com.ellisonalves.thehotel.infrastructure.controller.room.mappers.RoomModelViewMapper;
+import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomCreateDto;
+import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomList;
+import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomUpdateDto;
 
 import jakarta.validation.Valid;
 

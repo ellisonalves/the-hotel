@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller.room;
+package com.ellisonalves.thehotel.infrastructure.controller.room.model;
 
 import java.util.List;
 
