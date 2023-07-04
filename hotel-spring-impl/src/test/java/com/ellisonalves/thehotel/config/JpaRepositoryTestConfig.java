@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.ellisonalves.thehotel.infrastructure.mappers.GuestMapper;
 import com.ellisonalves.thehotel.infrastructure.mappers.GuestMapperImpl;
-import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapper;
-import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapperImpl;
+import com.ellisonalves.thehotel.infrastructure.mappers.RoomJpaMapper;
+import com.ellisonalves.thehotel.infrastructure.mappers.RoomJpaMapperImpl;
 
 @TestConfiguration
 @ComponentScan("com.ellisonalves.thehotel.infrastructure.jpa")
@@ -19,7 +19,7 @@ public class JpaRepositoryTestConfig {
     }
 
     @Bean
-    public RoomMapper roomMapper() {
-        return new RoomMapperImpl();
+    public RoomJpaMapper roomMapper() {
+        return new RoomJpaMapperImpl();
     }
 }

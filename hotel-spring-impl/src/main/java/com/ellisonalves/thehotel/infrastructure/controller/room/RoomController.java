@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ellisonalves.thehotel.application.usecases.ManageRoomUseCase;
-import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapper;
+import com.ellisonalves.thehotel.infrastructure.mappers.RoomJpaMapper;
 
 import jakarta.validation.Valid;
 
@@ -25,10 +25,10 @@ class RoomController {
 
     private final ManageRoomUseCase manageRoomUseCase;
 
-    private final RoomMapper mapper;
+    private final RoomJpaMapper mapper;
 
     @Autowired
-    public RoomController(final ManageRoomUseCase saveRoomUseCase, RoomMapper mapper) {
+    public RoomController(final ManageRoomUseCase saveRoomUseCase, RoomJpaMapper mapper) {
         this.manageRoomUseCase = saveRoomUseCase;
         this.mapper = mapper;
     }

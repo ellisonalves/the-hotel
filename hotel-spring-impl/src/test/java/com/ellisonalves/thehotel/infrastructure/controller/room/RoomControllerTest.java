@@ -28,12 +28,12 @@ import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
-import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapperImpl;
+import com.ellisonalves.thehotel.infrastructure.mappers.RoomJpaMapperImpl;
 import com.ellisonalves.thehotel.pojos.MessageSeverity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest({ RoomController.class })
-@Import({ RoomMapperImpl.class, MessagesConfig.class })
+@Import({ RoomJpaMapperImpl.class, MessagesConfig.class })
 public class RoomControllerTest {
 
         @Autowired

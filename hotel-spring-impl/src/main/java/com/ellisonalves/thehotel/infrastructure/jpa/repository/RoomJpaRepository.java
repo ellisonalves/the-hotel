@@ -11,16 +11,16 @@ import org.springframework.stereotype.Repository;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.domain.repository.RoomRepository;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
-import com.ellisonalves.thehotel.infrastructure.mappers.RoomMapper;
+import com.ellisonalves.thehotel.infrastructure.mappers.RoomJpaMapper;
 
 @Repository
 public class RoomJpaRepository implements RoomRepository {
 
     private final RoomSpringJpaRepository repository;
-    private final RoomMapper mapper;
+    private final RoomJpaMapper mapper;
 
     @Autowired
-    public RoomJpaRepository(RoomSpringJpaRepository roomSpringJpaRepository, RoomMapper mapper) {
+    public RoomJpaRepository(RoomSpringJpaRepository roomSpringJpaRepository, RoomJpaMapper mapper) {
         this.repository = roomSpringJpaRepository;
         this.mapper = mapper;
     }
@@ -32,7 +32,7 @@ public class RoomJpaRepository implements RoomRepository {
 
     @Override
     public Optional<Room> findById(UUID id) {
-        return repository.findById(id).map(t -> mapper.toDto(t));
+        return repository.findById(id).map(mapper::toModel);
     }
 
     @Override
@@ -42,12 +42,12 @@ public class RoomJpaRepository implements RoomRepository {
 
     @Override
     public List<Room> findAll() {
-        return mapper.toDtoList(repository.findAll());
+        return repository.findAll().stream().map(mapper::toModel).toList();
     }
 
     @Override
     public Optional<Room> findByDoorNumber(String doorNumber) {
-        return repository.findByDoorNumber(doorNumber).map(t -> mapper.toEntity(t));
+        return repository.findByDoorNumber(doorNumber).map(mapper::toEntity);
     }
 
 }
