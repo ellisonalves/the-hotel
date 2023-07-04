@@ -7,7 +7,7 @@ import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class RoomRequest {
+public class RoomCreateDto {
 
     @NotBlank
     private String doorNumber;

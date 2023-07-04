@@ -27,13 +27,13 @@ import com.ellisonalves.thehotel.application.usecases.ManageRoomUseCase;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
+import com.ellisonalves.thehotel.infrastructure.controller.mappers.RoomModelViewMapperImpl;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
-import com.ellisonalves.thehotel.infrastructure.mappers.RoomJpaMapperImpl;
 import com.ellisonalves.thehotel.pojos.MessageSeverity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest({ RoomController.class })
-@Import({ RoomJpaMapperImpl.class, MessagesConfig.class })
+@Import({ RoomModelViewMapperImpl.class, MessagesConfig.class })
 public class RoomControllerTest {
 
         @Autowired
@@ -47,7 +47,7 @@ public class RoomControllerTest {
 
         @Test
         public void shouldPostSuccessfuly() throws Exception {
-                var request = new RoomRequest();
+                var request = new RoomCreateDto();
                 request.setDoorNumber("123");
                 request.setPricePerDay(BigDecimal.TEN);
                 request.setType(RoomType.STANDARD);
@@ -65,7 +65,7 @@ public class RoomControllerTest {
         @Test
         public void shouldPutSuccessfuly() throws Exception {
                 var roomId = UUID.randomUUID();
-                var request = new RoomRequest();
+                var request = new RoomCreateDto();
                 request.setDoorNumber("123");
                 request.setPricePerDay(BigDecimal.TEN);
                 request.setType(RoomType.STANDARD);
@@ -89,7 +89,7 @@ public class RoomControllerTest {
 
         @Test
         public void shouldFailWhenTryingToCreateRoomWithInvalidValues() throws Exception {
-                RoomRequest roomDTO = new RoomRequest();
+                RoomCreateDto roomDTO = new RoomCreateDto();
 
                 MockHttpServletRequestBuilder post = post("/rooms");
                 post

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ellisonalves.thehotel.application.usecases.ManageRoomUseCase;
-import com.ellisonalves.thehotel.infrastructure.mappers.RoomJpaMapper;
+import com.ellisonalves.thehotel.infrastructure.controller.mappers.RoomModelViewMapper;
 
 import jakarta.validation.Valid;
 
@@ -25,23 +25,23 @@ class RoomController {
 
     private final ManageRoomUseCase manageRoomUseCase;
 
-    private final RoomJpaMapper mapper;
+    private final RoomModelViewMapper mapper;
 
     @Autowired
-    public RoomController(final ManageRoomUseCase saveRoomUseCase, RoomJpaMapper mapper) {
+    public RoomController(final ManageRoomUseCase saveRoomUseCase, RoomModelViewMapper mapper) {
         this.manageRoomUseCase = saveRoomUseCase;
         this.mapper = mapper;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody @Valid RoomRequest room) {
-        manageRoomUseCase.save(mapper.toEntity(room));
+    public void create(@RequestBody @Valid RoomCreateDto room) {
+        manageRoomUseCase.save(mapper.toModel(room));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void create(@PathVariable("id") UUID id, @RequestBody @Valid RoomRequest request) {
+    public void create(@PathVariable("id") UUID id, @RequestBody @Valid RoomUpdateDto request) {
         var persisted = manageRoomUseCase.findById(id);
         mapper.updateRoom(request, persisted);
         manageRoomUseCase.save(persisted);
@@ -49,15 +49,15 @@ class RoomController {
 
     @GetMapping("/{doorNumber}")
     @ResponseStatus(HttpStatus.OK)
-    public RoomResponse findByDoorNumber(@PathVariable String doorNumber) {
+    public RoomList findByDoorNumber(@PathVariable String doorNumber) {
         var room = manageRoomUseCase.findByDoorNumber(doorNumber);
         return mapper.toResponse(room);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public RoomResponse findAll() {
-        return new RoomResponse(mapper.toResponse(manageRoomUseCase.findAll()));
+    public RoomList findAll() {
+        return new RoomList(mapper.toResponse(manageRoomUseCase.findAll()));
     }
 
 }
