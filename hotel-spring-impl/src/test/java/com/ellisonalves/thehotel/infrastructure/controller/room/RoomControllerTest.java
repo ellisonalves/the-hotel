@@ -27,13 +27,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
+import com.ellisonalves.thehotel.application.pojos.MessageSeverity;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
+import com.ellisonalves.thehotel.infrastructure.controller.room.adapter.RoomAdapter;
 import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomCreateDto;
 import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomList;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
-import com.ellisonalves.thehotel.pojos.MessageSeverity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest({ RoomController.class })

@@ -11,15 +11,15 @@ import org.springframework.stereotype.Repository;
 import com.ellisonalves.thehotel.domain.entity.Guest;
 import com.ellisonalves.thehotel.domain.repository.GuestRepository;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.GuestJpa;
-import com.ellisonalves.thehotel.infrastructure.mappers.GuestMapper;
+import com.ellisonalves.thehotel.infrastructure.mappers.GuestJpaModelMapper;
 
 @Repository
 public class GuestJpaRepository implements GuestRepository {
 
     private final GuestSpringJpaRepository repository;
-    private final GuestMapper mapper;
+    private final GuestJpaModelMapper mapper;
 
-    public GuestJpaRepository(GuestSpringJpaRepository repository, GuestMapper guestMapper) {
+    public GuestJpaRepository(GuestSpringJpaRepository repository, GuestJpaModelMapper guestMapper) {
         this.repository = repository;
         this.mapper = guestMapper;
     }
