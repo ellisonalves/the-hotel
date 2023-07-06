@@ -62,7 +62,7 @@ public class Booking extends BaseEntity<UUID> {
     @Override
     public boolean equalTo(Object o) {
         Booking other = (Booking) o;
-        return Objects.equals(getId(), other.getId());
+        return Objects.equals(id, other.getId());
     }
 
 }
