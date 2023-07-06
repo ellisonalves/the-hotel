@@ -2,39 +2,41 @@ package com.ellisonalves.thehotel.domain.entity;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
-public class Booking extends BaseEntity<UUID> {
+import com.ellisonalves.thehotel.domain.aggregates.GuestId;
+import com.ellisonalves.thehotel.domain.aggregates.RoomId;
 
-    private UUID id;
-    private UUID guestId;
-    private UUID roomId;
+public class Booking extends BaseEntity<GuestId> {
+
+    private GuestId id;
+    private GuestId guestId;
+    private RoomId roomId;
     private LocalDateTime from;
     private LocalDateTime until;
     private Long version;
 
     @Override
-    public UUID getId() {
+    public GuestId getId() {
         return this.id;
     }
 
-    public void setId(UUID id) {
+    public void setId(GuestId id) {
         this.id = id;
     }
 
-    public UUID getGuestId() {
+    public GuestId getGuestId() {
         return guestId;
     }
 
-    public void setGuestId(UUID guestId) {
+    public void setGuest(GuestId guestId) {
         this.guestId = guestId;
     }
 
-    public UUID getRoomId() {
+    public RoomId getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(UUID roomId) {
+    public void setRoomId(RoomId roomId) {
         this.roomId = roomId;
     }
 

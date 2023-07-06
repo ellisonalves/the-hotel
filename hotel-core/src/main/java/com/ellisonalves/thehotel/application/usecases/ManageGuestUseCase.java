@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.ellisonalves.thehotel.domain.aggregates.GuestId;
 import com.ellisonalves.thehotel.domain.entity.Guest;
 import com.ellisonalves.thehotel.domain.repository.GuestRepository;
 
@@ -29,6 +30,10 @@ public class ManageGuestUseCase {
 
     void delete(UUID id) {
         repository.delete(id);
+    }
+
+    public boolean guestHasAnotherBook(GuestId guestId) {
+        return false;
     }
 
 }
