@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
-import com.ellisonalves.thehotel.domain.aggregates.RoomId;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.domain.repository.RoomRepository;
 
@@ -31,9 +30,4 @@ public class ManageRoomUseCase {
     public List<Room> findAll() {
         return repository.findAll();
     }
-
-    public boolean isRoomAvailable(RoomId room) {
-        return true;
-    }
-
 }

@@ -4,8 +4,8 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.ellisonalves.thehotel.infrastructure.mappers.GuestJpaModelMapper;
-import com.ellisonalves.thehotel.infrastructure.mappers.GuestJpaModelMapperImpl;
+import com.ellisonalves.thehotel.infrastructure.jpa.mappers.GuestJpaModelMapper;
+import com.ellisonalves.thehotel.infrastructure.jpa.mappers.GuestJpaModelMapperImpl;
 
 @TestConfiguration
 @ComponentScan("com.ellisonalves.thehotel.infrastructure.jpa")

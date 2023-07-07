@@ -31,7 +31,6 @@ import com.ellisonalves.thehotel.application.pojos.MessageSeverity;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
-import com.ellisonalves.thehotel.infrastructure.controller.room.adapter.RoomAdapter;
 import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomCreateDto;
 import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomList;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;

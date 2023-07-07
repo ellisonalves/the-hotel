@@ -10,15 +10,15 @@ import org.springframework.stereotype.Repository;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.domain.repository.RoomRepository;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
-import com.ellisonalves.thehotel.infrastructure.jpa.mappers.RoomJpaMapper;
+import com.ellisonalves.thehotel.infrastructure.jpa.mappers.RoomJpaModelMapper;
 
 @Repository
 public class RoomJpaRepository implements RoomRepository {
 
     private final RoomSpringJpaRepository repository;
-    private final RoomJpaMapper mapper;
+    private final RoomJpaModelMapper mapper;
 
-    public RoomJpaRepository(RoomSpringJpaRepository roomSpringJpaRepository, RoomJpaMapper mapper) {
+    public RoomJpaRepository(RoomSpringJpaRepository roomSpringJpaRepository, RoomJpaModelMapper mapper) {
         this.repository = roomSpringJpaRepository;
         this.mapper = mapper;
     }
