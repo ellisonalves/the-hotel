@@ -1,6 +1,6 @@
 package com.ellisonalves.thehotel.domain.entity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -9,8 +9,8 @@ public class Booking extends BaseEntity<UUID> {
     private UUID id;
     private UUID guestId;
     private UUID roomId;
-    private LocalDateTime from;
-    private LocalDateTime until;
+    private Instant startDate;
+    private Instant endDate;
     private Long version;
 
     @Override
@@ -38,20 +38,20 @@ public class Booking extends BaseEntity<UUID> {
         this.roomId = roomId;
     }
 
-    public LocalDateTime getFrom() {
-        return from;
+    public Instant getStartDate() {
+        return startDate;
     }
 
-    public void setFrom(LocalDateTime from) {
-        this.from = from;
+    public void setStartDate(Instant startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDateTime getUntil() {
-        return until;
+    public Instant getEndDate() {
+        return endDate;
     }
 
-    public void setUntil(LocalDateTime until) {
-        this.until = until;
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
     }
 
     @Override
