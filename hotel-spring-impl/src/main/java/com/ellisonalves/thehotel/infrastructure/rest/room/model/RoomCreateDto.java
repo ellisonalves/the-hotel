@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller.room.model;
+package com.ellisonalves.thehotel.infrastructure.rest.room.model;
 
 import java.math.BigDecimal;
 

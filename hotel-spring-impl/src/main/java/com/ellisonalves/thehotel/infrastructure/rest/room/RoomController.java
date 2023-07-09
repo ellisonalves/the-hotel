@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller.room;
+package com.ellisonalves.thehotel.infrastructure.rest.room;
 
 import java.util.UUID;
 
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomCreateDto;
-import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomList;
-import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomUpdateDto;
+import com.ellisonalves.thehotel.infrastructure.rest.room.model.RoomCreateDto;
+import com.ellisonalves.thehotel.infrastructure.rest.room.model.RoomList;
+import com.ellisonalves.thehotel.infrastructure.rest.room.model.RoomUpdateDto;
 
 import jakarta.validation.Valid;
 

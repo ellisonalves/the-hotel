@@ -1,13 +1,16 @@
-package com.ellisonalves.thehotel.infrastructure.controller.room;
+package com.ellisonalves.thehotel.infrastructure.rest.room;
 
 import java.util.UUID;
 
-import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomCreateDto;
-import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomList;
-import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomUpdateDto;
+import org.springframework.stereotype.Component;
+
+import com.ellisonalves.thehotel.infrastructure.rest.room.model.RoomCreateDto;
+import com.ellisonalves.thehotel.infrastructure.rest.room.model.RoomList;
+import com.ellisonalves.thehotel.infrastructure.rest.room.model.RoomUpdateDto;
 
 import jakarta.validation.Valid;
 
+@Component
 public class RoomAdapter {
 
     public void createRoom(@Valid RoomCreateDto room) {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ellisonalves.thehotel.application.usecases.CreateBooking;
 import com.ellisonalves.thehotel.application.usecases.CreateBookingUseCase;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 @RestController
@@ -28,7 +29,7 @@ public class BookingController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void createBooking(@RequestBody CreateBookingRequest data) {
+    public void createBooking(@Valid @RequestBody CreateBookingRequest data) {
         useCase.createBooking(data);
     }
 

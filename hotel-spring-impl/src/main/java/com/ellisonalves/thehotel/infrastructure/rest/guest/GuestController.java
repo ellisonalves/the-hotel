@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller.guest;
+package com.ellisonalves.thehotel.infrastructure.rest.guest;
 
 import java.util.Arrays;
 import java.util.List;

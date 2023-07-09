@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller.booking;
+package com.ellisonalves.thehotel.infrastructure.rest.booking;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,12 +15,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.ellisonalves.thehotel.application.usecases.CreateBookingUseCase;
+import com.ellisonalves.thehotel.infrastructure.config.JacksonConfig;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
+import com.ellisonalves.thehotel.infrastructure.controller.booking.BookingController;
 
-@WebMvcTest({ BookingController.class, MessagesConfig.class })
+@WebMvcTest({ BookingController.class, MessagesConfig.class, JacksonConfig.class })
 public class BookingControllerTest {
 
-    private static final String API_V1_BOOKINS = "/api/v1/bookings";
+    private static final String API_V1_BOOKINGS = "/api/v1/bookings";
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,9 +36,9 @@ public class BookingControllerTest {
     private Instant until = from.plus(Duration.ofDays(5));
 
     @Test
-    void testCreateBooking() throws Exception {
+    void shouldCreateBooking() throws Exception {
         mockMvc.perform(
-                post(API_V1_BOOKINS)
+                post(API_V1_BOOKINGS)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
@@ -49,5 +51,23 @@ public class BookingControllerTest {
                                         """.formatted(guestId, roomId, from, until)))
                 .andExpect(
                         status().isAccepted());
+    }
+
+    @Test
+    void shouldNotCreateBookingWhenMandatoryFieldsAreNotProvided() throws Exception {
+        mockMvc.perform(
+                post(API_V1_BOOKINGS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                """
+                                        {
+                                            "guest_id": "",
+                                            "room_id": "",
+                                            "from": "",
+                                            "until": ""
+                                        }
+                                        """))
+                .andExpect(
+                        status().isBadRequest());
     }
 }

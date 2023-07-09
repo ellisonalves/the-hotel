@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller;
+package com.ellisonalves.thehotel.infrastructure.rest;
 
 import static java.util.Arrays.asList;
 
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         var messages = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(this::toErroresPerField)
+                .map(this::toErrorsPerField)
                 .toList();
 
         return handleExceptionInternal(ex, new ErrorPerFiledList(messages), headers, HttpStatus.BAD_REQUEST,
@@ -93,11 +93,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return null;
     }
 
-    private ErrorsPerField toErroresPerField(FieldError fe) {
+    private ErrorsPerField toErrorsPerField(FieldError fe) {
         return new ErrorsPerField(
                 fe.getField(),
-                asList(fe.getCodes())
-                        .stream().map(code -> parseCodeToMessage(code)).toList());
+                asList(parseCodeToMessage(fe.getCodes()[0])));
     }
 
 }

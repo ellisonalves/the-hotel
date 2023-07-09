@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller.guest;
+package com.ellisonalves.thehotel.infrastructure.rest.guest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.ellisonalves.thehotel.application.usecases.ManageGuestUseCase;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
 
-@WebMvcTest({GuestController.class, MessagesConfig.class})
+@WebMvcTest({ GuestController.class, MessagesConfig.class })
 class GuestControllerTest {
 
     @Autowired

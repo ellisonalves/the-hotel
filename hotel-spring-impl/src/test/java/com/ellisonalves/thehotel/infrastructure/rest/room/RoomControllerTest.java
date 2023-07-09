@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.controller.room;
+package com.ellisonalves.thehotel.infrastructure.rest.room;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,9 +30,9 @@ import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundExceptio
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
-import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomCreateDto;
-import com.ellisonalves.thehotel.infrastructure.controller.room.model.RoomList;
 import com.ellisonalves.thehotel.infrastructure.jpa.entity.RoomJpa;
+import com.ellisonalves.thehotel.infrastructure.rest.room.model.RoomCreateDto;
+import com.ellisonalves.thehotel.infrastructure.rest.room.model.RoomList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest({ RoomController.class })
