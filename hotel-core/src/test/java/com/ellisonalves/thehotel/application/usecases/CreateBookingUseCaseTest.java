@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.ellisonalves.thehotel.application.mappers.BookingViewDomainMapper;
 import com.ellisonalves.thehotel.domain.entity.Booking;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 
@@ -34,10 +35,7 @@ public class CreateBookingUseCaseTest {
 
     @Test
     void shouldCreateBookingSuccessfully() {
-        var newBooking = new CreateBooking();
-        newBooking.setRoomId(UUID.randomUUID());
-        newBooking.setFrom(Instant.parse("2023-07-07T14:00:00.00z"));
-        newBooking.setUntil(Instant.parse("2023-07-20T11:00:00.00z"));
+        final var newBooking = createBookingRequest();
 
         var booking = new Booking();
 
@@ -54,7 +52,7 @@ public class CreateBookingUseCaseTest {
 
     @Test
     void shouldNotBookWhenTheRoomIsBusy() {
-        var newBooking = new CreateBooking();
+        var newBooking = createBookingRequest();
 
         var booking = new Booking();
 
@@ -65,5 +63,36 @@ public class CreateBookingUseCaseTest {
         useCase.createBooking(newBooking);
 
         verify(repository, never()).persist(booking);
+    }
+
+    private CreateBooking createBookingRequest() {
+        final var newBooking = new CreateBooking() {
+
+            private UUID guestId = UUID.randomUUID();
+            private UUID roomId = UUID.randomUUID();
+            private Instant from = Instant.parse("2023-07-07T14:00:00.00z");
+            private Instant until = Instant.parse("2023-07-20T11:00:00.00z");
+
+            @Override
+            public UUID getGuestId() {
+                return guestId;
+            }
+
+            @Override
+            public UUID getRoomId() {
+                return roomId;
+            }
+
+            @Override
+            public Instant getFrom() {
+                return from;
+            }
+
+            @Override
+            public Instant getUntil() {
+                return until;
+            }
+        };
+        return newBooking;
     }
 }

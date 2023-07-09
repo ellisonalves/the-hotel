@@ -1,5 +1,6 @@
 package com.ellisonalves.thehotel.application.usecases;
 
+import com.ellisonalves.thehotel.application.mappers.BookingViewDomainMapper;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 
 public class CreateBookingUseCase {
@@ -13,7 +14,9 @@ public class CreateBookingUseCase {
     }
 
     public void createBooking(CreateBooking booking) {
-        var existingBookings = repository.findBookingsPerRoomAndDateRange(booking.getRoomId(), booking.getFrom(),
+        var existingBookings = repository.findBookingsPerRoomAndDateRange(
+                booking.getRoomId(),
+                booking.getFrom(),
                 booking.getUntil());
 
         if (existingBookings != null && !existingBookings.isEmpty()) {

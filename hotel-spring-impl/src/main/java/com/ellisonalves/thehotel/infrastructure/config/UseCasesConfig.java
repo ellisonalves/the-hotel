@@ -3,7 +3,7 @@ package com.ellisonalves.thehotel.infrastructure.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.ellisonalves.thehotel.application.usecases.BookingViewDomainMapper;
+import com.ellisonalves.thehotel.application.mappers.BookingViewDomainMapper;
 import com.ellisonalves.thehotel.application.usecases.CreateBookingUseCase;
 import com.ellisonalves.thehotel.application.usecases.ManageGuestUseCase;
 import com.ellisonalves.thehotel.application.usecases.ManageRoomUseCase;
