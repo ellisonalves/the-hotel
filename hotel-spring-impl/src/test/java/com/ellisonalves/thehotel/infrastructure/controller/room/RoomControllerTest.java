@@ -1,6 +1,5 @@
 package com.ellisonalves.thehotel.infrastructure.controller.room;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.only;
@@ -17,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.UUID;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,7 +27,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
-import com.ellisonalves.thehotel.application.pojos.MessageSeverity;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.config.MessagesConfig;
@@ -40,83 +39,84 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Import({ MessagesConfig.class })
 class RoomControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+        @Autowired
+        private ObjectMapper objectMapper;
 
-    @MockBean
-    private RoomAdapter mockAdapter;
+        @MockBean
+        private RoomAdapter mockAdapter;
 
-    @Test
-    void shouldPostSuccessfully() throws Exception {
-        var request = new RoomCreateDto();
-        request.setDoorNumber("123");
-        request.setPricePerDay(BigDecimal.TEN);
-        request.setRoomType(RoomType.STANDARD);
+        @Test
+        void shouldPostSuccessfully() throws Exception {
+                var request = new RoomCreateDto();
+                request.setDoorNumber("123");
+                request.setPricePerDay(BigDecimal.TEN);
+                request.setRoomType(RoomType.STANDARD);
 
-        MockHttpServletRequestBuilder post = post("/rooms");
-        post
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsString((request)));
+                MockHttpServletRequestBuilder post = post("/rooms");
+                post
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(objectMapper.writeValueAsString((request)));
 
-        mockMvc.perform(post)
-                .andExpect(status().isCreated());
-    }
+                mockMvc.perform(post)
+                                .andExpect(status().isCreated());
+        }
 
-    @Test
-    void shouldPutSuccessfully() throws Exception {
-        var roomId = UUID.randomUUID();
-        var request = new RoomCreateDto();
-        request.setDoorNumber("123");
-        request.setPricePerDay(BigDecimal.TEN);
-        request.setRoomType(RoomType.STANDARD);
+        @Test
+        void shouldPutSuccessfully() throws Exception {
+                var roomId = UUID.randomUUID();
+                var request = new RoomCreateDto();
+                request.setDoorNumber("123");
+                request.setPricePerDay(BigDecimal.TEN);
+                request.setRoomType(RoomType.STANDARD);
 
-        Room persisted = new RoomJpa();
-        persisted.setDoorNumber(request.getDoorNumber());
-        persisted.setPricePerDay(request.getPricePerDay());
-        persisted.setRoomType(RoomType.STANDARD);
+                Room persisted = new RoomJpa();
+                persisted.setDoorNumber(request.getDoorNumber());
+                persisted.setPricePerDay(request.getPricePerDay());
+                persisted.setRoomType(RoomType.STANDARD);
 
-        MockHttpServletRequestBuilder put = put("/rooms/" + roomId);
-        put
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsString((request)));
+                MockHttpServletRequestBuilder put = put("/rooms/" + roomId);
+                put
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(objectMapper.writeValueAsString((request)));
 
-        mockMvc.perform(put)
-                .andExpect(status().isNoContent());
+                mockMvc.perform(put)
+                                .andExpect(status().isNoContent());
 
-        verify(mockAdapter, only()).updateRoom(any(), any());
-    }
+                verify(mockAdapter, only()).updateRoom(any(), any());
+        }
 
-    @Test
-    void shouldFailWhenTryingToCreateRoomWithInvalidValues() throws Exception {
-        RoomCreateDto roomDTO = new RoomCreateDto();
+        @Test
+        void shouldFailWhenTryingToCreateRoomWithInvalidValues() throws Exception {
+                RoomCreateDto roomDTO = new RoomCreateDto();
 
-        MockHttpServletRequestBuilder post = post("/rooms");
-        post
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsString((roomDTO)));
+                MockHttpServletRequestBuilder post = post("/rooms");
+                post
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(objectMapper.writeValueAsString((roomDTO)));
 
-        mockMvc.perform(post)
-                .andExpect(status().isBadRequest());
-    }
+                mockMvc.perform(post)
+                                .andExpect(status().isBadRequest());
+        }
 
-    @Test
-    void shouldReturnBadRequestWhenRoomIsNotFound() throws Exception {
-        var doorNumber = "NOT_FOUND";
-        when(mockAdapter.findByDoorNumber(doorNumber)).thenThrow(new ResourceNotFoundException());
+        @Test
+        void shouldReturnBadRequestWhenRoomIsNotFound() throws Exception {
+                var doorNumber = "NOT_FOUND";
+                when(mockAdapter.findByDoorNumber(doorNumber)).thenThrow(new ResourceNotFoundException());
 
-        mockMvc.perform(get("/rooms/" + doorNumber))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.errors[0].message",
-                        notNullValue()))
-                .andExpect(jsonPath("$.errors[0].severity",
-                        is(MessageSeverity.ERROR.toString())));
-    }
+                mockMvc.perform(get("/rooms/" + doorNumber))
+                                .andExpectAll(
+                                                status().isNotFound(),
+
+                                                jsonPath("$.errors", Matchers.hasSize(1)),
+
+                                                jsonPath("$.errors[0].message", notNullValue()));
+        }
 
     @Test
     void shouldReturnAnEmptyListOfRooms() throws Exception {

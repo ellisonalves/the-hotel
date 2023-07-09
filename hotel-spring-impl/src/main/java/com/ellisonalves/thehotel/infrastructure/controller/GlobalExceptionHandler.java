@@ -1,6 +1,6 @@
 package com.ellisonalves.thehotel.infrastructure.controller;
 
-import static java.util.Collections.EMPTY_LIST;
+import static java.util.Arrays.asList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,8 +19,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.web.util.WebUtils;
 
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
-import com.ellisonalves.thehotel.application.pojos.ErrorMessage;
-import com.ellisonalves.thehotel.application.pojos.MessageSeverity;
+import com.ellisonalves.thehotel.application.pojos.ErrorMessageList;
+import com.ellisonalves.thehotel.application.pojos.ErrorPerFiledList;
+import com.ellisonalves.thehotel.application.pojos.ErrorsPerField;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -31,27 +33,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleResourceNotFoundException(Exception ex, WebRequest request) {
         debugException(ex, request);
 
-        return createMessagesResponseEntity(ex, HttpStatus.NOT_FOUND, MessageSeverity.ERROR);
+        return createMessagesResponseEntity(ex, HttpStatus.NOT_FOUND);
     }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
             HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        // ErrorMessages fieldErrorMessages = ex.getBindingResult()
-        // .getFieldErrors()
-        // .stream()
-        // .map(fieldError -> {
-        // List<Error> errors = asList(fieldError.getCodes())
-        // .stream()
-        // .map(this::createNewErrorMessage)
-        // .filter(error -> error != null)
-        // .collect(Collectors.toList());
+        var messages = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(this::toErroresPerField)
+                .toList();
 
-        // return new ErrorMessages(fieldError.getField(), errors);
-        // })
-        // .collect(Collectors.toList());
-
-        return handleExceptionInternal(ex, EMPTY_LIST, headers, HttpStatus.BAD_REQUEST,
+        return handleExceptionInternal(ex, new ErrorPerFiledList(messages), headers, HttpStatus.BAD_REQUEST,
                 request);
     }
 
@@ -64,26 +58,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status))
                 request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
 
-            return createMessagesResponseEntity(ex, headers, status, MessageSeverity.ERROR);
+            return createMessagesResponseEntity(ex, headers, status);
         }
 
         return super.handleExceptionInternal(ex, body, headers, status, request);
     }
 
     private ResponseEntity<Object> createMessagesResponseEntity(Exception ex, HttpHeaders headers,
-            HttpStatusCode status,
-            MessageSeverity severity) {
-        ErrorMessage body = new ErrorMessage(ex.getMessage(), severity);
+            HttpStatusCode status) {
+        var body = ErrorMessageList.createSingleErrorMessageList(ex.getMessage());
         return new ResponseEntity<>(
                 body,
                 headers,
                 status);
     }
 
-    private ResponseEntity<Object> createMessagesResponseEntity(Exception ex, HttpStatus status,
-            MessageSeverity severity) {
+    private ResponseEntity<Object> createMessagesResponseEntity(Exception ex, HttpStatus status) {
         HttpHeaders headers = new HttpHeaders();
-        return createMessagesResponseEntity(ex, headers, status, severity);
+        return createMessagesResponseEntity(ex, headers, status);
     }
 
     private void debugException(Exception exception, WebRequest request) {
@@ -91,9 +83,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         // exception.getMessage());
     }
 
-    private ErrorMessage createNewErrorMessage(String code) {
+    private String parseCodeToMessage(String code) {
         try {
-            return new ErrorMessage(messageSourceAccessor.getMessage(code), MessageSeverity.ERROR);
+            return messageSourceAccessor.getMessage(code);
         } catch (NoSuchMessageException e) {
             // do nothing
             // if a message doesnt exist just don't use it.
@@ -101,6 +93,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return null;
     }
 
-    // private static record FieldErrors(List<Errors> messages) {
-    // }
+    private ErrorsPerField toErroresPerField(FieldError fe) {
+        return new ErrorsPerField(
+                fe.getField(),
+                asList(fe.getCodes())
+                        .stream().map(code -> parseCodeToMessage(code)).toList());
+    }
+
 }
