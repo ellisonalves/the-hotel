@@ -17,7 +17,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.ellisonalves.thehotel.application.mappers.BookingViewDomainMapper;
+import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingMapper;
+import com.ellisonalves.thehotel.application.usecases.booking.CreateBooking;
+import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
 import com.ellisonalves.thehotel.domain.entity.Booking;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 
@@ -31,7 +33,7 @@ public class CreateBookingUseCaseTest {
     private BookingRepository repository;
 
     @Mock
-    private BookingViewDomainMapper mapper;
+    private CreateBookingMapper mapper;
 
     @Test
     void shouldCreateBookingSuccessfully() {
