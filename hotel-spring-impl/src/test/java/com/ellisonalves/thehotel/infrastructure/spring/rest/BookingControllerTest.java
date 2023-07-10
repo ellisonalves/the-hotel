@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
 import com.ellisonalves.thehotel.infrastructure.spring.config.JacksonConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.config.MessagesConfig;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.BookingController;
 
 @WebMvcTest({ BookingController.class, MessagesConfig.class, JacksonConfig.class })
 public class BookingControllerTest {

@@ -10,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
-import com.ellisonalves.thehotel.config.JpaRepositoryTestConfig;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
+import com.ellisonalves.thehotel.infrastructure.spring.config.JpaRepositoryTestConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.RoomJpa;
-import com.ellisonalves.thehotel.infrastructure.spring.jpa.repository.RoomJpaRepository;
 
 @DataJpaTest
 @Import(JpaRepositoryTestConfig.class)

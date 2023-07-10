@@ -31,7 +31,6 @@ import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.spring.config.MessagesConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.RoomJpa;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomAdapter;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.model.RoomCreateDto;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.model.RoomList;
 import com.fasterxml.jackson.databind.ObjectMapper;
