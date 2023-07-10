@@ -94,9 +94,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ErrorsPerField toErrorsPerField(FieldError fe) {
+        String[] codes = fe.getCodes();
+        if (codes == null || codes.length == 0) {
+            return new ErrorsPerField(
+                    fe.getField(),
+                    asList(fe.getDefaultMessage()));
+        }
+
+        String parsedMessage = parseCodeToMessage(codes[0]);
+        var message = parsedMessage == null ? fe.getDefaultMessage() : parsedMessage;
+
         return new ErrorsPerField(
                 fe.getField(),
-                asList(parseCodeToMessage(fe.getCodes()[0])));
+                asList(message));
     }
 
 }
