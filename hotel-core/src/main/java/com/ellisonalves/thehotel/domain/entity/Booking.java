@@ -26,7 +26,7 @@ public class Booking extends BaseEntity<UUID> {
         return guestId;
     }
 
-    public void setGuest(UUID guestId) {
+    public void setGuestId(UUID guestId) {
         this.guestId = guestId;
     }
 

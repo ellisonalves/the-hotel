@@ -6,6 +6,8 @@ import java.util.UUID;
 import com.ellisonalves.thehotel.domain.entity.Booking;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -14,6 +16,7 @@ import jakarta.persistence.TemporalType;
 public class BookingJpa extends Booking {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Override
     public UUID getId() {
         return super.getId();

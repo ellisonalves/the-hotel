@@ -1,3 +1,3 @@
 #! /bin/bash
-./mvnw clean package
+./mvnw clean install
 ./mvnw -U spring-boot:run -pl hotel-spring-impl
