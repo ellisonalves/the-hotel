@@ -6,15 +6,12 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 
 import com.ellisonalves.thehotel.domain.aggregates.GenderType;
-import com.ellisonalves.thehotel.infrastructure.spring.config.JpaRepositoryTestConfig;
+import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseIntegrationTest;
 import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.GuestJpa;
 
-@DataJpaTest
-@Import(JpaRepositoryTestConfig.class)
+@DatabaseIntegrationTest
 class GuestJpaRepositoryTest {
 
     @Autowired
