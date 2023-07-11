@@ -31,3 +31,5 @@ HELP.md
 .vscode/
 
 .DS_Store
+
+.hprof

@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
-import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseIntegrationTest;
+import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseTest;
 import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.RoomJpa;
 
-@DatabaseIntegrationTest
+@DatabaseTest
 class RoomJpaRepositoryTest {
 
     @Autowired

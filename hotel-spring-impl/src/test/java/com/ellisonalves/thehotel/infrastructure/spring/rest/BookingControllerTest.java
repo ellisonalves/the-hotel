@@ -9,16 +9,13 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
-import com.ellisonalves.thehotel.infrastructure.spring.config.JacksonConfig;
-import com.ellisonalves.thehotel.infrastructure.spring.config.MessagesConfig;
+import com.ellisonalves.thehotel.infrastructure.spring.annotations.ContractTest;
 
-@WebMvcTest({ BookingController.class, MessagesConfig.class, JacksonConfig.class })
+@ContractTest
 public class BookingControllerTest {
 
     private static final String API_V1_BOOKINGS = "/api/v1/bookings";
@@ -26,7 +23,7 @@ public class BookingControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     private CreateBookingUseCase useCase;
 
     private UUID guestId = UUID.randomUUID();
@@ -47,7 +44,8 @@ public class BookingControllerTest {
                                             "from": "%s",
                                             "until": "%s"
                                         }
-                                        """.formatted(guestId, roomId, from, until)))
+                                        """.formatted(guestId, roomId, from,
+                                        until)))
                 .andExpect(
                         status().isAccepted());
     }

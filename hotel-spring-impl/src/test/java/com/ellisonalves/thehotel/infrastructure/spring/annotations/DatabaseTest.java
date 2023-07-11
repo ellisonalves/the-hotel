@@ -12,8 +12,9 @@ import com.ellisonalves.thehotel.infrastructure.spring.config.JpaRepositoryTestC
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@IntegrationTest
 @DataJpaTest
 @Import(JpaRepositoryTestConfig.class)
-public @interface DatabaseIntegrationTest {
+public @interface DatabaseTest {
     
 }

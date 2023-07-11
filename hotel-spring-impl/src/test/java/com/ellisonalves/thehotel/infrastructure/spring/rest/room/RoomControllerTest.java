@@ -3,6 +3,7 @@ package com.ellisonalves.thehotel.infrastructure.spring.rest.room;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -17,11 +18,9 @@ import java.util.Collections;
 import java.util.UUID;
 
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -29,14 +28,13 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
-import com.ellisonalves.thehotel.infrastructure.spring.config.MessagesConfig;
+import com.ellisonalves.thehotel.infrastructure.spring.annotations.ContractTest;
 import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.RoomJpa;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.model.RoomCreateDto;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.model.RoomList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest({ RoomController.class })
-@Import({ MessagesConfig.class })
+@ContractTest
 class RoomControllerTest {
 
         @Autowired
@@ -45,8 +43,13 @@ class RoomControllerTest {
         @Autowired
         private ObjectMapper objectMapper;
 
-        @MockBean
+        @Autowired
         private RoomAdapter mockAdapter;
+
+        @BeforeEach
+        public void setup() {
+                reset(mockAdapter);
+        }
 
         @Test
         void shouldPostSuccessfully() throws Exception {

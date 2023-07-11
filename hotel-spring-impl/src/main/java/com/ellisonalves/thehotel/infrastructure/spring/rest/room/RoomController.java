@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
-class RoomController {
+public class RoomController {
 
     private final RoomAdapter adapter;
 

@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
-import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseIntegrationTest;
+import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseTest;
 
-@DatabaseIntegrationTest
+@DatabaseTest
 public class BookingJpaRepositoryTest {
 
     @Autowired

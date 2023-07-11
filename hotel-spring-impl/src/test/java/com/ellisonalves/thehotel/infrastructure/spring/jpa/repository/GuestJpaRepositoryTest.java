@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ellisonalves.thehotel.domain.aggregates.GenderType;
-import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseIntegrationTest;
+import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseTest;
 import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.GuestJpa;
 
-@DatabaseIntegrationTest
+@DatabaseTest
 class GuestJpaRepositoryTest {
 
     @Autowired
