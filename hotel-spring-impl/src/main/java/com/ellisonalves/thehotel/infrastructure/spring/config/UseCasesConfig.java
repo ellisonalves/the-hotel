@@ -4,9 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.ellisonalves.thehotel.application.usecases.ManageGuestUseCase;
-import com.ellisonalves.thehotel.application.usecases.ManageRoomUseCase;
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingMapper;
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
+import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
+import com.ellisonalves.thehotel.application.usecases.room.RoomMapper;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 import com.ellisonalves.thehotel.domain.repository.GuestRepository;
 import com.ellisonalves.thehotel.domain.repository.RoomRepository;
@@ -15,8 +16,8 @@ import com.ellisonalves.thehotel.domain.repository.RoomRepository;
 public class UseCasesConfig {
 
     @Bean
-    public ManageRoomUseCase manageRoomUseCase(RoomRepository repository) {
-        return new ManageRoomUseCase(repository);
+    public ManageRoomUseCase manageRoomUseCase(RoomRepository repository, RoomMapper mapper) {
+        return new ManageRoomUseCase(repository, mapper);
     }
 
     @Bean

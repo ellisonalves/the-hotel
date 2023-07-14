@@ -1,6 +1,7 @@
 package com.ellisonalves.thehotel.domain.entity;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ public class Room extends BaseEntity<UUID> {
     private UUID id;
     private String doorNumber;
     private RoomType roomType;
+    private Currency currency;
     private BigDecimal pricePerDay;
     private Long version;
 
@@ -38,6 +40,14 @@ public class Room extends BaseEntity<UUID> {
         this.roomType = type;
     }
 
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
     public BigDecimal getPricePerDay() {
         return pricePerDay;
     }
@@ -55,6 +65,10 @@ public class Room extends BaseEntity<UUID> {
     public boolean equalTo(Object o) {
         Room other = (Room) o;
         return Objects.equals(this.getId(), other.getId());
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
 }

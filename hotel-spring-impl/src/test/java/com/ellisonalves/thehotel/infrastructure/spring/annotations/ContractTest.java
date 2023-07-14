@@ -13,10 +13,11 @@ import org.springframework.context.annotation.Import;
 
 import com.ellisonalves.thehotel.application.usecases.ManageGuestUseCase;
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
+import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.infrastructure.spring.config.JacksonConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.config.MessagesConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.CreateBookingMapstructImpl;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomAdapter;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomMapperMapstructImpl;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -26,7 +27,8 @@ import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomAdapter;
                 MessagesConfig.class,
                 JacksonConfig.class,
                 UseCaseMockConfig.class,
-                CreateBookingMapstructImpl.class
+                CreateBookingMapstructImpl.class,
+                RoomMapperMapstructImpl.class
 })
 public @interface ContractTest {
 
@@ -36,6 +38,11 @@ public @interface ContractTest {
 class UseCaseMockConfig {
 
         @Bean
+        public ManageRoomUseCase manageRoomUseCase() {
+                return Mockito.mock(ManageRoomUseCase.class);
+        }
+
+        @Bean
         public ManageGuestUseCase manageGuestUseCase() {
                 return Mockito.mock(ManageGuestUseCase.class);
         }
@@ -43,11 +50,6 @@ class UseCaseMockConfig {
         @Bean
         public CreateBookingUseCase createBookingUseCase() {
                 return Mockito.mock(CreateBookingUseCase.class);
-        }
-
-        @Bean
-        public RoomAdapter roomAdapter() {
-                return Mockito.mock(RoomAdapter.class);
         }
 
 }

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
 import com.ellisonalves.thehotel.infrastructure.spring.annotations.ContractTest;
 
 @ContractTest
@@ -22,9 +21,6 @@ public class BookingControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private CreateBookingUseCase useCase;
 
     private UUID guestId = UUID.randomUUID();
     private UUID roomId = UUID.randomUUID();
