@@ -71,4 +71,9 @@ public class Room extends BaseEntity<UUID> {
         this.version = version;
     }
 
+    @Override
+    public int hashCodePrime() {
+        return 41;
+    }
+
 }

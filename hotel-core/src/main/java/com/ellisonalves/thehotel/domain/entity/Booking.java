@@ -65,4 +65,9 @@ public class Booking extends BaseEntity<UUID> {
         return Objects.equals(id, other.getId());
     }
 
+    @Override
+    public int hashCodePrime() {
+        return 31;
+    }
+
 }
