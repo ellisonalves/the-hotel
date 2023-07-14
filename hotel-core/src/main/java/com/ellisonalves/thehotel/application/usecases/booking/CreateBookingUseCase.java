@@ -14,9 +14,9 @@ public class CreateBookingUseCase {
 
     public void createBooking(CreateBooking booking) {
         var existingBookings = repository.findBookingsPerRoomAndDateRange(
-                booking.getRoomId(),
-                booking.getFrom(),
-                booking.getUntil());
+                booking.roomId(),
+                booking.from(),
+                booking.until());
 
         if (existingBookings != null && !existingBookings.isEmpty()) {
             return;

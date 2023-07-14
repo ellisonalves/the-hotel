@@ -15,6 +15,7 @@ import com.ellisonalves.thehotel.application.usecases.ManageGuestUseCase;
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
 import com.ellisonalves.thehotel.infrastructure.spring.config.JacksonConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.config.MessagesConfig;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.CreateBookingMapstructImpl;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomAdapter;
 
 @Target(ElementType.TYPE)
@@ -24,7 +25,8 @@ import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomAdapter;
 @Import({
                 MessagesConfig.class,
                 JacksonConfig.class,
-                UseCaseMockConfig.class
+                UseCaseMockConfig.class,
+                CreateBookingMapstructImpl.class
 })
 public @interface ContractTest {
 

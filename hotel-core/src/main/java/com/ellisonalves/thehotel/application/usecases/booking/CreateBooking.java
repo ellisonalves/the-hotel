@@ -3,14 +3,14 @@ package com.ellisonalves.thehotel.application.usecases.booking;
 import java.time.Instant;
 import java.util.UUID;
 
-public interface CreateBooking {
+public record CreateBooking(
 
-    public UUID getGuestId();
+                UUID guestId,
 
-    public UUID getRoomId();
+                UUID roomId,
 
-    public Instant getFrom();
+                Instant from,
 
-    public Instant getUntil();
+                Instant until) {
 
 }

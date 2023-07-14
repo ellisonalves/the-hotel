@@ -93,6 +93,17 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.7.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -127,6 +138,35 @@
                     <execution>
                         <configuration>
                             <mainClass>com.ellisonalves.thehotel.TheHotelSpringApplication</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- openapi generator -->
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>6.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>
+                                ${project.basedir}/src/main/resources/api/api.yml
+                            </inputSpec>
+                            <generatorName>spring</generatorName>
+                            
+                            <apiPackage>com.ellisonalves.thehotel.infrastructure.rest</apiPackage>
+                            <modelPackage>
+                                com.ellisonalves.thehotel.infrastructure.rest.model</modelPackage>
+
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useSpringBoot3>true</useSpringBoot3>  
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>
