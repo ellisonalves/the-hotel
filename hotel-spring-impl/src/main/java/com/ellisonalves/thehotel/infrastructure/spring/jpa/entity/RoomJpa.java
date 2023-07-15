@@ -10,12 +10,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class RoomJpa extends Room {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Override
     public UUID getId() {
         return super.getId();
@@ -34,8 +37,8 @@ public class RoomJpa extends Room {
     }
 
     @Override
-    public BigDecimal getPricePerDay() {
-        return super.getPricePerDay();
+    public BigDecimal getAmount() {
+        return super.getAmount();
     }
 
 }

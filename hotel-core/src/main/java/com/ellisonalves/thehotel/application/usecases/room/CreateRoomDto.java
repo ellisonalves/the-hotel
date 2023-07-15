@@ -5,5 +5,5 @@ import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 public record CreateRoomDto(
                 String doorNumber,
                 RoomType roomType,
-                Money amount) {
+                Money money) {
 }

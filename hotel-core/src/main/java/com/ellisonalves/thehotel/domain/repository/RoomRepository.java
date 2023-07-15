@@ -8,7 +8,7 @@ import com.ellisonalves.thehotel.domain.entity.Room;
 
 public interface RoomRepository {
 
-    void persist(Room room);
+    Room persist(Room room);
 
     Optional<Room> findById(UUID id);
 

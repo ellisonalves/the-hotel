@@ -31,9 +31,9 @@ class RoomJpaRepositoryTest {
     @Test
     void shouldFindRoomById() {
         var newRoom = createRoom();
-        repository.persist(newRoom);
+        var persisted = repository.persist(newRoom);
 
-        assertThat(repository.findById(newRoom.getId())).isPresent();
+        assertThat(repository.findById(persisted.getId())).isPresent();
     }
 
     @Test
@@ -66,7 +66,7 @@ class RoomJpaRepositoryTest {
         var room = new RoomJpa();
         room.setId(UUID.randomUUID());
         room.setDoorNumber("123");
-        room.setPricePerDay(BigDecimal.TEN);
+        room.setAmount(BigDecimal.TEN);
         room.setRoomType(RoomType.STANDARD);
         return room;
     }

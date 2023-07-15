@@ -17,7 +17,7 @@ import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.infrastructure.spring.config.JacksonConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.config.MessagesConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.CreateBookingMapstructImpl;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomToDomainMapperImpl;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomToDomainMapstructImpl;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomAdapter;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomToViewMapperImpl;
 
@@ -30,7 +30,7 @@ import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomToViewMappe
                 JacksonConfig.class,
                 UseCaseMockConfig.class,
                 CreateBookingMapstructImpl.class,
-                RoomToDomainMapperImpl.class,
+                RoomToDomainMapstructImpl.class,
                 RoomToViewMapperImpl.class,
                 RoomAdapter.class,
 })

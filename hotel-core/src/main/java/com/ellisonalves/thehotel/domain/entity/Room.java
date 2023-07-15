@@ -13,7 +13,7 @@ public class Room extends BaseEntity<UUID> {
     private String doorNumber;
     private RoomType roomType;
     private Currency currency;
-    private BigDecimal pricePerDay;
+    private BigDecimal amount;
     private Long version;
 
     public UUID getId() {
@@ -48,12 +48,12 @@ public class Room extends BaseEntity<UUID> {
         this.currency = currency;
     }
 
-    public BigDecimal getPricePerDay() {
-        return pricePerDay;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setPricePerDay(BigDecimal pricePerDay) {
-        this.pricePerDay = pricePerDay;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
     @Override

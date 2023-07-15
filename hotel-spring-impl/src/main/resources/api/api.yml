@@ -142,12 +142,12 @@ components:
             - STANDARD
             - DOUBLE
             - PRESIDENT
-        amount_per_night:
+        unit_price:
           $ref: "#/components/schemas/MoneyData"
       required:
         - door_number
         - room_type
-        - amount_per_night
+        - unit_price
     MoneyData:
       type: object
       properties:
@@ -189,9 +189,9 @@ components:
             - STANDARD
             - DOUBLE
             - PRESIDENT
-        amount_per_night:
+        unit_price:
           $ref: "#/components/schemas/MoneyData"
       required:
         - door_number
         - room_type
-        - amount_per_night
+        - unit_price

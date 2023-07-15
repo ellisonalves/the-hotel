@@ -124,6 +124,7 @@
                     <compilerArgs>
                         <compilerArg>
                             -Amapstruct.defaultComponentModel=spring
+                            -Amapstruct.verbose=true
                         </compilerArg>
                     </compilerArgs>
                     <release>${java.version}</release>

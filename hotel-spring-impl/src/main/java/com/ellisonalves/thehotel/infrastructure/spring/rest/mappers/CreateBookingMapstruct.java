@@ -17,6 +17,8 @@ public interface CreateBookingMapstruct extends CreateBookingMapper {
 
     @Override
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "guest.id", source = "guestId")
+    @Mapping(target = "room.id", source = "roomId")
     @Mapping(target = "startDate", source = "from")
     @Mapping(target = "endDate", source = "until")
     @Mapping(target = "version", ignore = true)

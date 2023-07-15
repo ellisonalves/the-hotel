@@ -24,8 +24,8 @@ public class RoomJpaRepository implements RoomRepository {
     }
 
     @Override
-    public void persist(Room room) {
-        repository.save(mapper.toEntity(room));
+    public Room persist(Room room) {
+        return repository.save(mapper.toEntity(room));
     }
 
     @Override

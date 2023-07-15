@@ -78,8 +78,8 @@ class RoomControllerTest {
 
                 Room persisted = new RoomJpa();
                 persisted.setDoorNumber(request.getDoorNumber());
-                persisted.setCurrency(Currency.getInstance(request.getAmountPerNight().getCurrencyCode()));
-                persisted.setPricePerDay(request.getAmountPerNight().getAmount());
+                persisted.setCurrency(Currency.getInstance(request.getUnitPrice().getCurrencyCode()));
+                persisted.setAmount(request.getUnitPrice().getAmount());
                 persisted.setRoomType(RoomType.STANDARD);
 
                 MockHttpServletRequestBuilder put = put("/api/v1/rooms/" + roomId);

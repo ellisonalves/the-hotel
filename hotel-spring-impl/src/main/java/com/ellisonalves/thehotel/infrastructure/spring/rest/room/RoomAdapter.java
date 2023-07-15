@@ -9,7 +9,7 @@ import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomData;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomList;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomToDomainMapper;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomToDomainMapstruct;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -19,12 +19,12 @@ public class RoomAdapter {
 
     private final ManageRoomUseCase useCase;
 
-    private final RoomToDomainMapper domainMapper;
+    private final RoomToDomainMapstruct domainMapper;
 
     private final RoomToViewMapper viewMapper;
 
     public RoomAdapter(ManageRoomUseCase useCase,
-            RoomToDomainMapper domainMapper,
+            RoomToDomainMapstruct domainMapper,
             RoomToViewMapper viewMapper) {
         this.useCase = useCase;
         this.domainMapper = domainMapper;
