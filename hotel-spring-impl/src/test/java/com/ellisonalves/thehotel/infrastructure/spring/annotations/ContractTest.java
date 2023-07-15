@@ -32,7 +32,7 @@ import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomToViewMappe
                 CreateBookingMapstructImpl.class,
                 RoomToDomainMapperImpl.class,
                 RoomToViewMapperImpl.class,
-                RoomAdapter.class
+                RoomAdapter.class,
 })
 public @interface ContractTest {
 

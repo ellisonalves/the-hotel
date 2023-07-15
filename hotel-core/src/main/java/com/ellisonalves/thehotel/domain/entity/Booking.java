@@ -7,8 +7,8 @@ import java.util.UUID;
 public class Booking extends BaseEntity<UUID> {
 
     private UUID id;
-    private UUID guestId;
-    private UUID roomId;
+    private Guest guest;
+    private Room room;
     private Instant startDate;
     private Instant endDate;
     private Long version;
@@ -22,20 +22,20 @@ public class Booking extends BaseEntity<UUID> {
         this.id = id;
     }
 
-    public UUID getGuestId() {
-        return guestId;
+    public Guest getGuest() {
+        return guest;
     }
 
-    public void setGuestId(UUID guestId) {
-        this.guestId = guestId;
+    public void setGuest(Guest guest) {
+        this.guest = guest;
     }
 
-    public UUID getRoomId() {
-        return roomId;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomId(UUID roomId) {
-        this.roomId = roomId;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public Instant getStartDate() {
