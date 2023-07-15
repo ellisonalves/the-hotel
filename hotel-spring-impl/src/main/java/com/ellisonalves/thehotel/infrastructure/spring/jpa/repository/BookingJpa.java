@@ -26,13 +26,13 @@ public class BookingJpa extends Booking {
     }
 
     @Override
-    @ManyToOne
+    @ManyToOne(optional = false)
     public RoomJpa getRoom() {
         return (RoomJpa) super.getRoom();
     }
 
     @Override
-    @ManyToOne
+    @ManyToOne(optional = false)
     public GuestJpa getGuest() {
         return (GuestJpa) super.getGuest();
     }
