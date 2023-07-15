@@ -132,7 +132,7 @@ components:
     RoomData:
       type: object
       properties:
-        room_id:
+        id:
           type: string
           format: uuid
         door_number:

@@ -19,7 +19,7 @@ import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundExceptio
 import com.ellisonalves.thehotel.application.usecases.room.CreateRoomDto;
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.application.usecases.room.Money;
-import com.ellisonalves.thehotel.application.usecases.room.RoomMapper;
+import com.ellisonalves.thehotel.application.usecases.room.RoomDomainMapper;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.domain.repository.RoomRepository;
@@ -34,7 +34,7 @@ public class ManageRoomUseCaseTest {
     private RoomRepository repository;
 
     @Mock
-    private RoomMapper roomMapper;
+    private RoomDomainMapper roomMapper;
 
     private UUID roomId = UUID.randomUUID();
 
@@ -52,7 +52,7 @@ public class ManageRoomUseCaseTest {
     @Test
     public void shouldPersitRoom() {
         Room expected = new Room();
-        when(roomMapper.toDomain(room)).thenReturn(expected);
+        when(roomMapper.toRoom(room)).thenReturn(expected);
 
         useCase.persist(room);
 

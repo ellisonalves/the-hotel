@@ -10,21 +10,21 @@ import com.ellisonalves.thehotel.domain.repository.RoomRepository;
 public class ManageRoomUseCase {
 
     private final RoomRepository repository;
-    private final RoomMapper mapper;
+    private final RoomDomainMapper mapper;
 
-    public ManageRoomUseCase(RoomRepository repository, RoomMapper mapper) {
+    public ManageRoomUseCase(RoomRepository repository, RoomDomainMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
 
     public void persist(CreateRoomDto room) {
-        repository.persist(mapper.toDomain(room));
+        repository.persist(mapper.toRoom(room));
     }
 
     public void update(UUID roomId, UpdateRoomDto updateRoomDto) {
         var originalRoom = findById(roomId);
 
-        mapper.update(updateRoomDto, originalRoom);
+        mapper.updateRoom(updateRoomDto, originalRoom);
 
         repository.persist(originalRoom);
     }

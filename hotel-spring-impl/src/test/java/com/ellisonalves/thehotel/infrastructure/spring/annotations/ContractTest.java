@@ -17,7 +17,9 @@ import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.infrastructure.spring.config.JacksonConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.config.MessagesConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.CreateBookingMapstructImpl;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomMapperMapstructImpl;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomToDomainMapperImpl;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomAdapter;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomToViewMapperImpl;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -28,7 +30,9 @@ import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomMapperMa
                 JacksonConfig.class,
                 UseCaseMockConfig.class,
                 CreateBookingMapstructImpl.class,
-                RoomMapperMapstructImpl.class
+                RoomToDomainMapperImpl.class,
+                RoomToViewMapperImpl.class,
+                RoomAdapter.class
 })
 public @interface ContractTest {
 

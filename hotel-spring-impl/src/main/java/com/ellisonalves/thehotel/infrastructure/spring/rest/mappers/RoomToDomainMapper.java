@@ -6,27 +6,27 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 
 import com.ellisonalves.thehotel.application.usecases.room.CreateRoomDto;
-import com.ellisonalves.thehotel.application.usecases.room.RoomMapper;
+import com.ellisonalves.thehotel.application.usecases.room.RoomDomainMapper;
 import com.ellisonalves.thehotel.application.usecases.room.UpdateRoomDto;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomData;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface RoomMapperMapstruct extends RoomMapper {
+public interface RoomToDomainMapper extends RoomDomainMapper {
 
     @Override
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "version", ignore = true)
-    Room toDomain(CreateRoomDto room);
-
-    CreateRoomDto toDomain(CreateRoomRequest room);
-
-    RoomData toView(Room room);
+    Room toRoom(CreateRoomDto room);
 
     @Override
-    void update(UpdateRoomDto room, @MappingTarget Room originalRoom);
+    void updateRoom(UpdateRoomDto room, @MappingTarget Room originalRoom);
 
-    UpdateRoomDto toDomain(RoomData roomData);
+    // move to some view mappers
+
+    CreateRoomDto toCreateRoomDto(CreateRoomRequest room);
+
+    RoomData toRoomData(Room room);
 
 }

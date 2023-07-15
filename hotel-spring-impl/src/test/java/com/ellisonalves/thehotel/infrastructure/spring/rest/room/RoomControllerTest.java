@@ -1,6 +1,7 @@
 package com.ellisonalves.thehotel.infrastructure.spring.rest.room;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -21,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
@@ -44,6 +46,9 @@ class RoomControllerTest {
 
         @Autowired
         private ManageRoomUseCase mockUseCase;
+
+        @Autowired
+        private RoomAdapter mockAdapter;
 
         @Test
         void shouldPostSuccessfully() throws Exception {
@@ -91,7 +96,7 @@ class RoomControllerTest {
         void shouldFailWhenTryingToCreateRoomWithInvalidValues() throws Exception {
                 RoomCreateDto roomDTO = new RoomCreateDto();
 
-                MockHttpServletRequestBuilder post = post("/rooms");
+                MockHttpServletRequestBuilder post = post("/api/v1/rooms");
                 post
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -103,9 +108,11 @@ class RoomControllerTest {
 
         @Test
         void shouldReturnBadRequestWhenRoomIsNotFound() throws Exception {
+                when(mockAdapter.findByDoorNumber(anyString())).thenThrow(new ResourceNotFoundException());
+                
                 var doorNumber = "NOT_FOUND";
 
-                mockMvc.perform(get("/rooms/" + doorNumber))
+                mockMvc.perform(get("/api/v1/rooms/" + doorNumber))
                                 .andExpectAll(
                                                 status().isNotFound(),
 

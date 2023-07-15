@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.infrastructure.rest.RoomsApi;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomData;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomList;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomMapperMapstruct;
 
 import jakarta.validation.Valid;
 
@@ -20,18 +18,15 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1")
 public class RoomController implements RoomsApi {
 
-    private final ManageRoomUseCase useCase;
+    private final RoomAdapter adapter;
 
-    private final RoomMapperMapstruct mapper;
-
-    public RoomController(ManageRoomUseCase useCase, RoomMapperMapstruct mapper) {
-        this.useCase = useCase;
-        this.mapper = mapper;
+    public RoomController(RoomAdapter adapter) {
+        this.adapter = adapter;
     }
 
     @Override
     public ResponseEntity<Void> createRoom(CreateRoomRequest createRoomRequest) {
-        useCase.persist(mapper.toDomain(createRoomRequest));
+        adapter.createRoom(createRoomRequest);
 
         return ResponseEntity.created(
                 UriComponentsBuilder.fromUriString("rooms")
@@ -41,37 +36,19 @@ public class RoomController implements RoomsApi {
 
     @Override
     public ResponseEntity<com.ellisonalves.thehotel.infrastructure.rest.model.RoomList> findAll() {
-        var rooms = useCase.findAll();
-        return ResponseEntity.ok().body(new RoomList().rooms(rooms.stream().map(mapper::toView).toList()));
+        return ResponseEntity.ok().body(adapter.findAll());
     }
 
     @Override
     public ResponseEntity<Void> updateRoom(UUID roomId, @Valid RoomData roomData) {
-        useCase.update(roomId, mapper.toDomain(roomData));
+        adapter.update(roomId, roomData);
 
         return ResponseEntity.noContent().build();
     }
 
-    // @PutMapping("/{id}")
-    // @ResponseStatus(HttpStatus.NO_CONTENT)
-    // public void create(@PathVariable UUID id, @RequestBody @Valid RoomUpdateDto
-    // request) {
-    // useCase.updateRoom
-    // // adapter.updateRoom(id, request);
-    // }
-
-    // @GetMapping("/{doorNumber}")
-    // @ResponseStatus(HttpStatus.OK)
-    // public RoomList findByDoorNumber(@PathVariable String doorNumber) {
-    // // return adapter.findByDoorNumber(doorNumber);
-    // return new RoomList(Collections.emptyList());
-    // }
-
-    // @GetMapping
-    // @ResponseStatus(HttpStatus.OK)
-    // public RoomList findAll() {
-    // // return adapter.findAll();
-    // return new RoomList(Collections.emptyList());
-    // }
+    @Override
+    public ResponseEntity<RoomList> findByDoorNumber(String doorNumber) {
+        return ResponseEntity.ok().body(adapter.findByDoorNumber(doorNumber));
+    }
 
 }
