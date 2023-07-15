@@ -4,6 +4,8 @@ import com.ellisonalves.thehotel.domain.entity.Room;
 
 public interface RoomMapper {
 
-    Room toDomain(CreateRoom room);
+    Room toDomain(CreateRoomDto room);
+
+    void update(UpdateRoomDto room, Room originalRoom);
 
 }

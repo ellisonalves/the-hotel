@@ -17,8 +17,16 @@ public class ManageRoomUseCase {
         this.mapper = mapper;
     }
 
-    public void save(CreateRoom room) {
+    public void persist(CreateRoomDto room) {
         repository.persist(mapper.toDomain(room));
+    }
+
+    public void update(UUID roomId, UpdateRoomDto updateRoomDto) {
+        var originalRoom = findById(roomId);
+
+        mapper.update(updateRoomDto, originalRoom);
+
+        repository.persist(originalRoom);
     }
 
     public Room findById(UUID id) {

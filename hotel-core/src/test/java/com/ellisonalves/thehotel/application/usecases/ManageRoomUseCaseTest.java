@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
-import com.ellisonalves.thehotel.application.usecases.room.CreateRoom;
+import com.ellisonalves.thehotel.application.usecases.room.CreateRoomDto;
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.application.usecases.room.Money;
 import com.ellisonalves.thehotel.application.usecases.room.RoomMapper;
@@ -40,7 +40,7 @@ public class ManageRoomUseCaseTest {
 
     private String doorNumber = "123";
 
-    private CreateRoom room = new CreateRoom(
+    private CreateRoomDto room = new CreateRoomDto(
             doorNumber,
             RoomType.STANDARD,
             new Money(
@@ -54,7 +54,7 @@ public class ManageRoomUseCaseTest {
         Room expected = new Room();
         when(roomMapper.toDomain(room)).thenReturn(expected);
 
-        useCase.save(room);
+        useCase.persist(room);
 
         verify(repository, only()).persist(expected);
     }

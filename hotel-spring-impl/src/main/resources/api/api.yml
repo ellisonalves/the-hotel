@@ -74,6 +74,51 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RoomList"
+  /rooms/{door_number}:
+    get:
+      tags:
+        - rooms
+      summary: Finds a room by its door number
+      description: Find a room by door number
+      operationId: findByDoorNumber
+      parameters:
+        - name: door_number
+          in: path
+          description: door number of the room
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoomList"
+  /rooms/{room_id}:
+    put:
+      tags:
+        - rooms
+      summary: Updates a room data
+      description: Updates a room data
+      operationId: updateRoom
+      parameters:
+        - name: room_id
+          in: path
+          description: id of the room
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Room's data that is available for changing
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RoomData"
+      responses:
+        "204":
+          description: Room was updated correctly
 
 components:
   schemas:

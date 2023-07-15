@@ -27,6 +27,7 @@ import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest.RoomTypeEnum;
 import com.ellisonalves.thehotel.infrastructure.rest.model.MoneyData;
+import com.ellisonalves.thehotel.infrastructure.rest.model.RoomData;
 import com.ellisonalves.thehotel.infrastructure.spring.annotations.ContractTest;
 import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.RoomJpa;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.model.RoomCreateDto;
@@ -64,17 +65,19 @@ class RoomControllerTest {
         @Test
         void shouldPutSuccessfully() throws Exception {
                 var roomId = UUID.randomUUID();
-                var request = new RoomCreateDto();
-                request.setDoorNumber("123");
-                request.setPricePerDay(BigDecimal.TEN);
-                request.setRoomType(RoomType.STANDARD);
+                var request = new RoomData(
+                                "123",
+                                RoomData.RoomTypeEnum.STANDARD,
+                                new MoneyData(
+                                                BigDecimal.TEN, Currency.getInstance("EUR").getCurrencyCode()));
 
                 Room persisted = new RoomJpa();
                 persisted.setDoorNumber(request.getDoorNumber());
-                persisted.setPricePerDay(request.getPricePerDay());
+                persisted.setCurrency(Currency.getInstance(request.getAmountPerNight().getCurrencyCode()));
+                persisted.setPricePerDay(request.getAmountPerNight().getAmount());
                 persisted.setRoomType(RoomType.STANDARD);
 
-                MockHttpServletRequestBuilder put = put("/rooms/" + roomId);
+                MockHttpServletRequestBuilder put = put("/api/v1/rooms/" + roomId);
                 put
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
