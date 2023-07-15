@@ -13,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 
 @Entity
 public class RoomJpa extends Room {
@@ -39,6 +40,12 @@ public class RoomJpa extends Room {
     @Override
     public BigDecimal getAmount() {
         return super.getAmount();
+    }
+
+    @Override
+    @Version
+    public Long getVersion() {
+        return super.getVersion();
     }
 
 }

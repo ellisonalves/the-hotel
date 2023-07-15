@@ -21,8 +21,8 @@ public class ManageRoomUseCase {
         repository.persist(mapper.toRoom(room));
     }
 
-    public void update(UUID roomId, UpdateRoomDto updateRoomDto) {
-        var originalRoom = findById(roomId);
+    public void update(String doorNumber, UpdateRoomDto updateRoomDto) {
+        var originalRoom = findByDoorNumber(doorNumber);
 
         mapper.updateRoom(updateRoomDto, originalRoom);
 

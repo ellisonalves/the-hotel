@@ -99,10 +99,11 @@
             <artifactId>jackson-databind-nullable</artifactId>
             <version>0.2.1</version>
         </dependency>
+
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.7.0</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.1.0</version>
         </dependency>
     </dependencies>
 
@@ -159,14 +160,15 @@
                                 ${project.basedir}/src/main/resources/api/api.yml
                             </inputSpec>
                             <generatorName>spring</generatorName>
-                            
+
                             <apiPackage>com.ellisonalves.thehotel.infrastructure.rest</apiPackage>
                             <modelPackage>
                                 com.ellisonalves.thehotel.infrastructure.rest.model</modelPackage>
 
                             <configOptions>
                                 <interfaceOnly>true</interfaceOnly>
-                                <useSpringBoot3>true</useSpringBoot3>  
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <openApiNullable>false</openApiNullable>
                             </configOptions>
                         </configuration>
                     </execution>

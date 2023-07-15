@@ -1,7 +1,5 @@
 package com.ellisonalves.thehotel.infrastructure.spring.rest.room;
 
-import java.util.UUID;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,8 +38,8 @@ public class RoomController implements RoomsApi {
     }
 
     @Override
-    public ResponseEntity<Void> updateRoom(UUID roomId, @Valid RoomData roomData) {
-        adapter.update(roomId, roomData);
+    public ResponseEntity<Void> updateRoom(String doorNumber, @Valid RoomData roomData) {
+        adapter.update(doorNumber, roomData);
 
         return ResponseEntity.noContent().build();
     }

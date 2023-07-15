@@ -22,7 +22,7 @@ paths:
   /bookings:
     post:
       tags:
-        - bookings
+        - Bookings
       summary: Creates a new booking
       description: Creates a booking in the hotel for a given customers and room for a determine period of timeØ
       operationId: createBooking
@@ -45,7 +45,7 @@ paths:
   /rooms:
     post:
       tags:
-        - rooms
+        - Rooms
       summary: Creates a new room
       description: Adds a new room to the hotel database
       operationId: createRoom
@@ -63,7 +63,7 @@ paths:
           description: Invalid request
     get:
       tags:
-        - rooms
+        - Rooms
       summary: Finds all rooms
       description: Find all existing rooms in the hotel
       operationId: findAll
@@ -77,7 +77,7 @@ paths:
   /rooms/{door_number}:
     get:
       tags:
-        - rooms
+        - Rooms
       summary: Finds a room by its door number
       description: Find a room by door number
       operationId: findByDoorNumber
@@ -95,21 +95,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RoomList"
-  /rooms/{room_id}:
     put:
       tags:
-        - rooms
-      summary: Updates a room data
-      description: Updates a room data
+        - Rooms
+      summary: Updates a room information by its door number
+      description: Updates a room information by its door number
       operationId: updateRoom
       parameters:
-        - name: room_id
+        - name: door_number
           in: path
-          description: id of the room
+          description: Room's door number
           required: true
           schema:
             type: string
-            format: uuid
       requestBody:
         description: Room's data that is available for changing
         content:

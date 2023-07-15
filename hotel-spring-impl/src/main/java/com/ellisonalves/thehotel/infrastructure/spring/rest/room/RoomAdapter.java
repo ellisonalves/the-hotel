@@ -1,7 +1,6 @@
 package com.ellisonalves.thehotel.infrastructure.spring.rest.room;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
@@ -36,8 +35,8 @@ public class RoomAdapter {
     }
 
     @Transactional
-    public void update(UUID roomId, @Valid RoomData roomData) {
-        useCase.update(roomId, viewMapper.toUpdateRoomDto(roomData));
+    public void update(String doorNumber, @Valid RoomData roomData) {
+        useCase.update(doorNumber, viewMapper.toUpdateRoomDto(roomData));
     }
 
     public RoomList findAll() {
