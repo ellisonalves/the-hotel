@@ -25,7 +25,7 @@ public interface RoomToDomainMapstruct extends RoomDomainMapper {
     @Override
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "version", ignore = true)
-    @Mapping(target = "doorNumber", source = "doorNumber")
+    @Mapping(target = "doorNumber", ignore = true)
     @Mapping(target = "roomType", source = "roomType")
     @Mapping(target = "currency", source = "money.currency")
     @Mapping(target = "amount", source = "money.amount")

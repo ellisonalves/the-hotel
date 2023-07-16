@@ -28,8 +28,8 @@ import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest.RoomTypeEnum;
-import com.ellisonalves.thehotel.infrastructure.rest.model.MoneyData;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomData;
+import com.ellisonalves.thehotel.infrastructure.rest.model.UnitPrice;
 import com.ellisonalves.thehotel.infrastructure.spring.annotations.ContractTest;
 import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.RoomJpa;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.model.RoomCreateDto;
@@ -55,7 +55,7 @@ class RoomControllerTest {
                 CreateRoomRequest request = new CreateRoomRequest(
                                 "123",
                                 RoomTypeEnum.STANDARD,
-                                new MoneyData(BigDecimal.TEN, Currency.getInstance("EUR").getCurrencyCode()));
+                                new UnitPrice(BigDecimal.TEN, Currency.getInstance("EUR").getCurrencyCode()));
 
                 MockHttpServletRequestBuilder post = post("/api/v1/rooms");
                 post
@@ -73,7 +73,7 @@ class RoomControllerTest {
                 var request = new RoomData(
                                 "123",
                                 RoomData.RoomTypeEnum.STANDARD,
-                                new MoneyData(
+                                new UnitPrice(
                                                 BigDecimal.TEN, Currency.getInstance("EUR").getCurrencyCode()));
 
                 Room persisted = new RoomJpa();

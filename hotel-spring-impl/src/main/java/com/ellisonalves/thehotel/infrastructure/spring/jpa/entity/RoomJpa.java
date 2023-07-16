@@ -26,7 +26,7 @@ public class RoomJpa extends Room {
     }
 
     @Override
-    @Column(name = "DOOR_NUMBER")
+    @Column(name = "DOOR_NUMBER", unique = true, nullable = false, updatable = false)
     public String getDoorNumber() {
         return super.getDoorNumber();
     }

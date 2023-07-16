@@ -7,8 +7,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ellisonalves.thehotel.infrastructure.rest.RoomsApi;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
-import com.ellisonalves.thehotel.infrastructure.rest.model.RoomData;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomList;
+import com.ellisonalves.thehotel.infrastructure.rest.model.UpdateRoomRequest;
 
 import jakarta.validation.Valid;
 
@@ -38,7 +38,7 @@ public class RoomController implements RoomsApi {
     }
 
     @Override
-    public ResponseEntity<Void> updateRoom(String doorNumber, @Valid RoomData roomData) {
+    public ResponseEntity<Void> updateRoom(String doorNumber, @Valid UpdateRoomRequest roomData) {
         adapter.update(doorNumber, roomData);
 
         return ResponseEntity.noContent().build();

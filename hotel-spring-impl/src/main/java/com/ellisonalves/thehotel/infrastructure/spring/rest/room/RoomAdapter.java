@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
-import com.ellisonalves.thehotel.infrastructure.rest.model.RoomData;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomList;
+import com.ellisonalves.thehotel.infrastructure.rest.model.UpdateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomToDomainMapstruct;
 
 import jakarta.transaction.Transactional;
@@ -35,7 +35,7 @@ public class RoomAdapter {
     }
 
     @Transactional
-    public void update(String doorNumber, @Valid RoomData roomData) {
+    public void update(String doorNumber, @Valid UpdateRoomRequest roomData) {
         useCase.update(doorNumber, viewMapper.toUpdateRoomDto(roomData));
     }
 
