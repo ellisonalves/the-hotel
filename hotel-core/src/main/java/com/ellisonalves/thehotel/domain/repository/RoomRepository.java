@@ -12,7 +12,7 @@ public interface RoomRepository {
 
     Optional<Room> findById(UUID id);
 
-    void deleteById(UUID id);
+    void deleteByDoorNumber(String doorNumber);
 
     List<Room> findAll();
 

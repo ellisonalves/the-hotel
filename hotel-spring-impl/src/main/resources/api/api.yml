@@ -82,12 +82,7 @@ paths:
       description: Find a room by door number
       operationId: findByDoorNumber
       parameters:
-        - name: door_number
-          in: path
-          description: door number of the room
-          required: true
-          schema:
-            type: string
+        - $ref: "#/components/parameters/doorNumber"
       responses:
         "200":
           description: Successful response
@@ -102,12 +97,7 @@ paths:
       description: Updates a room information by its door number
       operationId: updateRoom
       parameters:
-        - name: door_number
-          in: path
-          description: Room's door number
-          required: true
-          schema:
-            type: string
+        - $ref: "#/components/parameters/doorNumber"
       requestBody:
         description: Room's data that is available for changing
         content:
@@ -117,16 +107,47 @@ paths:
       responses:
         "204":
           description: Room was updated correctly
+    delete:
+      tags:
+        - Rooms
+      summary: Deletes a room by its door number
+      description: Users the door number to identify a room and then delete it.
+      operationId: deleteRoom
+      parameters:
+        - $ref: "#/components/parameters/doorNumber"
+      responses:
+        "204":
+          description: Room deleted successfully
+        "404":
+          description: Room not found
 
 components:
+  parameters:
+    doorNumber:
+      name: door_number
+      in: path
+      description: Room's door number
+      required: true
+      schema:
+        type: string
   schemas:
-    RoomList:
+    # Room Schemas
+    CreateRoomRequest:
       type: object
       properties:
-        rooms:
-          type: array
-          items:
-            $ref: "#/components/schemas/RoomData"
+        door_number:
+          type: string
+        room_type:
+          enum:
+            - STANDARD
+            - DOUBLE
+            - PRESIDENT
+        unit_price:
+          $ref: "#/components/schemas/UnitPrice"
+      required:
+        - door_number
+        - room_type
+        - unit_price
     UpdateRoomRequest:
       type: object
       properties:
@@ -134,6 +155,13 @@ components:
           $ref: "#/components/schemas/RoomType"
         unit_price:
           $ref: "#/components/schemas/UnitPrice"
+    RoomList:
+      type: object
+      properties:
+        rooms:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoomData"
     RoomType:
       enum:
         - STANDARD
@@ -158,17 +186,8 @@ components:
         - door_number
         - room_type
         - unit_price
-    UnitPrice:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: decimal
-        currency_code:
-          type: string
-      required:
-        - amount
-        - currency_code
+
+    ## Booking Schemas
     CreateBookingRequest:
       type: object
       properties:
@@ -189,19 +208,16 @@ components:
         - room_id
         - from
         - until
-    CreateRoomRequest:
+
+    # Shared schemas
+    UnitPrice:
       type: object
       properties:
-        door_number:
+        amount:
+          type: number
+          format: decimal
+        currency_code:
           type: string
-        room_type:
-          enum:
-            - STANDARD
-            - DOUBLE
-            - PRESIDENT
-        unit_price:
-          $ref: "#/components/schemas/UnitPrice"
       required:
-        - door_number
-        - room_type
-        - unit_price
+        - amount
+        - currency_code

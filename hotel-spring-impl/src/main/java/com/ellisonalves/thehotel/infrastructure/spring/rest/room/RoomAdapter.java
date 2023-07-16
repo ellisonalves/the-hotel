@@ -52,4 +52,9 @@ public class RoomAdapter {
         return new RoomList().rooms(Arrays.asList(viewMapper.toRoomData(useCase.findByDoorNumber(doorNumber))));
     }
 
+    @Transactional
+    public void delete(String doorNumber) {
+        useCase.deleteByDoorNumber(doorNumber);
+    }
+
 }

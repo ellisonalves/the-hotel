@@ -49,4 +49,10 @@ public class RoomController implements RoomsApi {
         return ResponseEntity.ok().body(adapter.findByDoorNumber(doorNumber));
     }
 
+    @Override
+    public ResponseEntity<Void> deleteRoom(String doorNumber) {
+        adapter.delete(doorNumber);
+        return ResponseEntity.noContent().build();
+    }
+
 }

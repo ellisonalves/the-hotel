@@ -40,4 +40,8 @@ public class ManageRoomUseCase {
     public List<Room> findAll() {
         return repository.findAll();
     }
+
+    public void deleteByDoorNumber(String doorNumber) {
+        repository.deleteByDoorNumber(doorNumber);
+    }
 }
