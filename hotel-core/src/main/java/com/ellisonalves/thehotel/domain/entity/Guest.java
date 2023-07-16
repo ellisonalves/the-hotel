@@ -96,4 +96,9 @@ public class Guest extends BaseEntity<UUID> {
         return Objects.equals(this.getId(), other.getId());
     }
 
+    @Override
+    public int hashCodePrime() {
+        return 37;
+    }
+
 }

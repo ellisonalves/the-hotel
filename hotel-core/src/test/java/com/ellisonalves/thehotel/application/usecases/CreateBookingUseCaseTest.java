@@ -17,8 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingMapper;
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBooking;
+import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingMapper;
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
 import com.ellisonalves.thehotel.domain.entity.Booking;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
@@ -41,8 +41,8 @@ public class CreateBookingUseCaseTest {
 
         var booking = new Booking();
 
-        when(repository.findBookingsPerRoomAndDateRange(newBooking.getRoomId(), newBooking.getFrom(),
-                newBooking.getUntil()))
+        when(repository.findBookingsPerRoomAndDateRange(newBooking.roomId(), newBooking.from(),
+                newBooking.until()))
                 .thenReturn(Collections.emptyList());
 
         when(mapper.toDomain(newBooking)).thenReturn(booking);
@@ -58,8 +58,8 @@ public class CreateBookingUseCaseTest {
 
         var booking = new Booking();
 
-        when(repository.findBookingsPerRoomAndDateRange(newBooking.getRoomId(), newBooking.getFrom(),
-                newBooking.getUntil()))
+        when(repository.findBookingsPerRoomAndDateRange(newBooking.roomId(), newBooking.from(),
+                newBooking.until()))
                 .thenReturn(List.of(booking));
 
         useCase.createBooking(newBooking);
@@ -68,33 +68,10 @@ public class CreateBookingUseCaseTest {
     }
 
     private CreateBooking createBookingRequest() {
-        final var newBooking = new CreateBooking() {
-
-            private UUID guestId = UUID.randomUUID();
-            private UUID roomId = UUID.randomUUID();
-            private Instant from = Instant.parse("2023-07-07T14:00:00.00z");
-            private Instant until = Instant.parse("2023-07-20T11:00:00.00z");
-
-            @Override
-            public UUID getGuestId() {
-                return guestId;
-            }
-
-            @Override
-            public UUID getRoomId() {
-                return roomId;
-            }
-
-            @Override
-            public Instant getFrom() {
-                return from;
-            }
-
-            @Override
-            public Instant getUntil() {
-                return until;
-            }
-        };
-        return newBooking;
+        return new CreateBooking(
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                Instant.parse("2023-07-07T14:00:00.00z"),
+                Instant.parse("2023-07-20T11:00:00.00z"));
     }
 }

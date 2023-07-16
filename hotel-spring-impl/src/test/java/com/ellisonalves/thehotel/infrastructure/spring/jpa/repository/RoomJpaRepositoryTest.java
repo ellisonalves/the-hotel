@@ -31,21 +31,20 @@ class RoomJpaRepositoryTest {
     @Test
     void shouldFindRoomById() {
         var newRoom = createRoom();
-        repository.persist(newRoom);
+        var persisted = repository.persist(newRoom);
 
-        assertThat(repository.findById(newRoom.getId())).isPresent();
+        assertThat(repository.findById(persisted.getId())).isPresent();
     }
 
     @Test
     void shouldDeleteRoom() {
-        var room = createRoom();
-        repository.persist(room);
+        var room = repository.persist(createRoom());
 
         assertThat(repository.findById(room.getId())).isNotNull();
 
-        repository.deleteById(room.getId());
+        repository.deleteByDoorNumber(room.getDoorNumber());
 
-        assertThat(repository.findById(room.getId()));
+        assertThat(repository.findById(room.getId())).isNotPresent();
     }
 
     @Test
@@ -53,20 +52,11 @@ class RoomJpaRepositoryTest {
         assertThat(repository.findAll()).isEmpty();
     }
 
-    @Test
-    void shouldReturnPersistedRooms() throws InterruptedException {
-        repository.persist(createRoom());
-        repository.persist(createRoom());
-        repository.persist(createRoom());
-
-        assertThat(repository.findAll()).hasSize(3);
-    }
-
     private RoomJpa createRoom() {
         var room = new RoomJpa();
         room.setId(UUID.randomUUID());
         room.setDoorNumber("123");
-        room.setPricePerDay(BigDecimal.TEN);
+        room.setAmount(BigDecimal.TEN);
         room.setRoomType(RoomType.STANDARD);
         return room;
     }

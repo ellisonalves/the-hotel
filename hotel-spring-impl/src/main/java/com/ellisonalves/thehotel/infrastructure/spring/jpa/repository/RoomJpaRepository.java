@@ -24,8 +24,8 @@ public class RoomJpaRepository implements RoomRepository {
     }
 
     @Override
-    public void persist(Room room) {
-        repository.save(mapper.toEntity(room));
+    public Room persist(Room room) {
+        return repository.save(mapper.toEntity(room));
     }
 
     @Override
@@ -34,8 +34,8 @@ public class RoomJpaRepository implements RoomRepository {
     }
 
     @Override
-    public void deleteById(UUID id) {
-        repository.deleteById(id);
+    public void deleteByDoorNumber(String doorNumber) {
+        repository.deleteByDoorNumber(doorNumber);
     }
 
     @Override
@@ -53,4 +53,6 @@ public class RoomJpaRepository implements RoomRepository {
 interface RoomSpringJpaRepository extends JpaRepository<RoomJpa, UUID> {
 
     Optional<RoomJpa> findByDoorNumber(String doorNumber);
+
+    void deleteByDoorNumber(String doorNumber);
 }
