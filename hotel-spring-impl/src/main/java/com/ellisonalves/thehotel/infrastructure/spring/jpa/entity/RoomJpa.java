@@ -15,7 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Version;
 
-@Entity
+@Entity(name = "ROOM")
 public class RoomJpa extends Room {
 
     @Id
