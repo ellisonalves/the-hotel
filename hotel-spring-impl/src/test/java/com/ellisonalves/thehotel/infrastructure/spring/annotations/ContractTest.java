@@ -25,15 +25,8 @@ import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomToViewMappe
 @Retention(RetentionPolicy.RUNTIME)
 @IntegrationTest
 @WebMvcTest
-@Import({
-                MessagesConfig.class,
-                JacksonConfig.class,
-                UseCaseMockConfig.class,
-                CreateBookingMapstructImpl.class,
-                RoomToDomainMapstructImpl.class,
-                RoomToViewMapperImpl.class,
-                RoomAdapter.class,
-})
+@Import({ MessagesConfig.class, JacksonConfig.class, UseCaseMockConfig.class, CreateBookingMapstructImpl.class,
+		RoomToDomainMapstructImpl.class, RoomToViewMapperImpl.class, RoomAdapter.class, })
 public @interface ContractTest {
 
 }
@@ -41,19 +34,19 @@ public @interface ContractTest {
 @TestConfiguration
 class UseCaseMockConfig {
 
-        @Bean
-        public ManageRoomUseCase manageRoomUseCase() {
-                return Mockito.mock(ManageRoomUseCase.class);
-        }
+	@Bean
+	ManageRoomUseCase manageRoomUseCase() {
+		return Mockito.mock(ManageRoomUseCase.class);
+	}
 
-        @Bean
-        public ManageGuestUseCase manageGuestUseCase() {
-                return Mockito.mock(ManageGuestUseCase.class);
-        }
+	@Bean
+	ManageGuestUseCase manageGuestUseCase() {
+		return Mockito.mock(ManageGuestUseCase.class);
+	}
 
-        @Bean
-        public CreateBookingUseCase createBookingUseCase() {
-                return Mockito.mock(CreateBookingUseCase.class);
-        }
+	@Bean
+	CreateBookingUseCase createBookingUseCase() {
+		return Mockito.mock(CreateBookingUseCase.class);
+	}
 
 }

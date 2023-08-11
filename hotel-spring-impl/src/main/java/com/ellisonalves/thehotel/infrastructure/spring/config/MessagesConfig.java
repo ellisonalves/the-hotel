@@ -8,7 +8,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 @Configuration
 public class MessagesConfig {
     @Bean
-    public MessageSourceAccessor messageSourceAccessor(MessageSource messageSource) {
+    MessageSourceAccessor messageSourceAccessor(MessageSource messageSource) {
         return new MessageSourceAccessor(messageSource);
     }
 }

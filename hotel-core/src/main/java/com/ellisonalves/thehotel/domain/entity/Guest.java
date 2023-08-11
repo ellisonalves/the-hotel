@@ -7,7 +7,9 @@ import com.ellisonalves.thehotel.domain.aggregates.GenderType;
 
 public class Guest extends BaseEntity<UUID> {
 
-    private UUID id;
+    private static final long serialVersionUID = 1L;
+    
+	private UUID id;
     private String documentNumber;
     private String name;
     private String nationality;

@@ -18,7 +18,9 @@ import jakarta.persistence.TemporalType;
 @Entity
 public class BookingJpa extends Booking {
 
-    @Id
+    private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Override
     public UUID getId() {

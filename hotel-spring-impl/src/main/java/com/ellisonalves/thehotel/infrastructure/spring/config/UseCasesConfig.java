@@ -16,17 +16,17 @@ import com.ellisonalves.thehotel.domain.repository.RoomRepository;
 public class UseCasesConfig {
 
     @Bean
-    public ManageRoomUseCase manageRoomUseCase(RoomRepository repository, RoomDomainMapper mapper) {
+    ManageRoomUseCase manageRoomUseCase(RoomRepository repository, RoomDomainMapper mapper) {
         return new ManageRoomUseCase(repository, mapper);
     }
 
     @Bean
-    public ManageGuestUseCase manageGuestUseCase(GuestRepository repository) {
+    ManageGuestUseCase manageGuestUseCase(GuestRepository repository) {
         return new ManageGuestUseCase(repository);
     }
 
     @Bean
-    public CreateBookingUseCase createBookingUseCase(
+    CreateBookingUseCase createBookingUseCase(
             BookingRepository repository,
             CreateBookingMapper mapper) {
         return new CreateBookingUseCase(repository, mapper);

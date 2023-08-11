@@ -6,7 +6,9 @@ import java.util.UUID;
 
 public class Booking extends BaseEntity<UUID> {
 
-    private UUID id;
+    private static final long serialVersionUID = 1L;
+    
+	private UUID id;
     private Guest guest;
     private Room room;
     private Instant startDate;

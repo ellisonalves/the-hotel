@@ -18,7 +18,9 @@ import jakarta.persistence.Version;
 @Entity(name = "ROOM")
 public class RoomJpa extends Room {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Override
     public UUID getId() {

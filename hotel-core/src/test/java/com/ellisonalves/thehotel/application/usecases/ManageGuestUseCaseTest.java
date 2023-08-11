@@ -53,5 +53,7 @@ public class ManageGuestUseCaseTest {
     }
 
     private static class GuestStub extends Guest {
+
+		private static final long serialVersionUID = 1L;
     }
 }

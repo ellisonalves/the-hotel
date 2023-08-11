@@ -12,7 +12,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 public class JacksonConfig {
 
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+    Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
         return builder -> builder
                 .serializationInclusion(JsonInclude.Include.NON_NULL)
                 .modules(new JavaTimeModule())

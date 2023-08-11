@@ -6,7 +6,9 @@ import java.util.Objects;
 
 public abstract class BaseEntity<ID extends Serializable> implements Serializable {
 
-    public abstract ID getId();
+    private static final long serialVersionUID = 1L;
+
+	public abstract ID getId();
 
     public abstract Long getVersion();
 

@@ -13,7 +13,9 @@ import jakarta.persistence.Id;
 @Entity
 public class GuestJpa extends Guest {
 
-    @Id
+    private static final long serialVersionUID = 1L;
+
+	@Id
     @Override
     public UUID getId() {
         return super.getId();

@@ -9,7 +9,9 @@ import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 
 public class Room extends BaseEntity<UUID> {
 
-    private UUID id;
+    private static final long serialVersionUID = 1L;
+    
+	private UUID id;
     private String doorNumber;
     private RoomType roomType;
     private Currency currency;
