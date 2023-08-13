@@ -6,44 +6,35 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ellisonalves.thehotel.domain.entity.Booking;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
-import com.ellisonalves.thehotel.infrastructure.spring.jpa.mappers.BookingJpaModelMapper;
 
 @Repository
 public class BookingJpaRepository implements BookingRepository {
 
     private final BookingSpringJpaRepository repository;
 
-    private final BookingJpaModelMapper mapper;
-
-    public BookingJpaRepository(BookingSpringJpaRepository repository, BookingJpaModelMapper mapper) {
+    public BookingJpaRepository(BookingSpringJpaRepository repository) {
         this.repository = repository;
-        this.mapper = mapper;
     }
 
     @Override
     public void persist(Booking booking) {
-        repository.save(mapper.toJpa(booking));
+        repository.save(booking);
     }
 
     @Override
-    public List<Booking> findBookingsPerRoomAndDateRange(UUID roomId, Instant from, Instant until) {
-        return repository.findBookingsPerRoomAndDateRange(roomId, from, until)
-                .stream().map(p -> mapper.toDomain(p))
-                .toList();
+    public List<Booking> findBookingsByRoomAndPeriod(UUID roomId, Instant from, Instant until) {
+        return repository.findBookingsPerRoomAndDateRange(roomId, from, until);
     }
 
 }
 
-interface BookingSpringJpaRepository extends JpaRepository<BookingJpa, UUID> {
+interface BookingSpringJpaRepository extends JpaRepository<Booking, UUID> {
 
-    @Query("select b from BookingJpa b where b.room.id = :roomId and (b.startDate < :endDate and b.endDate > :startDate)")
-    List<BookingJpa> findBookingsPerRoomAndDateRange(
-            @Param("roomId") UUID roomId,
-            @Param("startDate") Instant start,
-            @Param("endDate") Instant end);
+    @Query("select b from Booking b where b.room.id = :roomId and (b.startDate < :endDate and b.endDate > :startDate)")
+    List<Booking> findBookingsPerRoomAndDateRange(UUID roomId, Instant from, Instant until);
+
 }

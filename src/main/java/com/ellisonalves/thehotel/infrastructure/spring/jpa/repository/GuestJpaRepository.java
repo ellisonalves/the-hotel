@@ -10,28 +10,24 @@ import org.springframework.stereotype.Repository;
 
 import com.ellisonalves.thehotel.domain.entity.Guest;
 import com.ellisonalves.thehotel.domain.repository.GuestRepository;
-import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.GuestJpa;
-import com.ellisonalves.thehotel.infrastructure.spring.jpa.mappers.GuestJpaModelMapper;
 
 @Repository
 public class GuestJpaRepository implements GuestRepository {
 
     private final GuestSpringJpaRepository repository;
-    private final GuestJpaModelMapper mapper;
 
-    public GuestJpaRepository(GuestSpringJpaRepository repository, GuestJpaModelMapper guestMapper) {
+    public GuestJpaRepository(GuestSpringJpaRepository repository) {
         this.repository = repository;
-        this.mapper = guestMapper;
     }
 
     @Override
     public void persist(Guest guest) {
-        repository.save(mapper.toJpa(guest));
+        repository.save(guest);
     }
 
     @Override
     public Optional<Guest> findById(UUID id) {
-        return repository.findById(id).map(m -> mapper.toDomain(m));
+        return repository.findById(id);
     }
 
     @Override
@@ -43,11 +39,10 @@ public class GuestJpaRepository implements GuestRepository {
     public List<Guest> findAll() {
         return repository.findAll()
                 .stream()
-                .map(guest -> mapper.toDomain(guest))
                 .collect(Collectors.toList());
     }
 }
 
-interface GuestSpringJpaRepository extends JpaRepository<GuestJpa, UUID> {
+interface GuestSpringJpaRepository extends JpaRepository<Guest, UUID> {
 
 }

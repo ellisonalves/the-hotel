@@ -41,7 +41,7 @@ public class CreateBookingUseCaseTest {
 
         var booking = new Booking();
 
-        when(repository.findBookingsPerRoomAndDateRange(newBooking.roomId(), newBooking.from(),
+        when(repository.findBookingsByRoomAndPeriod(newBooking.roomId(), newBooking.from(),
                 newBooking.until()))
                 .thenReturn(Collections.emptyList());
 
@@ -58,7 +58,7 @@ public class CreateBookingUseCaseTest {
 
         var booking = new Booking();
 
-        when(repository.findBookingsPerRoomAndDateRange(newBooking.roomId(), newBooking.from(),
+        when(repository.findBookingsByRoomAndPeriod(newBooking.roomId(), newBooking.from(),
                 newBooking.until()))
                 .thenReturn(List.of(booking));
 

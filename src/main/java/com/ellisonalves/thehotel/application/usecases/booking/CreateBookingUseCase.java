@@ -13,7 +13,7 @@ public class CreateBookingUseCase {
     }
 
     public void createBooking(CreateBooking booking) {
-        var existingBookings = repository.findBookingsPerRoomAndDateRange(
+        var existingBookings = repository.findBookingsByRoomAndPeriod(
                 booking.roomId(),
                 booking.from(),
                 booking.until());

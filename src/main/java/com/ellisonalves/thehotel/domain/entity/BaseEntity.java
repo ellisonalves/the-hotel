@@ -2,19 +2,47 @@
 package com.ellisonalves.thehotel.domain.entity;
 
 import java.io.Serializable;
+import java.time.Clock;
+import java.time.Instant;
 import java.util.Objects;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Version;
 
 public abstract class BaseEntity<ID extends Serializable> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-	public abstract ID getId();
+    protected ID id;
 
-    public abstract Long getVersion();
+    protected Instant createdAt;
+
+    protected Long version;
+
+    @Column(updatable = false, nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    @Version
+    public Long getVersion() {
+        return version;
+    }
+
+    public abstract ID getId();
 
     public abstract boolean equalTo(Object o);
 
     public abstract int hashCodePrime();
+
+    @PrePersist
+    void setCreateAt() {
+        createdAt = Instant.now(Clock.systemUTC());
+    }
 
     @Override
     public boolean equals(Object o) {

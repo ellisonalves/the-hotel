@@ -37,13 +37,6 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.ellisonalves</groupId>
-            <artifactId>hotel-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
         <!-- [START] Springboot dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

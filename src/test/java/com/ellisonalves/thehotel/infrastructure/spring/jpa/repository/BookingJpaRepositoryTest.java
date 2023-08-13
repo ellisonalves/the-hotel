@@ -34,7 +34,7 @@ public class BookingJpaRepositoryTest {
 
     @Test
     void shouldNotFindAnyBookingForTheProvidedCriteria() {
-        var bookings = bookingRepository.findBookingsPerRoomAndDateRange(roomId, start, end);
+        var bookings = bookingRepository.findBookingsByRoomAndPeriod(roomId, start, end);
         assertThat(bookings).isEmpty();
     }
 }

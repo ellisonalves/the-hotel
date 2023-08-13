@@ -5,11 +5,16 @@ import java.util.UUID;
 
 import com.ellisonalves.thehotel.domain.aggregates.GenderType;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Guest extends BaseEntity<UUID> {
 
     private static final long serialVersionUID = 1L;
-    
-	private UUID id;
+
     private String documentNumber;
     private String name;
     private String nationality;
@@ -19,6 +24,9 @@ public class Guest extends BaseEntity<UUID> {
     private String phone;
     private Long version;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Override
     public UUID getId() {
         return id;
     }

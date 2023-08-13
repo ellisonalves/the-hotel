@@ -7,8 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
+import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.domain.repository.RoomRepository;
-import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.RoomJpa;
 
 @Component
 public class PopulateRepositoryRunner implements CommandLineRunner {
@@ -27,7 +27,7 @@ public class PopulateRepositoryRunner implements CommandLineRunner {
     }
 
     private void persistRoom(String doorNumber) {
-        var room = new RoomJpa();
+        var room = new Room();
         room.setDoorNumber(doorNumber);
         room.setAmount(BigDecimal.TEN);
         room.setCurrency(Currency.getInstance("EUR"));

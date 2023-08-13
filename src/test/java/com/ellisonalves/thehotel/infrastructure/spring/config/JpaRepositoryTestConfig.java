@@ -4,7 +4,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 @TestConfiguration
-@ComponentScan("com.ellisonalves.thehotel.infrastructure.spring.jpa")
+@ComponentScan("com.ellisonalves.thehotel.domain.entity")
 public class JpaRepositoryTestConfig {
 
 }

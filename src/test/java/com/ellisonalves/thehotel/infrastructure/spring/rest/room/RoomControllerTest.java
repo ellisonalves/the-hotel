@@ -31,7 +31,6 @@ import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest.Roo
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomData;
 import com.ellisonalves.thehotel.infrastructure.rest.model.UnitPrice;
 import com.ellisonalves.thehotel.infrastructure.spring.annotations.ContractTest;
-import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.RoomJpa;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.model.RoomCreateDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -76,7 +75,7 @@ class RoomControllerTest {
                                 new UnitPrice(
                                                 BigDecimal.TEN, Currency.getInstance("EUR").getCurrencyCode()));
 
-                Room persisted = new RoomJpa();
+                Room persisted = new Room();
                 persisted.setDoorNumber(request.getDoorNumber());
                 persisted.setCurrency(Currency.getInstance(request.getUnitPrice().getCurrencyCode()));
                 persisted.setAmount(request.getUnitPrice().getAmount());

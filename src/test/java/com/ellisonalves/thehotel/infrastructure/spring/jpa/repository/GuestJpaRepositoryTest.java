@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ellisonalves.thehotel.domain.aggregates.GenderType;
+import com.ellisonalves.thehotel.domain.entity.Guest;
 import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseTest;
-import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.GuestJpa;
 
 @DatabaseTest
 class GuestJpaRepositoryTest {
@@ -57,7 +57,7 @@ class GuestJpaRepositoryTest {
     }
 
     private void persistGuest(UUID id) {
-        GuestJpa guest = new GuestJpa();
+        var guest = new Guest();
         guest.setId(id);
         guest.setAddress("123");
         guest.setDocumentNumber("123");

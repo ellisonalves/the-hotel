@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
+import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseTest;
-import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.RoomJpa;
 
 @DatabaseTest
 class RoomJpaRepositoryTest {
@@ -52,8 +52,8 @@ class RoomJpaRepositoryTest {
         assertThat(repository.findAll()).isEmpty();
     }
 
-    private RoomJpa createRoom() {
-        var room = new RoomJpa();
+    private Room createRoom() {
+        var room = new Room();
         room.setId(UUID.randomUUID());
         room.setDoorNumber("123");
         room.setAmount(BigDecimal.TEN);

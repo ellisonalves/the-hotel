@@ -4,26 +4,36 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
+@Entity
 public class Booking extends BaseEntity<UUID> {
 
     private static final long serialVersionUID = 1L;
-    
-	private UUID id;
+
     private Guest guest;
     private Room room;
     private Instant startDate;
     private Instant endDate;
-    private Long version;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Override
     public UUID getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(UUID id) {
         this.id = id;
     }
 
+    @ManyToOne
     public Guest getGuest() {
         return guest;
     }
@@ -32,6 +42,7 @@ public class Booking extends BaseEntity<UUID> {
         this.guest = guest;
     }
 
+    @ManyToOne
     public Room getRoom() {
         return room;
     }
@@ -40,6 +51,7 @@ public class Booking extends BaseEntity<UUID> {
         this.room = room;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
     public Instant getStartDate() {
         return startDate;
     }
@@ -48,17 +60,13 @@ public class Booking extends BaseEntity<UUID> {
         this.startDate = startDate;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
     public Instant getEndDate() {
         return endDate;
     }
 
     public void setEndDate(Instant endDate) {
         this.endDate = endDate;
-    }
-
-    @Override
-    public Long getVersion() {
-        return version;
     }
 
     @Override
