@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.spring.annotations;
+package com.ellisonalves.thehotel.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

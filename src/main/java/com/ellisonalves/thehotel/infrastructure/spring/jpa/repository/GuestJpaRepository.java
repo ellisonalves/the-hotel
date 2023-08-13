@@ -21,8 +21,8 @@ public class GuestJpaRepository implements GuestRepository {
     }
 
     @Override
-    public void persist(Guest guest) {
-        repository.save(guest);
+    public Guest persist(Guest guest) {
+        return repository.save(guest);
     }
 
     @Override

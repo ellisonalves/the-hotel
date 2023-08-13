@@ -8,8 +8,8 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ellisonalves.thehotel.annotations.DatabaseTest;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
-import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseTest;
 
 @DatabaseTest
 public class BookingJpaRepositoryTest {
@@ -34,7 +34,7 @@ public class BookingJpaRepositoryTest {
 
     @Test
     void shouldNotFindAnyBookingForTheProvidedCriteria() {
-        var bookings = bookingRepository.findBookingsByRoomAndPeriod(roomId, start, end);
+        var bookings = bookingRepository.findBookings(roomId, start, end);
         assertThat(bookings).isEmpty();
     }
 }

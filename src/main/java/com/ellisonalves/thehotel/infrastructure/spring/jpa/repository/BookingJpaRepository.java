@@ -26,15 +26,15 @@ public class BookingJpaRepository implements BookingRepository {
     }
 
     @Override
-    public List<Booking> findBookingsByRoomAndPeriod(UUID roomId, Instant from, Instant until) {
-        return repository.findBookingsPerRoomAndDateRange(roomId, from, until);
+    public List<Booking> findBookings(UUID roomId, Instant startDate, Instant endDate) {
+        return repository.findBookingsPerRoomAndDateRange(roomId, startDate, endDate);
     }
 
 }
 
 interface BookingSpringJpaRepository extends JpaRepository<Booking, UUID> {
 
-    @Query("select b from Booking b where b.room.id = :roomId and (b.startDate < :endDate and b.endDate > :startDate)")
-    List<Booking> findBookingsPerRoomAndDateRange(UUID roomId, Instant from, Instant until);
+    @Query("from Booking b where b.room.id = :roomId and (b.startDate < :endDate and b.endDate > :startDate)")
+    List<Booking> findBookingsPerRoomAndDateRange(UUID roomId, Instant startDate, Instant endDate);
 
 }

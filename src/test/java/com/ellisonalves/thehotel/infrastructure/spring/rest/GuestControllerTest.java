@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.ellisonalves.thehotel.annotations.ContractTest;
 import com.ellisonalves.thehotel.application.usecases.ManageGuestUseCase;
-import com.ellisonalves.thehotel.infrastructure.spring.annotations.ContractTest;
 
 @ContractTest
 class GuestControllerTest {

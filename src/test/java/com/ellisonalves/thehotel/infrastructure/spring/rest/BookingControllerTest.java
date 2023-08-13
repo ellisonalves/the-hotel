@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.ellisonalves.thehotel.infrastructure.spring.annotations.ContractTest;
+import com.ellisonalves.thehotel.annotations.ContractTest;
 
 @ContractTest
 public class BookingControllerTest {

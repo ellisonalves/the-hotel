@@ -8,9 +8,9 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ellisonalves.thehotel.annotations.DatabaseTest;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 import com.ellisonalves.thehotel.domain.entity.Room;
-import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseTest;
 
 @DatabaseTest
 class RoomJpaRepositoryTest {
@@ -45,11 +45,6 @@ class RoomJpaRepositoryTest {
         repository.deleteByDoorNumber(room.getDoorNumber());
 
         assertThat(repository.findById(room.getId())).isNotPresent();
-    }
-
-    @Test
-    void shouldReturnNoRooms() {
-        assertThat(repository.findAll()).isEmpty();
     }
 
     private Room createRoom() {

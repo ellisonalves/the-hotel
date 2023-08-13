@@ -10,6 +10,6 @@ public interface BookingRepository {
 
     void persist(Booking booking);
 
-    List<Booking> findBookingsByRoomAndPeriod(UUID roomId, Instant from, Instant until);
+    List<Booking> findBookings(UUID roomId, Instant startDate, Instant endDate);
 
 }

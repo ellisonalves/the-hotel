@@ -7,9 +7,9 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ellisonalves.thehotel.annotations.DatabaseTest;
 import com.ellisonalves.thehotel.domain.aggregates.GenderType;
 import com.ellisonalves.thehotel.domain.entity.Guest;
-import com.ellisonalves.thehotel.infrastructure.spring.annotations.DatabaseTest;
 
 @DatabaseTest
 class GuestJpaRepositoryTest {
@@ -21,11 +21,9 @@ class GuestJpaRepositoryTest {
 
     @Test
     void shouldPersistAndFindGuest() {
-        var id = UUID.randomUUID();
+        var persisted = persistGuest(id);
 
-        persistGuest(id);
-
-        assertThat(repository.findById(id)).isPresent();
+        assertThat(repository.findById(persisted.getId())).isPresent();
     }
 
     @Test
@@ -56,7 +54,7 @@ class GuestJpaRepositoryTest {
         assertThat(repository.findAll()).hasSize(3);
     }
 
-    private void persistGuest(UUID id) {
+    private Guest persistGuest(UUID id) {
         var guest = new Guest();
         guest.setId(id);
         guest.setAddress("123");
@@ -67,7 +65,7 @@ class GuestJpaRepositoryTest {
         guest.setNationality("br");
         guest.setPhone("123098");
 
-        repository.persist(guest);
+        return repository.persist(guest);
     }
 
 }
