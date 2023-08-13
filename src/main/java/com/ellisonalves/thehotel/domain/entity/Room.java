@@ -8,6 +8,8 @@ import java.util.UUID;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,6 +44,7 @@ public class Room extends BaseEntity<UUID> {
         this.doorNumber = doorNumber;
     }
 
+    @Enumerated(EnumType.STRING)
     public RoomType getRoomType() {
         return roomType;
     }

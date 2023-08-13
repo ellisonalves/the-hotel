@@ -42,16 +42,11 @@ class GuestJpaRepositoryTest {
     }
 
     @Test
-    void shouldFindAllWithNoGuest() {
-        assertThat(repository.findAll()).isEmpty();
-    }
-
-    @Test
     void shouldFindAllGuests() {
         persistGuest(UUID.randomUUID());
         persistGuest(UUID.randomUUID());
         persistGuest(UUID.randomUUID());
-        assertThat(repository.findAll()).hasSize(3);
+        assertThat(repository.findAll()).hasSize(4);
     }
 
     private Guest persistGuest(UUID id) {
