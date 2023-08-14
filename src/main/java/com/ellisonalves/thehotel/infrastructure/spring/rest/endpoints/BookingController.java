@@ -1,30 +1,27 @@
-package com.ellisonalves.thehotel.infrastructure.spring.rest;
+package com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
 import com.ellisonalves.thehotel.infrastructure.rest.BookingsApi;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateBookingRequest;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.CreateBookingMapstruct;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.adapters.CreateBookingAdapter;
 
 @RestController
 @RequestMapping("/api/v1")
 public class BookingController implements BookingsApi {
 
-    private final CreateBookingUseCase useCase;
+    private final CreateBookingAdapter adapter;
 
-    private final CreateBookingMapstruct mapper;
-
-    public BookingController(CreateBookingUseCase useCase, CreateBookingMapstruct mapper) {
-        this.useCase = useCase;
-        this.mapper = mapper;
+    public BookingController(CreateBookingAdapter adapter) {
+        this.adapter = adapter;
     }
 
     @Override
     public ResponseEntity<Void> createBooking(CreateBookingRequest request) {
-        useCase.createBooking(mapper.toDomain(request));
+        adapter.createBooking(request);
         return ResponseEntity.accepted().build();
     }
+
 }
