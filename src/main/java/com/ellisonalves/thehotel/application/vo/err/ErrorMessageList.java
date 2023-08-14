@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.application.pojos.errors;
+package com.ellisonalves.thehotel.application.vo.err;
 
 import java.util.Arrays;
 import java.util.List;

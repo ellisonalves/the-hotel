@@ -19,9 +19,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.web.util.WebUtils;
 
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
-import com.ellisonalves.thehotel.application.pojos.errors.ErrorMessageList;
-import com.ellisonalves.thehotel.application.pojos.errors.ErrorPerFiledList;
-import com.ellisonalves.thehotel.application.pojos.errors.ErrorsPerField;
+import com.ellisonalves.thehotel.application.vo.err.ErrorMessageList;
+import com.ellisonalves.thehotel.application.vo.err.ErrorPerFiledList;
+import com.ellisonalves.thehotel.application.vo.err.ErrorsPerField;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
