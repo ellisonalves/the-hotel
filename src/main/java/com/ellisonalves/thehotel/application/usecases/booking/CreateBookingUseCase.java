@@ -17,18 +17,17 @@ public class CreateBookingUseCase {
     }
 
     public Result createBooking(CreateBooking booking) {
-        var now = Instant.now(Clock.systemUTC()); // TODO refactor to be reused
+        var now = Instant.now(Clock.systemUTC());
 
-        if (booking.guestId() == null || booking.roomId() == null || booking.from() == null
-                || booking.until() == null) { // TODO extract to the vO
+        if (booking.hasMandatoryFields()) {
             return Result.err("Missing mandatory fields");
         }
 
-        if (now.isAfter(booking.from()) || now.isAfter(booking.until())) { // TODO extract to the VO
+        if (booking.isStartOrEndDatesBefore(now)) {
             return Result.err("Bookings in the past are not allowed");
         }
 
-        if (booking.from().isAfter(booking.until())) { // extract to the VO
+        if (booking.isStartDateAfterEndDate()) {
             return Result.err("Start date MUST be before end date");
         }
 

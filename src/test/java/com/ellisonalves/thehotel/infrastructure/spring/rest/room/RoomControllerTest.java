@@ -22,7 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import com.ellisonalves.thehotel.annotations.ContractTest;
+import com.ellisonalves.thehotel.annotations.ControllerTest;
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
@@ -34,7 +34,7 @@ import com.ellisonalves.thehotel.infrastructure.rest.model.UnitPrice;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.model.RoomCreateDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@ContractTest
+@ControllerTest
 class RoomControllerTest {
 
         @Autowired

@@ -10,11 +10,11 @@ import com.ellisonalves.thehotel.infrastructure.spring.rest.adapters.CreateBooki
 
 @RestController
 @RequestMapping("/api/v1")
-public class BookingController implements BookingsApi {
+public class BookingsController implements BookingsApi {
 
     private final CreateBookingAdapter adapter;
 
-    public BookingController(CreateBookingAdapter adapter) {
+    public BookingsController(CreateBookingAdapter adapter) {
         this.adapter = adapter;
     }
 

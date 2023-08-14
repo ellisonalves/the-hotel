@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.ellisonalves.thehotel.annotations.ContractTest;
+import com.ellisonalves.thehotel.annotations.ControllerTest;
 
-@ContractTest
-public class BookingControllerTest {
+@ControllerTest
+public class BookingsControllerTest {
 
     private static final String API_V1_BOOKINGS = "/api/v1/bookings";
 

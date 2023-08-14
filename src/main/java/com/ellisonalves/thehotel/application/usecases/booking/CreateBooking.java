@@ -5,12 +5,24 @@ import java.util.UUID;
 
 public record CreateBooking(
 
-                UUID guestId,
+        UUID guestId,
 
-                UUID roomId,
+        UUID roomId,
 
-                Instant from,
+        Instant from,
 
-                Instant until) {
+        Instant until) {
+
+    public boolean hasMandatoryFields() {
+        return guestId == null || roomId == null || from == null || until == null;
+    }
+
+    public boolean isStartOrEndDatesBefore(Instant instant) {
+        return (from != null && until != null) && from.isBefore(instant) || until.isBefore(instant);
+    }
+
+    public boolean isStartDateAfterEndDate() {
+        return from.isAfter(until);
+    }
 
 }
