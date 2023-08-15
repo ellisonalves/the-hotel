@@ -4,6 +4,7 @@ import java.time.Clock;
 import java.time.Instant;
 
 import com.ellisonalves.thehotel.application.vo.err.Result;
+import com.ellisonalves.thehotel.domain.entity.Booking;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 
 public class CreateBookingUseCase {
@@ -19,7 +20,7 @@ public class CreateBookingUseCase {
     public Result createBooking(CreateBooking booking) {
         var now = Instant.now(Clock.systemUTC());
 
-        if (booking.hasMandatoryFields()) {
+        if (booking.isMissingMandatoryFields()) {
             return Result.err("Missing mandatory fields");
         }
 
@@ -43,5 +44,11 @@ public class CreateBookingUseCase {
         repository.persist(mapper.toDomain(booking));
 
         return Result.ok("Created!");
+    }
+
+    public interface CreateBookingMapper {
+
+        Booking toDomain(CreateBooking booking);
+
     }
 }

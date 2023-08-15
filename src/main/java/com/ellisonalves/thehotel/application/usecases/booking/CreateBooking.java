@@ -13,7 +13,7 @@ public record CreateBooking(
 
         Instant until) {
 
-    public boolean hasMandatoryFields() {
+    public boolean isMissingMandatoryFields() {
         return guestId == null || roomId == null || from == null || until == null;
     }
 

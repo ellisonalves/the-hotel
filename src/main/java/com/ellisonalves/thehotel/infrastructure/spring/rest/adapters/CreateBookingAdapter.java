@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBooking;
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
+import com.ellisonalves.thehotel.application.vo.err.Result;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateBookingRequest;
 
 @Component
@@ -23,8 +24,8 @@ public class CreateBookingAdapter {
         this.mapper = mapper;
     }
 
-    public void createBooking(CreateBookingRequest request) {
-        useCase.createBooking(mapper.toDomain(request));
+    public Result createBooking(CreateBookingRequest request) {
+        return useCase.createBooking(mapper.toDomain(request));
     }
 
     @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)

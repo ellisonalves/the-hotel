@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.ellisonalves.thehotel.application.usecases.ManageGuestUseCase;
-import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingMapper;
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
+import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase.CreateBookingMapper;
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.application.usecases.room.RoomDomainMapper;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
