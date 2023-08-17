@@ -1,5 +1,6 @@
 package com.ellisonalves.thehotel.domain.entity;
 
+import java.time.Clock;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
@@ -9,22 +10,36 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Transient;
+import jakarta.persistence.Version;
 
 @Entity
 public class Booking extends BaseEntity<UUID> {
 
 	private static final long serialVersionUID = 1L;
 
-	private Guest guest;
-	private Room room;
-	private Instant startDate;
-	private Instant endDate;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
+
+	@ManyToOne
+	private Guest guest;
+
+	@ManyToOne
+	private Room room;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Instant startDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Instant endDate;
+	
+	@Version
+	private Long version;
+
 	@Override
 	public UUID getId() {
 		return id;
@@ -34,7 +49,6 @@ public class Booking extends BaseEntity<UUID> {
 		this.id = id;
 	}
 
-	@ManyToOne
 	public Guest getGuest() {
 		return guest;
 	}
@@ -43,7 +57,6 @@ public class Booking extends BaseEntity<UUID> {
 		this.guest = guest;
 	}
 
-	@ManyToOne
 	public Room getRoom() {
 		return room;
 	}
@@ -52,7 +65,6 @@ public class Booking extends BaseEntity<UUID> {
 		this.room = room;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Instant getStartDate() {
 		return startDate;
 	}
@@ -68,6 +80,20 @@ public class Booking extends BaseEntity<UUID> {
 
 	public void setEndDate(Instant endDate) {
 		this.endDate = endDate;
+	}
+	
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	@PrePersist
+	public void prePersist() {
+		super.setCreatedAt(Instant.now(Clock.systemUTC()));
 	}
 
 	@Override

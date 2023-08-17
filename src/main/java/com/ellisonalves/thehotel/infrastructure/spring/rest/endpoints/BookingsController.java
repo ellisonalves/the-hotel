@@ -11,7 +11,7 @@ import com.ellisonalves.thehotel.infrastructure.rest.model.BookingCreatedRespons
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateBookingRequest;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping(Routes.BASE_URL_V1)
 public class BookingsController implements BookingsApi {
 
 	private final BookingsAdapter adapter;
@@ -32,7 +32,7 @@ public class BookingsController implements BookingsApi {
 			return ResponseEntity.badRequest().body(result);
 		}
 
-		return ResponseEntity.created(URI.create("/api/v1/bookings/" + result.getId())).build();
+		return ResponseEntity.created(URI.create(Routes.Bookings.BOOKINGS.concat(result.getId()))).build();
 	}
 
 }

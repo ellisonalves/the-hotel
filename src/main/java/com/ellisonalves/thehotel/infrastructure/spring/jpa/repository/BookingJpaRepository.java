@@ -2,6 +2,7 @@ package com.ellisonalves.thehotel.infrastructure.spring.jpa.repository;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,6 +29,11 @@ public class BookingJpaRepository implements BookingRepository {
 	@Override
 	public List<Booking> findBookings(UUID roomId, Instant startDate, Instant endDate) {
 		return repository.findBookingsPerRoomAndDateRange(roomId, startDate, endDate);
+	}
+
+	@Override
+	public Optional<Booking> findById(UUID id) {
+		return repository.findById(id);
 	}
 
 }
