@@ -1,21 +1,25 @@
 package com.ellisonalves.thehotel.application.vo.err;
 
-public record Result(boolean err, String message) {
+public record Result(Content content) {
 
-    public static Result err(String message) {
-        return create(false, message);
-    }
+	public static Result inputError(String message) {
+		return err(400, message);
+	}
 
-    public static Result ok(String message) {
-        return create(true, message);
-    }
+	public static Result err(Integer statusCode, String message) {
+		return createResult(null, statusCode, message);
+	}
 
-    private static Result create(boolean err, String message) {
-        return new Result(err, message);
-    }
+	public static Result created(String id, String message) {
+		return createResult(id, 200, message);
+	}
 
-    public boolean isErr() {
-        return err;
-    }
+	private static Result createResult(String id, Integer statusCode, String message) {
+		return new Result(new Content(id, statusCode, message));
+	}
+
+	public static record Content(String id, Integer statusCode, String message) {
+
+	}
 
 }

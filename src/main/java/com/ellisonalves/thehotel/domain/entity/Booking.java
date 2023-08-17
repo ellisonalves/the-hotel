@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Booking extends BaseEntity<UUID> {
@@ -79,5 +80,23 @@ public class Booking extends BaseEntity<UUID> {
     public int hashCodePrime() {
         return 31;
     }
+
+    @Transient
+	public boolean isMissingMandatoryFields() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+    @Transient
+	public boolean isStartOrEndDatesBefore(Instant now) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+    @Transient
+	public boolean isStartDateAfterEndDate() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

@@ -14,27 +14,27 @@ import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 @Repository
 public class BookingJpaRepository implements BookingRepository {
 
-    private final BookingSpringJpaRepository repository;
+	private final BookingSpringJpaRepository repository;
 
-    public BookingJpaRepository(BookingSpringJpaRepository repository) {
-        this.repository = repository;
-    }
+	public BookingJpaRepository(BookingSpringJpaRepository repository) {
+		this.repository = repository;
+	}
 
-    @Override
-    public void persist(Booking booking) {
-        repository.save(booking);
-    }
+	@Override
+	public Booking persist(Booking booking) {
+		return repository.save(booking);
+	}
 
-    @Override
-    public List<Booking> findBookings(UUID roomId, Instant startDate, Instant endDate) {
-        return repository.findBookingsPerRoomAndDateRange(roomId, startDate, endDate);
-    }
+	@Override
+	public List<Booking> findBookings(UUID roomId, Instant startDate, Instant endDate) {
+		return repository.findBookingsPerRoomAndDateRange(roomId, startDate, endDate);
+	}
 
 }
 
 interface BookingSpringJpaRepository extends JpaRepository<Booking, UUID> {
 
-    @Query("from Booking b where b.room.id = :roomId and (b.startDate < :endDate and b.endDate > :startDate)")
-    List<Booking> findBookingsPerRoomAndDateRange(UUID roomId, Instant startDate, Instant endDate);
+	@Query("from Booking b where b.room.id = :roomId and (b.startDate < :endDate and b.endDate > :startDate)")
+	List<Booking> findBookingsPerRoomAndDateRange(UUID roomId, Instant startDate, Instant endDate);
 
 }

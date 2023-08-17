@@ -1,27 +1,38 @@
 package com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints;
 
+import java.net.URI;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ellisonalves.thehotel.infrastructure.rest.BookingsApi;
+import com.ellisonalves.thehotel.infrastructure.rest.api.BookingsApi;
+import com.ellisonalves.thehotel.infrastructure.rest.model.BookingCreatedResponse;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateBookingRequest;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.adapters.CreateBookingAdapter;
 
 @RestController
 @RequestMapping("/api/v1")
 public class BookingsController implements BookingsApi {
 
-    private final CreateBookingAdapter adapter;
+	private final BookingsAdapter adapter;
 
-    public BookingsController(CreateBookingAdapter adapter) {
-        this.adapter = adapter;
-    }
+	public BookingsController(BookingsAdapter adapter) {
+		this.adapter = adapter;
+	}
 
-    @Override
-    public ResponseEntity<Void> createBooking(CreateBookingRequest request) {
-        adapter.createBooking(request);
-        return ResponseEntity.accepted().build();
-    }
+	@Override
+	public ResponseEntity<BookingCreatedResponse> createBooking(CreateBookingRequest request) {
+		var result = adapter.adapt(request);
+
+		if (result == null || result.getStatusCode() == null) {
+			return ResponseEntity.unprocessableEntity().build();
+		}
+
+		if (result.getStatusCode() > 399 && result.getStatusCode() < 499) {
+			return ResponseEntity.badRequest().body(result);
+		}
+
+		return ResponseEntity.created(URI.create("/api/v1/bookings/" + result.getId())).build();
+	}
 
 }

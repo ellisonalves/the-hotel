@@ -154,7 +154,7 @@
                             </inputSpec>
                             <generatorName>spring</generatorName>
 
-                            <apiPackage>com.ellisonalves.thehotel.infrastructure.rest</apiPackage>
+                            <apiPackage>com.ellisonalves.thehotel.infrastructure.rest.api</apiPackage>
                             <modelPackage>
                                 com.ellisonalves.thehotel.infrastructure.rest.model</modelPackage>
 

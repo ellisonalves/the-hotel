@@ -8,7 +8,7 @@ import com.ellisonalves.thehotel.domain.entity.Booking;
 
 public interface BookingRepository {
 
-    void persist(Booking booking);
+    Booking persist(Booking booking);
 
     List<Booking> findBookings(UUID roomId, Instant startDate, Instant endDate);
 

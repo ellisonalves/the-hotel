@@ -36,6 +36,10 @@ paths:
       responses:
         "201":
           description: Successful operation
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/BookingCreatedResponse"
         "400":
           description: Invalid request
         "404":
@@ -274,6 +278,16 @@ components:
         - room_id
         - from
         - until
+    
+    BookingCreatedResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
 
     ## Guest Schemas
     CreateGuestRequest:

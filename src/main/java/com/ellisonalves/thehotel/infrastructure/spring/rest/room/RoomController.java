@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.ellisonalves.thehotel.infrastructure.rest.RoomsApi;
+import com.ellisonalves.thehotel.infrastructure.rest.api.RoomsApi;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomList;
 import com.ellisonalves.thehotel.infrastructure.rest.model.UpdateRoomRequest;

@@ -9,46 +9,37 @@ import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 
 public class CreateBookingUseCase {
 
-    private final BookingRepository repository;
-    private final CreateBookingMapper mapper;
+	private final BookingRepository repository;
 
-    public CreateBookingUseCase(BookingRepository repository, CreateBookingMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
+	public CreateBookingUseCase(BookingRepository repository) {
+		this.repository = repository;
+	}
 
-    public Result createBooking(CreateBooking booking) {
-        var now = Instant.now(Clock.systemUTC());
+	public Result createBooking(Booking booking) {
+		var now = Instant.now(Clock.systemUTC());
 
-        if (booking.isMissingMandatoryFields()) {
-            return Result.err("Missing mandatory fields");
-        }
+		if (booking.isMissingMandatoryFields()) {
+			return Result.inputError("Missing mandatory fields");
+		}
 
-        if (booking.isStartOrEndDatesBefore(now)) {
-            return Result.err("Bookings in the past are not allowed");
-        }
+		if (booking.isStartOrEndDatesBefore(now)) {
+			return Result.inputError("Bookings in the past are not allowed");
+		}
 
-        if (booking.isStartDateAfterEndDate()) {
-            return Result.err("Start date MUST be before end date");
-        }
+		if (booking.isStartDateAfterEndDate()) {
+			return Result.inputError("Start date MUST be before end date");
+		}
 
-        var existingBookings = repository.findBookings(
-                booking.roomId(),
-                booking.from(),
-                booking.until());
+		var existingBookings = repository.findBookings(booking.getRoom().getId(), booking.getStartDate(),
+				booking.getEndDate());
 
-        if (existingBookings != null && !existingBookings.isEmpty()) {
-            return Result.err("Booking not available");
-        }
+		if (existingBookings != null && !existingBookings.isEmpty()) {
+			return Result.inputError("Booking not available");
+		}
 
-        repository.persist(mapper.toDomain(booking));
+		var createdBooking = repository.persist(booking);
 
-        return Result.ok("Created!");
-    }
+		return Result.created(createdBooking.getId().toString(), "Created!");
+	}
 
-    public interface CreateBookingMapper {
-
-        Booking toDomain(CreateBooking booking);
-
-    }
 }

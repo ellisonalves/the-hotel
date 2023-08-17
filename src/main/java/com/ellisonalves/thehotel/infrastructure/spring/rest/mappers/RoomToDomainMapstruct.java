@@ -33,7 +33,7 @@ public interface RoomToDomainMapstruct extends RoomDomainMapper {
 
     @Mapping(target = "money.amount", source = "unitPrice.amount")
     @Mapping(target = "money.currency", source = "unitPrice.currencyCode")
-    CreateRoomDto toCreateRoomDto(CreateRoomRequest room);
+	CreateRoomDto toCreateRoomDto(CreateRoomRequest room);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "doorNumber", source = "doorNumber")
