@@ -36,7 +36,10 @@ public class BookingsControllerTest {
 
 	@Test
 	void shouldCreateBooking() throws Exception {
-		Mockito.when(mockBookingsAdapter.adapt(Mockito.any())).thenReturn(new BookingCreatedResponse().statusCode(201));
+		var response = new BookingCreatedResponse();
+		response.statusCode(201);
+		response.setId(UUID.randomUUID().toString());
+		Mockito.when(mockBookingsAdapter.adapt(Mockito.any())).thenReturn(response);
 
 		mockMvc.perform(post(API_V1_BOOKINGS).contentType(MediaType.APPLICATION_JSON).content("""
 				{

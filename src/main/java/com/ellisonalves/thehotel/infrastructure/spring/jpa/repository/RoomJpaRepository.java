@@ -13,50 +13,42 @@ import com.ellisonalves.thehotel.domain.repository.RoomRepository;
 @Repository
 public class RoomJpaRepository implements RoomRepository {
 
-    private final RoomSpringJpaRepository repository;
+	private final RoomSpringJpaRepository repository;
 
-    public RoomJpaRepository(RoomSpringJpaRepository roomSpringJpaRepository) {
-        this.repository = roomSpringJpaRepository;
-    }
+	public RoomJpaRepository(RoomSpringJpaRepository roomSpringJpaRepository) {
+		this.repository = roomSpringJpaRepository;
+	}
 
-    @Override
-    public Room persist(Room room) {
-<<<<<<< HEAD:src/main/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepository.java
-        return repository.save(room);
-=======
-        return repository.save(mapper.toEntity(room));
->>>>>>> origin/master:hotel-spring-impl/src/main/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepository.java
-    }
+	@Override
+	public Room persist(Room room) {
+		return repository.save(room);
+	}
 
-    @Override
-    public Optional<Room> findById(UUID id) {
-        return repository.findById(id);
-    }
+	@Override
+	public Optional<Room> findById(UUID id) {
+		return repository.findById(id);
+	}
 
-    @Override
-    public void deleteByDoorNumber(String doorNumber) {
-        repository.deleteByDoorNumber(doorNumber);
-    }
+	@Override
+	public void deleteByDoorNumber(String doorNumber) {
+		repository.deleteByDoorNumber(doorNumber);
+	}
 
-    @Override
-    public List<Room> findAll() {
-        return repository.findAll().stream().toList();
-    }
+	@Override
+	public List<Room> findAll() {
+		return repository.findAll().stream().toList();
+	}
 
-    @Override
-    public Optional<Room> findByDoorNumber(String doorNumber) {
-        return repository.findByDoorNumber(doorNumber);
-    }
+	@Override
+	public Optional<Room> findByDoorNumber(String doorNumber) {
+		return repository.findByDoorNumber(doorNumber);
+	}
 
 }
 
 interface RoomSpringJpaRepository extends JpaRepository<Room, UUID> {
 
-<<<<<<< HEAD:src/main/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepository.java
-    Optional<Room> findByDoorNumber(String doorNumber);
-=======
-    Optional<RoomJpa> findByDoorNumber(String doorNumber);
->>>>>>> origin/master:hotel-spring-impl/src/main/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepository.java
+	Optional<Room> findByDoorNumber(String doorNumber);
 
-    void deleteByDoorNumber(String doorNumber);
+	void deleteByDoorNumber(String doorNumber);
 }

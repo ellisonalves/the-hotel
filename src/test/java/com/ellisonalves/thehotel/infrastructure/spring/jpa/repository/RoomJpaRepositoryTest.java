@@ -15,55 +15,44 @@ import com.ellisonalves.thehotel.domain.entity.Room;
 @DatabaseTest
 class RoomJpaRepositoryTest {
 
-    @Autowired
-    private RoomJpaRepository repository;
+	@Autowired
+	private RoomJpaRepository repository;
 
-    @Test
-    void shouldPersistRoom() {
-        repository.persist(createRoom());
-    }
+	@Test
+	void shouldPersistRoom() {
+		repository.persist(createRoom());
+	}
 
-    @Test
-    void shouldReturnNoRoom() {
-        assertThat(repository.findById(UUID.randomUUID())).isNotPresent();
-    }
+	@Test
+	void shouldReturnNoRoom() {
+		assertThat(repository.findById(UUID.randomUUID())).isNotPresent();
+	}
 
-    @Test
-    void shouldFindRoomById() {
-        var newRoom = createRoom();
-        var persisted = repository.persist(newRoom);
+	@Test
+	void shouldFindRoomById() {
+		var newRoom = createRoom();
+		var persisted = repository.persist(newRoom);
 
-        assertThat(repository.findById(persisted.getId())).isPresent();
-    }
+		assertThat(repository.findById(persisted.getId())).isPresent();
+	}
 
-    @Test
-    void shouldDeleteRoom() {
-        var room = repository.persist(createRoom());
+	@Test
+	void shouldDeleteRoom() {
+		var room = repository.persist(createRoom());
 
-        assertThat(repository.findById(room.getId())).isNotNull();
+		assertThat(repository.findById(room.getId())).isNotNull();
 
-        repository.deleteByDoorNumber(room.getDoorNumber());
+		repository.deleteByDoorNumber(room.getDoorNumber());
 
-        assertThat(repository.findById(room.getId())).isNotPresent();
-    }
+		assertThat(repository.findById(room.getId())).isNotPresent();
+	}
 
-<<<<<<< HEAD:src/test/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepositoryTest.java
-    private Room createRoom() {
-        var room = new Room();
-=======
-    @Test
-    void shouldReturnNoRooms() {
-        assertThat(repository.findAll()).isEmpty();
-    }
-
-    private RoomJpa createRoom() {
-        var room = new RoomJpa();
->>>>>>> origin/master:hotel-spring-impl/src/test/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepositoryTest.java
-        room.setId(UUID.randomUUID());
-        room.setDoorNumber("123");
-        room.setAmount(BigDecimal.TEN);
-        room.setRoomType(RoomType.STANDARD);
-        return room;
-    }
+	private Room createRoom() {
+		var room = new Room();
+		room.setDoorNumber("123");
+		room.setAmount(BigDecimal.TEN);
+		room.setRoomType(RoomType.STANDARD);
+		return room;
+	}
 
 }
