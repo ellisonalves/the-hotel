@@ -47,8 +47,18 @@ class RoomJpaRepositoryTest {
         assertThat(repository.findById(room.getId())).isNotPresent();
     }
 
+<<<<<<< HEAD:src/test/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepositoryTest.java
     private Room createRoom() {
         var room = new Room();
+=======
+    @Test
+    void shouldReturnNoRooms() {
+        assertThat(repository.findAll()).isEmpty();
+    }
+
+    private RoomJpa createRoom() {
+        var room = new RoomJpa();
+>>>>>>> origin/master:hotel-spring-impl/src/test/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepositoryTest.java
         room.setId(UUID.randomUUID());
         room.setDoorNumber("123");
         room.setAmount(BigDecimal.TEN);

@@ -31,6 +31,11 @@ import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest.RoomTypeEnum;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomData;
 import com.ellisonalves.thehotel.infrastructure.rest.model.UnitPrice;
+<<<<<<< HEAD:src/test/java/com/ellisonalves/thehotel/infrastructure/spring/rest/room/RoomControllerTest.java
+=======
+import com.ellisonalves.thehotel.infrastructure.spring.annotations.ContractTest;
+import com.ellisonalves.thehotel.infrastructure.spring.jpa.entity.RoomJpa;
+>>>>>>> origin/master:hotel-spring-impl/src/test/java/com/ellisonalves/thehotel/infrastructure/spring/rest/room/RoomControllerTest.java
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.model.RoomCreateDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

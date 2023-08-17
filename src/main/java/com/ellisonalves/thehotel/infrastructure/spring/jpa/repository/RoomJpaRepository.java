@@ -21,7 +21,11 @@ public class RoomJpaRepository implements RoomRepository {
 
     @Override
     public Room persist(Room room) {
+<<<<<<< HEAD:src/main/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepository.java
         return repository.save(room);
+=======
+        return repository.save(mapper.toEntity(room));
+>>>>>>> origin/master:hotel-spring-impl/src/main/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepository.java
     }
 
     @Override
@@ -48,7 +52,11 @@ public class RoomJpaRepository implements RoomRepository {
 
 interface RoomSpringJpaRepository extends JpaRepository<Room, UUID> {
 
+<<<<<<< HEAD:src/main/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepository.java
     Optional<Room> findByDoorNumber(String doorNumber);
+=======
+    Optional<RoomJpa> findByDoorNumber(String doorNumber);
+>>>>>>> origin/master:hotel-spring-impl/src/main/java/com/ellisonalves/thehotel/infrastructure/spring/jpa/repository/RoomJpaRepository.java
 
     void deleteByDoorNumber(String doorNumber);
 }
