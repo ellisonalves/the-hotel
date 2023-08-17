@@ -1,0 +1,311 @@
+openapi: 3.0.3
+info:
+  title: The Hotel API - OpenAPI 3.0
+  description: |-
+    Simple Api in order to test the opengenerator plugin features.
+  contact:
+    email: ellisonalves@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: https://localhost:8080/api/v1
+tags:
+  - name: Booking
+    description: Manage booking in the hotel
+  - name: Rooms
+    description: Manage the hotel rooms
+  - name: Guests
+    description: Manage the guests in the hotel
+paths:
+  /bookings:
+    post:
+      tags:
+        - Bookings
+      summary: Creates a new booking
+      description: Creates a booking in the hotel for a given customers and room for a determine period of timeØ
+      operationId: createBooking
+      requestBody:
+        description: Required data for creating a booking
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBookingRequest"
+        required: true
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/BookingCreatedResponse"
+        "400":
+          description: Invalid request
+        "404":
+          description: Pet not found
+        "405":
+          description: Validation exception
+  
+  /rooms:
+    post:
+      tags:
+        - Rooms
+      summary: Creates a new room
+      description: Adds a new room to the hotel database
+      operationId: createRoom
+      requestBody:
+        description: Required information for adding a room
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRoomRequest"
+        required: true
+      responses:
+        "201":
+          description: Room created
+        "400":
+          description: Invalid request
+    get:
+      tags:
+        - Rooms
+      summary: Finds all rooms
+      description: Find all existing rooms in the hotel
+      operationId: findAll
+      responses:
+        "200":
+          description: List of the rooms in the hotel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoomList"
+  /rooms/{door_number}:
+    get:
+      tags:
+        - Rooms
+      summary: Finds a room by its door number
+      description: Find a room by door number
+      operationId: findByDoorNumber
+      parameters:
+        - $ref: "#/components/parameters/DoorNumber"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoomList"
+    put:
+      tags:
+        - Rooms
+      summary: Updates a room information by its door number
+      description: Updates a room information by its door number
+      operationId: updateRoom
+      parameters:
+        - $ref: "#/components/parameters/DoorNumber"
+      requestBody:
+        description: Room's data that is available for changing
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRoomRequest"
+      responses:
+        "204":
+          description: Room was updated correctly
+    delete:
+      tags:
+        - Rooms
+      summary: Deletes a room by its door number
+      description: Users the door number to identify a room and then delete it.
+      operationId: deleteRoom
+      parameters:
+        - $ref: "#/components/parameters/DoorNumber"
+      responses:
+        "204":
+          description: Room deleted successfully
+        "404":
+          description: Room not found
+  
+  /guests:
+    post:
+      tags:
+        - Guests
+      summary: Adds a new guest to the hotel.
+      description: The guests are in the hotel during a given period of time and their information needs to be stored in the hotel.
+      operationId: addGuest
+      requestBody:
+        description: Required information for allowing a person to enter the hotel.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGuestRequest"
+      responses:
+        "201":
+          description: Resource was created successfully
+  /guests/{guest_id}:
+    get:
+      tags:
+        - Guests
+      summary: Get a guest by its id
+      description: Get a guest by its id
+      operationId: findById
+      parameters:
+        - $ref: "#/components/parameters/GuestId"
+      responses:
+        "200":
+          description: Resource found
+        "404":
+          description: Resource not found
+    put:
+      tags:
+        - Guests
+      summary: Updates a guest by its id
+      description: Updats a guest by its id
+      operationId: updateGuest
+      parameters:
+        - $ref: "#/components/parameters/GuestId"
+      responses:
+        "200":
+          description: Resource found
+        "404":
+          description: Resource not found
+    delete:
+      tags:
+        - Guests
+      summary: Deletes a guest by its id
+      description: Deletes a guest by its id
+      operationId: deleteById
+      parameters:
+        - $ref: "#/components/parameters/GuestId"
+      responses:
+        "200":
+          description: Resource found
+        "404":
+          description: Resource not found
+
+components:
+  parameters:
+    GuestId:
+      name: guest_id
+      in: path
+      description: Guest Id
+      required: true
+      schema:
+        type: string
+    DoorNumber:
+      name: door_number
+      in: path
+      description: Room's door number
+      required: true
+      schema:
+        type: string
+  
+  schemas:
+    # Room Schemas
+    CreateRoomRequest:
+      type: object
+      properties:
+        door_number:
+          type: string
+        room_type:
+          enum:
+            - STANDARD
+            - DOUBLE
+            - PRESIDENT
+        unit_price:
+          $ref: "#/components/schemas/UnitPrice"
+      required:
+        - door_number
+        - room_type
+        - unit_price
+    UpdateRoomRequest:
+      type: object
+      properties:
+        room_type:
+          $ref: "#/components/schemas/RoomType"
+        unit_price:
+          $ref: "#/components/schemas/UnitPrice"
+    RoomList:
+      type: object
+      properties:
+        rooms:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoomData"
+    RoomType:
+      enum:
+        - STANDARD
+        - DOUBLE
+        - PRESIDENT
+    RoomData:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        door_number:
+          type: string
+        room_type:
+          enum:
+            - STANDARD
+            - DOUBLE
+            - PRESIDENT
+        unit_price:
+          $ref: "#/components/schemas/UnitPrice"
+      required:
+        - door_number
+        - room_type
+        - unit_price
+
+    ## Booking Schemas
+    CreateBookingRequest:
+      type: object
+      properties:
+        guest_id:
+          type: string
+          format: uuid
+        room_id:
+          type: string
+          format: uuid
+        from:
+          type: string
+          format: date-time
+        until:
+          type: string
+          format: date-time
+      required:
+        - guest_id
+        - room_id
+        - from
+        - until
+    
+    BookingCreatedResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status_code:
+          type: integer
+        message:
+          type: string
+
+    ## Guest Schemas
+    CreateGuestRequest:
+      type: object
+      properties:
+        name:
+          type: string
+
+
+    # Shared schemas
+    UnitPrice:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: decimal
+        currency_code:
+          type: string
+      required:
+        - amount
+        - currency_code
