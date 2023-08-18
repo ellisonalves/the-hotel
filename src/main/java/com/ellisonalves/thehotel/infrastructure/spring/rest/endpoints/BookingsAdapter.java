@@ -7,12 +7,15 @@ import java.time.ZoneId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.ValueMapping;
 import org.springframework.stereotype.Component;
 
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
-import com.ellisonalves.thehotel.application.vo.err.Result.Content;
+import com.ellisonalves.thehotel.application.vo.err.Result;
+import com.ellisonalves.thehotel.application.vo.err.Result.ResultType;
 import com.ellisonalves.thehotel.domain.entity.Booking;
 import com.ellisonalves.thehotel.infrastructure.rest.model.BookingCreatedResponse;
+import com.ellisonalves.thehotel.infrastructure.rest.model.BookingCreatedResponse.LevelEnum;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateBookingRequest;
 
 @Component
@@ -26,9 +29,18 @@ public class BookingsAdapter {
 		this.mapper = mapper;
 	}
 
-	public BookingCreatedResponse adapt(CreateBookingRequest request) {
+	public BookingCreatedResponse execute(CreateBookingRequest request) {
 		var result = useCase.createBooking(mapper.toDomain(request));
-		return mapper.toCreatedBookingResponse(result.content());
+
+		switch (result.resultType()) {
+		case OK:
+			return mapper.toOkResponse(result);
+		case UNPROCESSABLE_ENTITY:
+			return mapper.toUnprocessableResponse(result);
+		default:
+			throw new IllegalArgumentException("The resultType can't be mapped -> %s".formatted(result.resultType()));
+		}
+
 	}
 
 	@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
@@ -40,9 +52,22 @@ public class BookingsAdapter {
 		@Mapping(target = "startDate", source = "from")
 		@Mapping(target = "endDate", source = "until")
 		@Mapping(target = "version", ignore = true)
+		@Mapping(target = "createdAt", ignore = true)
 		Booking toDomain(CreateBookingRequest view);
 
-		BookingCreatedResponse toCreatedBookingResponse(Content content);
+		@Mapping(target = "resourceId", ignore = true)
+		@Mapping(target = "message", source = "content.message")
+		@Mapping(target = "level", source = "resultType")
+		BookingCreatedResponse toUnprocessableResponse(Result result);
+
+		@Mapping(target = "resourceId", source = "content.resourceId")
+		@Mapping(target = "message", source = "content.message")
+		@Mapping(target = "level", source = "resultType")
+		BookingCreatedResponse toOkResponse(Result result);
+
+		@ValueMapping(target = "OK", source = "OK")
+		@ValueMapping(target = "UNPROCESSABLE", source = "UNPROCESSABLE_ENTITY")
+		LevelEnum mapLevel(ResultType resultType);
 
 		default Instant map(OffsetDateTime offsetDateTime) {
 			if (offsetDateTime == null)

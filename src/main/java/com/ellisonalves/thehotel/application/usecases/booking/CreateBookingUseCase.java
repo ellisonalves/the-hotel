@@ -19,27 +19,27 @@ public class CreateBookingUseCase {
 		var now = Instant.now(Clock.systemUTC());
 
 		if (booking.isMissingMandatoryFields()) {
-			return Result.inputError("Missing mandatory fields");
+			return Result.unprocessableFailure("Missing mandatory fields");
 		}
 
 		if (booking.isStartOrEndDatesBefore(now)) {
-			return Result.inputError("Bookings in the past are not allowed");
+			return Result.unprocessableFailure("Bookings in the past are not allowed");
 		}
 
 		if (booking.isStartDateAfterEndDate()) {
-			return Result.inputError("Start date MUST be before end date");
+			return Result.unprocessableFailure("Start date MUST be before end date");
 		}
 
 		var existingBookings = repository.findBookings(booking.getRoom().getId(), booking.getStartDate(),
 				booking.getEndDate());
 
 		if (existingBookings != null && !existingBookings.isEmpty()) {
-			return Result.inputError("Booking not available");
+			return Result.unprocessableFailure("Booking not available");
 		}
 
 		var createdBooking = repository.persist(booking);
 
-		return Result.created(createdBooking.getId().toString(), "Created!");
+		return Result.ok(createdBooking.getId().toString(), "Created!");
 	}
 
 }

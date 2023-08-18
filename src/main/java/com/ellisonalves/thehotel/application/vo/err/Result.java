@@ -1,25 +1,29 @@
 package com.ellisonalves.thehotel.application.vo.err;
 
-public record Result(Content content) {
+public record Result(ResultType resultType, Content content) {
 
-	public static Result inputError(String message) {
-		return err(400, message);
+	public static Result unprocessableFailure(String message) {
+		return failure(ResultType.UNPROCESSABLE_ENTITY, message);
 	}
 
-	public static Result err(Integer statusCode, String message) {
-		return createResult(null, statusCode, message);
+	public static Result ok(String resourceId, String message) {
+		return createResult(ResultType.OK, resourceId, message);
 	}
 
-	public static Result created(String id, String message) {
-		return createResult(id, 200, message);
+	private static Result failure(ResultType resultType, String message) {
+		return createResult(resultType, null, message);
 	}
 
-	private static Result createResult(String id, Integer statusCode, String message) {
-		return new Result(new Content(id, statusCode, message));
+	private static Result createResult(ResultType resultType, String resourceId, String message) {
+		return new Result(resultType, new Content(resourceId, message));
 	}
 
-	public static record Content(String id, Integer statusCode, String message) {
+	public static record Content(String resourceId, String message) {
 
+	}
+
+	public static enum ResultType {
+		UNPROCESSABLE_ENTITY, OK
 	}
 
 }

@@ -19,7 +19,7 @@ tags:
   - name: Guests
     description: Manage the guests in the hotel
 paths:
-  /bookings:
+  /bookings/:
     post:
       tags:
         - Bookings
@@ -42,6 +42,10 @@ paths:
                 $ref: "#/components/schemas/BookingCreatedResponse"
         "400":
           description: Invalid request
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/BookingCreatedResponse"
         "404":
           description: Pet not found
         "405":
@@ -282,12 +286,15 @@ components:
     BookingCreatedResponse:
       type: object
       properties:
-        id:
+        resource_id:
           type: string
-        status_code:
-          type: integer
         message:
           type: string
+        level:
+          type: string
+          enum:
+            - UNPROCESSABLE
+            - OK
 
     ## Guest Schemas
     CreateGuestRequest:

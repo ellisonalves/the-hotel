@@ -22,17 +22,18 @@ public class BookingsController implements BookingsApi {
 
 	@Override
 	public ResponseEntity<BookingCreatedResponse> createBooking(CreateBookingRequest request) {
-		var result = adapter.adapt(request);
+		var response = adapter.execute(request);
 
-		if (result == null || result.getStatusCode() == null) {
-			return ResponseEntity.unprocessableEntity().build();
+		switch (response.getLevel()) {
+		case UNPROCESSABLE:
+			return ResponseEntity.unprocessableEntity().body(response);
+		case OK:
+			return ResponseEntity.created(URI.create(Routes.Bookings.BOOKINGS.concat(response.getResourceId())))
+					.body(response);
+		default:
+			throw new IllegalArgumentException("Something went wrong");
 		}
 
-		if (result.getStatusCode() > 399 && result.getStatusCode() < 499) {
-			return ResponseEntity.badRequest().body(result);
-		}
-
-		return ResponseEntity.created(URI.create(Routes.Bookings.BOOKINGS.concat(result.getId()))).build();
 	}
 
 }
