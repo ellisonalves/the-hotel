@@ -1,4 +1,4 @@
-package com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints;
+package com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints.adapter;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
@@ -35,7 +35,7 @@ public class BookingsAdapter {
 		switch (result.resultType()) {
 		case OK:
 			return mapper.toOkResponse(result);
-		case UNPROCESSABLE_ENTITY:
+		case UNPROCESSABLE:
 			return mapper.toUnprocessableResponse(result);
 		default:
 			throw new IllegalArgumentException("The resultType can't be mapped -> %s".formatted(result.resultType()));
@@ -65,8 +65,8 @@ public class BookingsAdapter {
 		@Mapping(target = "level", source = "resultType")
 		BookingCreatedResponse toOkResponse(Result result);
 
-		@ValueMapping(target = "OK", source = "OK")
-		@ValueMapping(target = "UNPROCESSABLE", source = "UNPROCESSABLE_ENTITY")
+		@ValueMapping(target = "CREATED", source = "OK")
+		@ValueMapping(target = "UNPROCESSABLE_ENTITY", source = "UNPROCESSABLE")
 		LevelEnum mapLevel(ResultType resultType);
 
 		default Instant map(OffsetDateTime offsetDateTime) {

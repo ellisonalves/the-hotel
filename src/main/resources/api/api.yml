@@ -293,8 +293,8 @@ components:
         level:
           type: string
           enum:
-            - UNPROCESSABLE
-            - OK
+            - UNPROCESSABLE_ENTITY
+            - CREATED
 
     ## Guest Schemas
     CreateGuestRequest:

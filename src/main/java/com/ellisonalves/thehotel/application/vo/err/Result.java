@@ -3,7 +3,7 @@ package com.ellisonalves.thehotel.application.vo.err;
 public record Result(ResultType resultType, Content content) {
 
 	public static Result unprocessableFailure(String message) {
-		return failure(ResultType.UNPROCESSABLE_ENTITY, message);
+		return failure(ResultType.UNPROCESSABLE, message);
 	}
 
 	public static Result ok(String resourceId, String message) {
@@ -23,7 +23,7 @@ public record Result(ResultType resultType, Content content) {
 	}
 
 	public static enum ResultType {
-		UNPROCESSABLE_ENTITY, OK
+		UNPROCESSABLE, OK
 	}
 
 }

@@ -16,7 +16,7 @@ import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCa
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.infrastructure.spring.config.JacksonConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.config.MessagesConfig;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints.BookingsAdapter;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints.adapter.BookingsAdapter;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomToDomainMapstructImpl;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomAdapter;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomToViewMapperImpl;

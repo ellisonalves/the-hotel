@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ellisonalves.thehotel.infrastructure.rest.api.BookingsApi;
 import com.ellisonalves.thehotel.infrastructure.rest.model.BookingCreatedResponse;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateBookingRequest;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints.adapter.BookingsAdapter;
 
 @RestController
 @RequestMapping(Routes.BASE_URL_V1)
@@ -25,9 +26,9 @@ public class BookingsController implements BookingsApi {
 		var response = adapter.execute(request);
 
 		switch (response.getLevel()) {
-		case UNPROCESSABLE:
+		case UNPROCESSABLE_ENTITY:
 			return ResponseEntity.unprocessableEntity().body(response);
-		case OK:
+		case CREATED:
 			return ResponseEntity.created(URI.create(Routes.Bookings.BOOKINGS.concat(response.getResourceId())))
 					.body(response);
 		default:

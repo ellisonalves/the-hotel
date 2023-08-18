@@ -3,6 +3,7 @@ package com.ellisonalves.thehotel.domain.entity;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.ellisonalves.thehotel.domain.BaseEntity;
 import com.ellisonalves.thehotel.domain.aggregates.GenderType;
 
 import jakarta.persistence.Column;

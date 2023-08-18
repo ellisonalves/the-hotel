@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import com.ellisonalves.thehotel.annotations.ControllerTest;
 import com.ellisonalves.thehotel.infrastructure.rest.model.BookingCreatedResponse;
 import com.ellisonalves.thehotel.infrastructure.rest.model.BookingCreatedResponse.LevelEnum;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints.adapter.BookingsAdapter;
 
 @ControllerTest
 public class BookingsControllerTest {
@@ -44,7 +45,7 @@ public class BookingsControllerTest {
 
 		response.setResourceId(createdBookingId);
 		response.setMessage("Created!");
-		response.setLevel(LevelEnum.OK);
+		response.setLevel(LevelEnum.CREATED);
 
 		when(mockBookingsAdapter.execute(any())).thenReturn(response);
 
@@ -54,7 +55,7 @@ public class BookingsControllerTest {
 							{
 								"resource_id": "e891677d-0ebf-475d-a967-dff6bb09d2ff",
 								"message": "Created!",
-								"level": "OK"
+								"level": "CREATED"
 							}
 						""", true));
 	}
@@ -83,14 +84,14 @@ public class BookingsControllerTest {
 	@Test
 	void shouldHandleUnprocessableEntityError() throws Exception {
 		var response = new BookingCreatedResponse();
-		response.setLevel(LevelEnum.UNPROCESSABLE);
+		response.setLevel(LevelEnum.UNPROCESSABLE_ENTITY);
 		response.setMessage("some error has happened");
 
 		when(mockBookingsAdapter.execute(any())).thenReturn(response);
 
 		mockMvc.perform(validBookingPost()).andExpect(status().isUnprocessableEntity()).andExpect(content().json("""
 				{
-					"level": "UNPROCESSABLE",
+					"level": "UNPROCESSABLE_ENTITY",
 					"message": "some error has happened"
 				}
 				""", true));
