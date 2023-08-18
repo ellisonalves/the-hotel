@@ -26,14 +26,13 @@ public class PopulateRepositoryRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		persistRoom("123Teste");
-		persistGuest();
+		persistRoom("Testing Room");
+		persistGuest("Testing Guest");
 	}
 
-	private void persistGuest() {
+	private void persistGuest(String name) {
 		var guest = new Guest();
-		guest.setName("Testing Guest");
-
+		guest.setName(name);
 		guestRepository.persist(guest);
 	}
 
