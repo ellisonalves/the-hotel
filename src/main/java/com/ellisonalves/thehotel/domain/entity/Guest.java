@@ -3,6 +3,7 @@ package com.ellisonalves.thehotel.domain.entity;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.ellisonalves.thehotel.domain.BaseEntity;
 import com.ellisonalves.thehotel.domain.aggregates.GenderType;
 
 import jakarta.persistence.Column;
@@ -12,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 
 @Entity
 public class Guest extends BaseEntity<UUID> {
@@ -22,14 +24,18 @@ public class Guest extends BaseEntity<UUID> {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String documentNumber;
-	
-	@Column(insertable = true, updatable = true, nullable = false)
+
+	@Column(nullable = false)
 	private String name;
 	private String nationality;
+	
+	@Enumerated(EnumType.STRING)
 	private GenderType genderType;
 	private String email;
 	private String address;
 	private String phone;
+
+	@Version
 	private Long version;
 
 	@Override

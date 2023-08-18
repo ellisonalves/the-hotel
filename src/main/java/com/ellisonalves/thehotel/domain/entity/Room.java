@@ -5,6 +5,7 @@ import java.util.Currency;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.ellisonalves.thehotel.domain.BaseEntity;
 import com.ellisonalves.thehotel.domain.aggregates.RoomType;
 
 import jakarta.persistence.Entity;
@@ -23,7 +24,7 @@ public class Room extends BaseEntity<UUID> {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String doorNumber;
-	
+
 	@Enumerated(EnumType.STRING)
 	private RoomType roomType;
 	private Currency currency;

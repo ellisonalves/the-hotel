@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ellisonalves.thehotel.infrastructure.rest.api.BookingsApi;
 import com.ellisonalves.thehotel.infrastructure.rest.model.BookingCreatedResponse;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateBookingRequest;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints.adapter.BookingsAdapter;
 
 @RestController
 @RequestMapping(Routes.BASE_URL_V1)
@@ -22,17 +23,18 @@ public class BookingsController implements BookingsApi {
 
 	@Override
 	public ResponseEntity<BookingCreatedResponse> createBooking(CreateBookingRequest request) {
-		var result = adapter.adapt(request);
+		var response = adapter.execute(request);
 
-		if (result == null || result.getStatusCode() == null) {
-			return ResponseEntity.unprocessableEntity().build();
+		switch (response.getLevel()) {
+		case UNPROCESSABLE_ENTITY:
+			return ResponseEntity.unprocessableEntity().body(response);
+		case CREATED:
+			return ResponseEntity.created(URI.create(Routes.Bookings.BOOKINGS.concat(response.getResourceId())))
+					.body(response);
+		default:
+			throw new IllegalArgumentException("Something went wrong");
 		}
 
-		if (result.getStatusCode() > 399 && result.getStatusCode() < 499) {
-			return ResponseEntity.badRequest().body(result);
-		}
-
-		return ResponseEntity.created(URI.create(Routes.Bookings.BOOKINGS.concat(result.getId()))).build();
 	}
 
 }

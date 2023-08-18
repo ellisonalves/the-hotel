@@ -1,5 +1,5 @@
 
-package com.ellisonalves.thehotel.domain.entity;
+package com.ellisonalves.thehotel.domain;
 
 import java.io.Serializable;
 import java.time.Instant;
