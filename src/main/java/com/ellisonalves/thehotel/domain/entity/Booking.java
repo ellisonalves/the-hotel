@@ -30,7 +30,7 @@ public class Booking extends BaseEntity<UUID> {
 	private Guest guest;
 
 	@ManyToOne
-	private Room room;
+	private Accommodation room;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Instant startDate;
@@ -58,11 +58,11 @@ public class Booking extends BaseEntity<UUID> {
 		this.guest = guest;
 	}
 
-	public Room getRoom() {
+	public Accommodation getRoom() {
 		return room;
 	}
 
-	public void setRoom(Room room) {
+	public void setRoom(Accommodation room) {
 		this.room = room;
 	}
 

@@ -8,25 +8,25 @@ import com.ellisonalves.thehotel.application.TimeHelper;
 import com.ellisonalves.thehotel.application.vo.err.UseCaseResult;
 import com.ellisonalves.thehotel.domain.entity.Booking;
 import com.ellisonalves.thehotel.domain.entity.Guest;
-import com.ellisonalves.thehotel.domain.entity.Room;
+import com.ellisonalves.thehotel.domain.entity.Accommodation;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 import com.ellisonalves.thehotel.domain.repository.GuestRepository;
-import com.ellisonalves.thehotel.domain.repository.RoomRepository;
+import com.ellisonalves.thehotel.domain.repository.AccomodationRepository;
 
 public class CreateBookingUseCase {
 
 	private final BookingRepository bookingRepository;
 
-	private final RoomRepository roomRepository;
+	private final AccomodationRepository accommodationRepository;
 
-	private GuestRepository guestRepository;
+	private final GuestRepository guestRepository;
 
 	private final TimeHelper timeHelper;
 
-	public CreateBookingUseCase(BookingRepository bookingRepository, RoomRepository roomRepository,
+	public CreateBookingUseCase(BookingRepository bookingRepository, AccomodationRepository accommodationRepository,
 			GuestRepository guestRepository, TimeHelper timeHelper) {
 		this.bookingRepository = bookingRepository;
-		this.roomRepository = roomRepository;
+		this.accommodationRepository = accommodationRepository;
 		this.timeHelper = timeHelper;
 		this.guestRepository = guestRepository;
 	}
@@ -50,8 +50,8 @@ public class CreateBookingUseCase {
 			return UseCaseResult.unprocessableFailure("Booking not available");
 		}
 
-		var room = roomRepository.findById(input.roomId());
-		if (room.isEmpty()) {
+		var accomodation = accommodationRepository.findById(input.roomId());
+		if (accomodation.isEmpty()) {
 			return UseCaseResult.unprocessableFailure("The room does not exist");
 		}
 
@@ -60,12 +60,12 @@ public class CreateBookingUseCase {
 			return UseCaseResult.unprocessableFailure("The guest does not exist");
 		}
 
-		var createdBooking = persistNewBooking(input, room, guest);
+		var createdBooking = persistNewBooking(input, accomodation, guest);
 
 		return UseCaseResult.ok(createdBooking.getId().toString(), "Created!");
 	}
 
-	private Booking persistNewBooking(CreateBookingInput input, Optional<Room> room, Optional<Guest> guest) {
+	private Booking persistNewBooking(CreateBookingInput input, Optional<Accommodation> room, Optional<Guest> guest) {
 		var newBooking = new Booking();
 		newBooking.setRoom(room.get());
 		newBooking.setGuest(guest.get());
@@ -85,7 +85,7 @@ public class CreateBookingUseCase {
 		}
 
 		public boolean isStartOrEndDatesBefore(Instant instant) {
-			return hasStartAndEndDates() && startDate.isBefore(instant) || endDate.isBefore(instant);
+			return hasStartAndEndDates() && (startDate.isBefore(instant) || endDate.isBefore(instant));
 		}
 
 		public boolean isStartDateAfterEndDate() {

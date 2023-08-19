@@ -1,11 +1,11 @@
 package com.ellisonalves.thehotel.application.usecases.room;
 
-import com.ellisonalves.thehotel.domain.entity.Room;
+import com.ellisonalves.thehotel.domain.entity.Accommodation;
 
 public interface RoomDomainMapper {
 
-    Room toRoom(CreateRoomDto room);
+    Accommodation toRoom(CreateRoomDto room);
 
-    void updateRoom(UpdateRoomDto room, Room originalRoom);
+    void updateRoom(UpdateRoomDto room, Accommodation originalRoom);
 
 }

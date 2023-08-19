@@ -26,10 +26,10 @@ import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCa
 import com.ellisonalves.thehotel.application.vo.err.UseCaseResult;
 import com.ellisonalves.thehotel.domain.entity.Booking;
 import com.ellisonalves.thehotel.domain.entity.Guest;
-import com.ellisonalves.thehotel.domain.entity.Room;
+import com.ellisonalves.thehotel.domain.entity.Accommodation;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 import com.ellisonalves.thehotel.domain.repository.GuestRepository;
-import com.ellisonalves.thehotel.domain.repository.RoomRepository;
+import com.ellisonalves.thehotel.domain.repository.AccomodationRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class CreateBookingUseCaseTest {
@@ -41,7 +41,7 @@ public class CreateBookingUseCaseTest {
 	private BookingRepository bookingRepository;
 
 	@Mock
-	private RoomRepository roomRepository;
+	private AccomodationRepository roomRepository;
 
 	@Mock
 	private GuestRepository guestRepository;
@@ -163,7 +163,7 @@ public class CreateBookingUseCaseTest {
 
 	private Booking createBookingFromInput(CreateBookingInput input) {
 		var newBooking = new Booking();
-		var room = new Room();
+		var room = new Accommodation();
 		room.setId(input.roomId());
 		var guest = new Guest();
 		guest.setId(input.guestId());
@@ -174,8 +174,8 @@ public class CreateBookingUseCaseTest {
 		return newBooking;
 	}
 
-	private Room newRoom() {
-		var room = new Room();
+	private Accommodation newRoom() {
+		var room = new Accommodation();
 		room.setId(VALID_BOOKING_INPUT.roomId());
 		return room;
 	}
@@ -198,7 +198,7 @@ public class CreateBookingUseCaseTest {
 		return when(guestRepository.findById(VALID_BOOKING_INPUT.guestId()));
 	}
 
-	private OngoingStubbing<Optional<Room>> whenFindValidRoomById() {
+	private OngoingStubbing<Optional<Accommodation>> whenFindValidRoomById() {
 		return when(roomRepository.findById(VALID_BOOKING_INPUT.roomId()));
 	}
 

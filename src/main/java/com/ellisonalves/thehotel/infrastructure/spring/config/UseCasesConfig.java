@@ -10,13 +10,13 @@ import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.application.usecases.room.RoomDomainMapper;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 import com.ellisonalves.thehotel.domain.repository.GuestRepository;
-import com.ellisonalves.thehotel.domain.repository.RoomRepository;
+import com.ellisonalves.thehotel.domain.repository.AccomodationRepository;
 
 @Configuration
 public class UseCasesConfig {
 
 	@Bean
-	ManageRoomUseCase manageRoomUseCase(RoomRepository repository, RoomDomainMapper mapper) {
+	ManageRoomUseCase manageRoomUseCase(AccomodationRepository repository, RoomDomainMapper mapper) {
 		return new ManageRoomUseCase(repository, mapper);
 	}
 
@@ -26,7 +26,7 @@ public class UseCasesConfig {
 	}
 
 	@Bean
-	CreateBookingUseCase createBookingUseCase(BookingRepository bookingRepository, RoomRepository roomRepository,
+	CreateBookingUseCase createBookingUseCase(BookingRepository bookingRepository, AccomodationRepository roomRepository,
 			GuestRepository guestRepository, TimeHelper timeHelper) {
 		return new CreateBookingUseCase(bookingRepository, roomRepository, guestRepository, timeHelper);
 	}

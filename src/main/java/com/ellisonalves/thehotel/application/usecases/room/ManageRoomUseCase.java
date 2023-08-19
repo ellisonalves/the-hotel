@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
-import com.ellisonalves.thehotel.domain.entity.Room;
-import com.ellisonalves.thehotel.domain.repository.RoomRepository;
+import com.ellisonalves.thehotel.domain.entity.Accommodation;
+import com.ellisonalves.thehotel.domain.repository.AccomodationRepository;
 
 public class ManageRoomUseCase {
 
-    private final RoomRepository repository;
+    private final AccomodationRepository repository;
     private final RoomDomainMapper mapper;
 
-    public ManageRoomUseCase(RoomRepository repository, RoomDomainMapper mapper) {
+    public ManageRoomUseCase(AccomodationRepository repository, RoomDomainMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
@@ -29,15 +29,15 @@ public class ManageRoomUseCase {
         repository.persist(originalRoom);
     }
 
-    public Room findById(UUID id) {
+    public Accommodation findById(UUID id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException());
     }
 
-    public Room findByDoorNumber(String doorNumber) {
+    public Accommodation findByDoorNumber(String doorNumber) {
         return repository.findByDoorNumber(doorNumber).orElseThrow(() -> new ResourceNotFoundException());
     }
 
-    public List<Room> findAll() {
+    public List<Accommodation> findAll() {
         return repository.findAll();
     }
 

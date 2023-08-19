@@ -25,8 +25,8 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import com.ellisonalves.thehotel.annotations.ControllerTest;
 import com.ellisonalves.thehotel.application.exceptions.ResourceNotFoundException;
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
-import com.ellisonalves.thehotel.domain.aggregates.RoomType;
-import com.ellisonalves.thehotel.domain.entity.Room;
+import com.ellisonalves.thehotel.domain.aggregates.AccommodationType;
+import com.ellisonalves.thehotel.domain.entity.Accommodation;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest.RoomTypeEnum;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomData;
@@ -67,11 +67,11 @@ class RoomControllerTest {
 		var request = new RoomData("123", RoomData.RoomTypeEnum.STANDARD,
 				new UnitPrice(BigDecimal.TEN, Currency.getInstance("EUR").getCurrencyCode()));
 
-		Room persisted = new Room();
+		Accommodation persisted = new Accommodation();
 		persisted.setDoorNumber(request.getDoorNumber());
 		persisted.setCurrency(Currency.getInstance(request.getUnitPrice().getCurrencyCode()));
 		persisted.setAmount(request.getUnitPrice().getAmount());
-		persisted.setRoomType(RoomType.STANDARD);
+		persisted.setAccommodationType(AccommodationType.STANDARD);
 
 		MockHttpServletRequestBuilder put = put("/api/v1/rooms/" + roomId);
 		put.accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE)

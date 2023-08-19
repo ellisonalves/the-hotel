@@ -14,7 +14,7 @@ import com.ellisonalves.thehotel.annotations.DatabaseTest;
 import com.ellisonalves.thehotel.domain.entity.Booking;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
 import com.ellisonalves.thehotel.domain.repository.GuestRepository;
-import com.ellisonalves.thehotel.domain.repository.RoomRepository;
+import com.ellisonalves.thehotel.domain.repository.AccomodationRepository;
 
 @DatabaseTest
 public class BookingJpaRepositoryTest {
@@ -26,7 +26,7 @@ public class BookingJpaRepositoryTest {
 	private GuestRepository guestRepo;
 
 	@Autowired
-	private RoomRepository roomRepo;
+	private AccomodationRepository roomRepo;
 
 	private final UUID roomId = UUID.fromString("f426b501-4da1-43fa-aaa5-eb63c5cd668f");
 
