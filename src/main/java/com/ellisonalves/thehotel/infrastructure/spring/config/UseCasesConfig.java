@@ -3,6 +3,7 @@ package com.ellisonalves.thehotel.infrastructure.spring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.ellisonalves.thehotel.application.TimeHelper;
 import com.ellisonalves.thehotel.application.usecases.ManageGuestUseCase;
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
@@ -25,8 +26,9 @@ public class UseCasesConfig {
 	}
 
 	@Bean
-	CreateBookingUseCase createBookingUseCase(BookingRepository repository) {
-		return new CreateBookingUseCase(repository);
+	CreateBookingUseCase createBookingUseCase(BookingRepository bookingRepository, RoomRepository roomRepository,
+			GuestRepository guestRepository, TimeHelper timeHelper) {
+		return new CreateBookingUseCase(bookingRepository, roomRepository, guestRepository, timeHelper);
 	}
 
 }

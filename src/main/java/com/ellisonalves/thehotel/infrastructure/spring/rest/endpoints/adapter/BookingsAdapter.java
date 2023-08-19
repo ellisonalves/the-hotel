@@ -11,9 +11,9 @@ import org.mapstruct.ValueMapping;
 import org.springframework.stereotype.Component;
 
 import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase;
-import com.ellisonalves.thehotel.application.vo.err.Result;
-import com.ellisonalves.thehotel.application.vo.err.Result.ResultType;
-import com.ellisonalves.thehotel.domain.entity.Booking;
+import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCase.CreateBookingInput;
+import com.ellisonalves.thehotel.application.vo.err.UseCaseResult;
+import com.ellisonalves.thehotel.application.vo.err.UseCaseResult.ResultType;
 import com.ellisonalves.thehotel.infrastructure.rest.model.BookingCreatedResponse;
 import com.ellisonalves.thehotel.infrastructure.rest.model.BookingCreatedResponse.LevelEnum;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateBookingRequest;
@@ -30,7 +30,7 @@ public class BookingsAdapter {
 	}
 
 	public BookingCreatedResponse execute(CreateBookingRequest request) {
-		var result = useCase.createBooking(mapper.toDomain(request));
+		var result = useCase.execute(mapper.toDomain(request));
 
 		switch (result.resultType()) {
 		case OK:
@@ -46,24 +46,19 @@ public class BookingsAdapter {
 	@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 	public interface CreateBookingsViewMapper {
 
-		@Mapping(target = "id", ignore = true)
-		@Mapping(target = "guest.id", source = "guestId")
-		@Mapping(target = "room.id", source = "roomId")
 		@Mapping(target = "startDate", source = "from")
 		@Mapping(target = "endDate", source = "until")
-		@Mapping(target = "version", ignore = true)
-		@Mapping(target = "createdAt", ignore = true)
-		Booking toDomain(CreateBookingRequest view);
+		CreateBookingInput toDomain(CreateBookingRequest view);
 
 		@Mapping(target = "resourceId", ignore = true)
 		@Mapping(target = "message", source = "content.message")
 		@Mapping(target = "level", source = "resultType")
-		BookingCreatedResponse toUnprocessableResponse(Result result);
+		BookingCreatedResponse toUnprocessableResponse(UseCaseResult result);
 
 		@Mapping(target = "resourceId", source = "content.resourceId")
 		@Mapping(target = "message", source = "content.message")
 		@Mapping(target = "level", source = "resultType")
-		BookingCreatedResponse toOkResponse(Result result);
+		BookingCreatedResponse toOkResponse(UseCaseResult result);
 
 		@ValueMapping(target = "CREATED", source = "OK")
 		@ValueMapping(target = "UNPROCESSABLE_ENTITY", source = "UNPROCESSABLE")

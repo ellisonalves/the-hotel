@@ -1,45 +1,116 @@
 package com.ellisonalves.thehotel.application.usecases.booking;
 
-import java.time.Clock;
 import java.time.Instant;
+import java.util.Optional;
+import java.util.UUID;
 
-import com.ellisonalves.thehotel.application.vo.err.Result;
+import com.ellisonalves.thehotel.application.TimeHelper;
+import com.ellisonalves.thehotel.application.vo.err.UseCaseResult;
 import com.ellisonalves.thehotel.domain.entity.Booking;
+import com.ellisonalves.thehotel.domain.entity.Guest;
+import com.ellisonalves.thehotel.domain.entity.Room;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
+import com.ellisonalves.thehotel.domain.repository.GuestRepository;
+import com.ellisonalves.thehotel.domain.repository.RoomRepository;
 
 public class CreateBookingUseCase {
 
-	private final BookingRepository repository;
+	private final BookingRepository bookingRepository;
 
-	public CreateBookingUseCase(BookingRepository repository) {
-		this.repository = repository;
+	private final RoomRepository roomRepository;
+
+	private GuestRepository guestRepository;
+
+	private final TimeHelper timeHelper;
+
+	public CreateBookingUseCase(BookingRepository bookingRepository, RoomRepository roomRepository,
+			GuestRepository guestRepository, TimeHelper timeHelper) {
+		this.bookingRepository = bookingRepository;
+		this.roomRepository = roomRepository;
+		this.timeHelper = timeHelper;
+		this.guestRepository = guestRepository;
 	}
 
-	public Result createBooking(Booking booking) {
-		var now = Instant.now(Clock.systemUTC());
-
-		if (booking.isMissingMandatoryFields()) {
-			return Result.unprocessableFailure("Missing mandatory fields");
+	public UseCaseResult execute(CreateBookingInput input) {
+		if (input.isMissingMandatoryFields()) {
+			return UseCaseResult.unprocessableFailure("Missing mandatory fields");
 		}
 
-		if (booking.isStartOrEndDatesBefore(now)) {
-			return Result.unprocessableFailure("Bookings in the past are not allowed");
+		if (input.isStartOrEndDatesBefore(timeHelper.now())) {
+			return UseCaseResult.unprocessableFailure("Bookings with start and end dates in the past are not allowed");
 		}
 
-		if (booking.isStartDateAfterEndDate()) {
-			return Result.unprocessableFailure("Start date MUST be before end date");
+		if (input.isStartDateAfterEndDate()) {
+			return UseCaseResult.unprocessableFailure("Start date MUST be before end date");
 		}
 
-		var existingBookings = repository.findBookings(booking.getRoom().getId(), booking.getStartDate(),
-				booking.getEndDate());
+		var existingBookings = bookingRepository.findBookings(input.roomId(), input.startDate(), input.endDate());
 
 		if (existingBookings != null && !existingBookings.isEmpty()) {
-			return Result.unprocessableFailure("Booking not available");
+			return UseCaseResult.unprocessableFailure("Booking not available");
 		}
 
-		var createdBooking = repository.persist(booking);
+		var room = roomRepository.findById(input.roomId());
+		if (room.isEmpty()) {
+			return UseCaseResult.unprocessableFailure("The room does not exist");
+		}
 
-		return Result.ok(createdBooking.getId().toString(), "Created!");
+		var guest = guestRepository.findById(input.guestId());
+		if (guest.isEmpty()) {
+			return UseCaseResult.unprocessableFailure("The guest does not exist");
+		}
+
+		var createdBooking = persistNewBooking(input, room, guest);
+
+		return UseCaseResult.ok(createdBooking.getId().toString(), "Created!");
+	}
+
+	private Booking persistNewBooking(CreateBookingInput input, Optional<Room> room, Optional<Guest> guest) {
+		var newBooking = new Booking();
+		newBooking.setRoom(room.get());
+		newBooking.setGuest(guest.get());
+		newBooking.setStartDate(input.startDate);
+		newBooking.setEndDate(input.endDate());
+
+		var createdBooking = bookingRepository.persist(newBooking);
+		return createdBooking;
+	}
+
+	public static record CreateBookingInput(UUID roomId, UUID guestId, Instant startDate, Instant endDate
+
+	) {
+
+		public boolean isMissingMandatoryFields() {
+			return !(hasGuestId() || hasRoomId() || hasStartDate() || hasEndDate());
+		}
+
+		public boolean isStartOrEndDatesBefore(Instant instant) {
+			return hasStartAndEndDates() && startDate.isBefore(instant) || endDate.isBefore(instant);
+		}
+
+		public boolean isStartDateAfterEndDate() {
+			return hasStartAndEndDates() && startDate.isAfter(endDate);
+		}
+
+		private boolean hasEndDate() {
+			return endDate != null;
+		}
+
+		private boolean hasStartDate() {
+			return startDate != null;
+		}
+
+		private boolean hasRoomId() {
+			return roomId != null;
+		}
+
+		private boolean hasGuestId() {
+			return guestId != null;
+		}
+
+		private boolean hasStartAndEndDates() {
+			return hasStartDate() && hasEndDate();
+		}
 	}
 
 }
