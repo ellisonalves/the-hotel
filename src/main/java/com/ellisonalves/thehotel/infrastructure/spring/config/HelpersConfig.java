@@ -1,16 +1,19 @@
 package com.ellisonalves.thehotel.infrastructure.spring.config;
 
+import com.ellisonalves.thehotel.application.TimeHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.ellisonalves.thehotel.application.TimeHelper;
+import java.time.Clock;
 
 @Configuration
 public class HelpersConfig {
 
-	@Bean
-	TimeHelper timeHelper() {
-		return new TimeHelper();
-	}
+    public static final Clock DEFAULT_CLOCK = Clock.systemUTC();
+
+    @Bean
+    TimeHelper timeHelper() {
+        return new TimeHelper(DEFAULT_CLOCK);
+    }
 
 }
