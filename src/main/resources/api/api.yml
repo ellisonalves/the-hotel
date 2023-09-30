@@ -38,13 +38,13 @@ paths:
           description: Successful operation
           content:
             application/json:
-              schema: 
+              schema:
                 $ref: "#/components/schemas/BookingCreatedResponse"
         "400":
           description: Invalid request
           content:
             application/json:
-              schema: 
+              schema:
                 $ref: "#/components/schemas/BookingCreatedResponse"
         "404":
           description: Pet not found
@@ -290,11 +290,6 @@ components:
           type: string
         message:
           type: string
-        level:
-          type: string
-          enum:
-            - UNPROCESSABLE_ENTITY
-            - CREATED
 
     ## Guest Schemas
     CreateGuestRequest:

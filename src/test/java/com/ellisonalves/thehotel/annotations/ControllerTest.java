@@ -5,7 +5,7 @@ import com.ellisonalves.thehotel.application.usecases.booking.CreateBookingUseCa
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.infrastructure.spring.config.JacksonConfig;
 import com.ellisonalves.thehotel.infrastructure.spring.config.MessagesConfig;
-import com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints.adapter.BookingsAdapter;
+import com.ellisonalves.thehotel.infrastructure.spring.rest.endpoints.BookingsController$CreateBookingsViewMapperImpl;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomToDomainMapstructImpl;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomAdapter;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.room.RoomToViewMapperImpl;
@@ -24,19 +24,21 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @IntegrationTest
 @WebMvcTest
-@Import({MessagesConfig.class, JacksonConfig.class, UseCaseMockConfig.class, RoomToDomainMapstructImpl.class,
-        RoomToViewMapperImpl.class, RoomAdapter.class,})
+@Import({
+        MessagesConfig.class,
+        JacksonConfig.class,
+        RoomToDomainMapstructImpl.class,
+        RoomToViewMapperImpl.class,
+        BookingsController$CreateBookingsViewMapperImpl.class,
+        RoomAdapter.class,
+        UseCaseMockConfig.class
+})
 public @interface ControllerTest {
 
 }
 
 @TestConfiguration
 class UseCaseMockConfig {
-
-    @Bean
-    BookingsAdapter bookingAdapter() {
-        return Mockito.mock(BookingsAdapter.class);
-    }
 
     @Bean
     ManageRoomUseCase manageRoomUseCase() {
@@ -49,7 +51,7 @@ class UseCaseMockConfig {
     }
 
     @Bean
-    CreateBookingUseCase createBookingUseCase() {
+    CreateBookingUseCase mockCreateBookingUseCase() {
         return Mockito.mock(CreateBookingUseCase.class);
     }
 

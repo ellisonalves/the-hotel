@@ -99,7 +99,7 @@ public class CreateBookingUseCaseTest {
     void shouldNotBookWhenThereAreMissingProperties() {
         var actual = useCase.execute(new CreateBookingInput(null, null, null, null));
 
-        assertEquals(UseCaseResult.unprocessableFailure("Missing mandatory fields"), actual);
+        assertEquals(UseCaseResult.dataValidationError("Missing mandatory fields"), actual);
 
         verify(bookingRepository, never()).persist(any());
     }
@@ -112,7 +112,7 @@ public class CreateBookingUseCaseTest {
         var actual = useCase.execute(new CreateBookingInput(UUID.randomUUID(), UUID.randomUUID(), lastWeek, yesterday));
 
         assertEquals(
-                UseCaseResult.unprocessableFailure("Bookings with start and end dates in the past are not allowed"),
+                UseCaseResult.dataValidationError("Bookings with start and end dates in the past are not allowed"),
                 actual);
 
         verify(bookingRepository, never()).persist(any());
@@ -124,7 +124,7 @@ public class CreateBookingUseCaseTest {
 
         var actual = useCase.execute(new CreateBookingInput(UUID.randomUUID(), UUID.randomUUID(), nextWeek, TODAY));
 
-        assertEquals(UseCaseResult.unprocessableFailure("Start date MUST be before end date"), actual);
+        assertEquals(UseCaseResult.dataValidationError("Start date MUST be before end date"), actual);
 
         verify(bookingRepository, never()).persist(any());
     }
@@ -136,7 +136,7 @@ public class CreateBookingUseCaseTest {
 
         var actual = useCase.execute(VALID_BOOKING_INPUT);
 
-        assertEquals(UseCaseResult.unprocessableFailure("Booking not available"), actual);
+        assertEquals(UseCaseResult.dataValidationError("Booking not available"), actual);
 
         verify(bookingRepository, never()).persist(any());
     }
@@ -147,7 +147,7 @@ public class CreateBookingUseCaseTest {
 
         var actual = useCase.execute(VALID_BOOKING_INPUT);
 
-        assertEquals(UseCaseResult.unprocessableFailure("The room does not exist"), actual);
+        assertEquals(UseCaseResult.dataValidationError("The room does not exist"), actual);
 
         verify(bookingRepository, never()).persist(any());
     }
@@ -159,7 +159,7 @@ public class CreateBookingUseCaseTest {
 
         var actual = useCase.execute(VALID_BOOKING_INPUT);
 
-        assertEquals(UseCaseResult.unprocessableFailure("The guest does not exist"), actual);
+        assertEquals(UseCaseResult.dataValidationError("The guest does not exist"), actual);
 
         verify(bookingRepository, never()).persist(any());
     }

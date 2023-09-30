@@ -1,17 +1,15 @@
 package com.ellisonalves.thehotel.infrastructure.spring.rest.room;
 
-import java.util.Arrays;
-
-import org.springframework.stereotype.Component;
-
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.infrastructure.rest.model.CreateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.rest.model.RoomList;
 import com.ellisonalves.thehotel.infrastructure.rest.model.UpdateRoomRequest;
 import com.ellisonalves.thehotel.infrastructure.spring.rest.mappers.RoomToDomainMapstruct;
-
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Component
 public class RoomAdapter {
@@ -23,8 +21,8 @@ public class RoomAdapter {
     private final RoomToViewMapper viewMapper;
 
     public RoomAdapter(ManageRoomUseCase useCase,
-            RoomToDomainMapstruct domainMapper,
-            RoomToViewMapper viewMapper) {
+                       RoomToDomainMapstruct domainMapper,
+                       RoomToViewMapper viewMapper) {
         this.useCase = useCase;
         this.domainMapper = domainMapper;
         this.viewMapper = viewMapper;

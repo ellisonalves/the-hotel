@@ -29,32 +29,32 @@ public class CreateBookingUseCase {
 
     public UseCaseResult execute(CreateBookingInput createBookingInput) {
         if (createBookingInput.isMissingMandatoryFields()) {
-            return UseCaseResult.unprocessableFailure("Missing mandatory fields");
+            return UseCaseResult.dataValidationError("Missing mandatory fields");
         }
 
         if (createBookingInput.isStartOrEndDatesBefore(timeHelper.getFirstMinuteOfToday())) {
-            return UseCaseResult.unprocessableFailure("Bookings with start and end dates in the past are not allowed");
+            return UseCaseResult.dataValidationError("Bookings with start and end dates in the past are not allowed");
         }
 
         if (createBookingInput.isStartDateAfterEndDate()) {
-            return UseCaseResult.unprocessableFailure("Start date MUST be before end date");
+            return UseCaseResult.dataValidationError("Start date MUST be before end date");
         }
 
         var existingBookings = bookingRepository.findBookings(createBookingInput.roomId(),
                 createBookingInput.startDate(), createBookingInput.endDate());
 
         if (existingBookings != null && !existingBookings.isEmpty()) {
-            return UseCaseResult.unprocessableFailure("Booking not available");
+            return UseCaseResult.dataValidationError("Booking not available");
         }
 
         var accommodation = accommodationRepository.findById(createBookingInput.roomId());
         if (accommodation.isEmpty()) {
-            return UseCaseResult.unprocessableFailure("The room does not exist");
+            return UseCaseResult.dataValidationError("The room does not exist");
         }
 
         var guest = guestRepository.findById(createBookingInput.guestId());
         if (guest.isEmpty()) {
-            return UseCaseResult.unprocessableFailure("The guest does not exist");
+            return UseCaseResult.dataValidationError("The guest does not exist");
         }
 
         var createdBooking = persistNewBooking(createBookingInput, accommodation.get(), guest.get());
