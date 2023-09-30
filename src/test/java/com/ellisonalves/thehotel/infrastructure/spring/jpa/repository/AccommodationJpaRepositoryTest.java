@@ -9,14 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ellisonalves.thehotel.annotations.DatabaseTest;
-import com.ellisonalves.thehotel.domain.aggregates.RoomType;
-import com.ellisonalves.thehotel.domain.entity.Room;
+import com.ellisonalves.thehotel.domain.aggregates.AccommodationType;
+import com.ellisonalves.thehotel.domain.entity.Accommodation;
 
 @DatabaseTest
-class RoomJpaRepositoryTest {
+class AccommodationJpaRepositoryTest {
 
 	@Autowired
-	private RoomJpaRepository repository;
+	private AccommodationJpaRepository repository;
 
 	@Test
 	void shouldPersistRoom() {
@@ -47,11 +47,11 @@ class RoomJpaRepositoryTest {
 		assertThat(repository.findById(room.getId())).isNotPresent();
 	}
 
-	private Room createRoom() {
-		var room = new Room();
+	private Accommodation createRoom() {
+		var room = new Accommodation();
 		room.setDoorNumber("123");
 		room.setAmount(BigDecimal.TEN);
-		room.setRoomType(RoomType.STANDARD);
+		room.setAccommodationType(AccommodationType.STANDARD);
 		return room;
 	}
 

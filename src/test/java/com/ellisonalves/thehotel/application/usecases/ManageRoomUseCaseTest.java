@@ -20,9 +20,9 @@ import com.ellisonalves.thehotel.application.usecases.room.CreateRoomDto;
 import com.ellisonalves.thehotel.application.usecases.room.ManageRoomUseCase;
 import com.ellisonalves.thehotel.application.usecases.room.Money;
 import com.ellisonalves.thehotel.application.usecases.room.RoomDomainMapper;
-import com.ellisonalves.thehotel.domain.aggregates.RoomType;
-import com.ellisonalves.thehotel.domain.entity.Room;
-import com.ellisonalves.thehotel.domain.repository.RoomRepository;
+import com.ellisonalves.thehotel.domain.aggregates.AccommodationType;
+import com.ellisonalves.thehotel.domain.entity.Accommodation;
+import com.ellisonalves.thehotel.domain.repository.AccomodationRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class ManageRoomUseCaseTest {
@@ -31,7 +31,7 @@ public class ManageRoomUseCaseTest {
     private ManageRoomUseCase useCase;
 
     @Mock
-    private RoomRepository repository;
+    private AccomodationRepository repository;
 
     @Mock
     private RoomDomainMapper roomMapper;
@@ -42,7 +42,7 @@ public class ManageRoomUseCaseTest {
 
     private CreateRoomDto room = new CreateRoomDto(
             doorNumber,
-            RoomType.STANDARD,
+            AccommodationType.STANDARD,
             new Money(
                     new BigDecimal("20"),
                     Currency.getInstance("EUR"))
@@ -51,7 +51,7 @@ public class ManageRoomUseCaseTest {
 
     @Test
     public void shouldPersitRoom() {
-        Room expected = new Room();
+        Accommodation expected = new Accommodation();
         when(roomMapper.toRoom(room)).thenReturn(expected);
 
         useCase.persist(room);

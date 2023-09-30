@@ -15,7 +15,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.persistence.Transient;
 import jakarta.persistence.Version;
 
 @Entity
@@ -31,7 +30,7 @@ public class Booking extends BaseEntity<UUID> {
 	private Guest guest;
 
 	@ManyToOne
-	private Room room;
+	private Accommodation room;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Instant startDate;
@@ -59,11 +58,11 @@ public class Booking extends BaseEntity<UUID> {
 		this.guest = guest;
 	}
 
-	public Room getRoom() {
+	public Accommodation getRoom() {
 		return room;
 	}
 
-	public void setRoom(Room room) {
+	public void setRoom(Accommodation room) {
 		this.room = room;
 	}
 
@@ -101,47 +100,17 @@ public class Booking extends BaseEntity<UUID> {
 	@Override
 	public boolean equalTo(Object o) {
 		Booking other = (Booking) o;
-		return Objects.equals(id, other.getId());
+		return Objects.equals(id, other.getId())
+				&& Objects.equals(room, other.room)
+				&& Objects.equals(guest, other.guest)
+				&& Objects.equals(startDate, other.startDate)
+				&& Objects.equals(endDate, other.endDate)
+				;
 	}
 
 	@Override
 	public int hashCodePrime() {
 		return 31;
-	}
-
-	@Transient
-	public boolean isMissingMandatoryFields() {
-		return !(hasGuestId() || hasRoomId() || hasStartDate() || hasEndDate());
-	}
-
-	@Transient
-	public boolean isStartOrEndDatesBefore(Instant instant) {
-		return hasStartAndEndDates() && startDate.isBefore(instant) || endDate.isBefore(instant);
-	}
-
-	@Transient
-	public boolean isStartDateAfterEndDate() {
-		return hasStartAndEndDates() && startDate.isAfter(endDate);
-	}
-
-	private boolean hasEndDate() {
-		return endDate != null;
-	}
-
-	private boolean hasStartDate() {
-		return startDate != null;
-	}
-
-	private boolean hasRoomId() {
-		return room != null && room.getId() != null;
-	}
-
-	private boolean hasGuestId() {
-		return guest != null && guest.getId() != null;
-	}
-
-	private boolean hasStartAndEndDates() {
-		return hasStartDate() && hasEndDate();
 	}
 
 }

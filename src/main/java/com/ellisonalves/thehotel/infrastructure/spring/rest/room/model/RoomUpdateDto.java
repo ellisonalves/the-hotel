@@ -2,7 +2,7 @@ package com.ellisonalves.thehotel.infrastructure.spring.rest.room.model;
 
 import java.math.BigDecimal;
 
-import com.ellisonalves.thehotel.domain.aggregates.RoomType;
+import com.ellisonalves.thehotel.domain.aggregates.AccommodationType;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ public class RoomUpdateDto {
     private String doorNumber;
 
     @NotNull
-    private RoomType roomType;
+    private AccommodationType roomType;
 
     @NotNull
     private BigDecimal pricePerDay;
@@ -26,11 +26,11 @@ public class RoomUpdateDto {
         this.doorNumber = doorNumber;
     }
 
-    public RoomType getRoomType() {
+    public AccommodationType getRoomType() {
         return roomType;
     }
 
-    public void setRoomType(RoomType type) {
+    public void setRoomType(AccommodationType type) {
         this.roomType = type;
     }
 

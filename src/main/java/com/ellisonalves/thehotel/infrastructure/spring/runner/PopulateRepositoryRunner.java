@@ -6,20 +6,20 @@ import java.util.Currency;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.ellisonalves.thehotel.domain.aggregates.RoomType;
+import com.ellisonalves.thehotel.domain.aggregates.AccommodationType;
 import com.ellisonalves.thehotel.domain.entity.Guest;
-import com.ellisonalves.thehotel.domain.entity.Room;
+import com.ellisonalves.thehotel.domain.entity.Accommodation;
 import com.ellisonalves.thehotel.domain.repository.GuestRepository;
-import com.ellisonalves.thehotel.domain.repository.RoomRepository;
+import com.ellisonalves.thehotel.domain.repository.AccomodationRepository;
 
 @Component
 public class PopulateRepositoryRunner implements CommandLineRunner {
 
-	private final RoomRepository roomRepository;
+	private final AccomodationRepository roomRepository;
 
 	private final GuestRepository guestRepository;
 
-	public PopulateRepositoryRunner(RoomRepository roomRepository, GuestRepository guestRepository) {
+	public PopulateRepositoryRunner(AccomodationRepository roomRepository, GuestRepository guestRepository) {
 		this.roomRepository = roomRepository;
 		this.guestRepository = guestRepository;
 	}
@@ -37,11 +37,11 @@ public class PopulateRepositoryRunner implements CommandLineRunner {
 	}
 
 	private void persistRoom(String doorNumber) {
-		var room = new Room();
+		var room = new Accommodation();
 		room.setDoorNumber(doorNumber);
 		room.setAmount(BigDecimal.TEN);
 		room.setCurrency(Currency.getInstance("EUR"));
-		room.setRoomType(RoomType.STANDARD);
+		room.setAccommodationType(AccommodationType.STANDARD);
 		roomRepository.persist(room);
 	}
 

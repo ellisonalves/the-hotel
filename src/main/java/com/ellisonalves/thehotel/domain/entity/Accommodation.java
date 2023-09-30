@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.ellisonalves.thehotel.domain.BaseEntity;
-import com.ellisonalves.thehotel.domain.aggregates.RoomType;
+import com.ellisonalves.thehotel.domain.aggregates.AccommodationType;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,7 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Room extends BaseEntity<UUID> {
+public class Accommodation extends BaseEntity<UUID> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class Room extends BaseEntity<UUID> {
 	private String doorNumber;
 
 	@Enumerated(EnumType.STRING)
-	private RoomType roomType;
+	private AccommodationType accommodationType;
 	private Currency currency;
 	private BigDecimal amount;
 	private Long version;
@@ -48,12 +48,12 @@ public class Room extends BaseEntity<UUID> {
 		this.doorNumber = doorNumber;
 	}
 
-	public RoomType getRoomType() {
-		return roomType;
+	public AccommodationType getAccommodationType() {
+		return accommodationType;
 	}
 
-	public void setRoomType(RoomType type) {
-		this.roomType = type;
+	public void setAccommodationType(AccommodationType accommodationType) {
+		this.accommodationType = accommodationType;
 	}
 
 	public Currency getCurrency() {
@@ -74,7 +74,7 @@ public class Room extends BaseEntity<UUID> {
 
 	@Override
 	public boolean equalTo(Object o) {
-		Room other = (Room) o;
+		Accommodation other = (Accommodation) o;
 		return Objects.equals(this.getId(), other.getId());
 	}
 

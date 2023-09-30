@@ -1,45 +1,77 @@
 package com.ellisonalves.thehotel.application.usecases.booking;
 
-import java.time.Clock;
-import java.time.Instant;
-
-import com.ellisonalves.thehotel.application.vo.err.Result;
+import com.ellisonalves.thehotel.application.TimeHelper;
+import com.ellisonalves.thehotel.application.vo.err.UseCaseResult;
+import com.ellisonalves.thehotel.domain.entity.Accommodation;
 import com.ellisonalves.thehotel.domain.entity.Booking;
+import com.ellisonalves.thehotel.domain.entity.Guest;
+import com.ellisonalves.thehotel.domain.repository.AccomodationRepository;
 import com.ellisonalves.thehotel.domain.repository.BookingRepository;
+import com.ellisonalves.thehotel.domain.repository.GuestRepository;
 
 public class CreateBookingUseCase {
 
-	private final BookingRepository repository;
+    private final BookingRepository bookingRepository;
 
-	public CreateBookingUseCase(BookingRepository repository) {
-		this.repository = repository;
-	}
+    private final AccomodationRepository accommodationRepository;
 
-	public Result createBooking(Booking booking) {
-		var now = Instant.now(Clock.systemUTC());
+    private final GuestRepository guestRepository;
 
-		if (booking.isMissingMandatoryFields()) {
-			return Result.unprocessableFailure("Missing mandatory fields");
-		}
+    private final TimeHelper timeHelper;
 
-		if (booking.isStartOrEndDatesBefore(now)) {
-			return Result.unprocessableFailure("Bookings in the past are not allowed");
-		}
+    public CreateBookingUseCase(BookingRepository bookingRepository, AccomodationRepository accommodationRepository,
+                                GuestRepository guestRepository, TimeHelper timeHelper) {
+        this.bookingRepository = bookingRepository;
+        this.accommodationRepository = accommodationRepository;
+        this.timeHelper = timeHelper;
+        this.guestRepository = guestRepository;
+    }
 
-		if (booking.isStartDateAfterEndDate()) {
-			return Result.unprocessableFailure("Start date MUST be before end date");
-		}
+    public UseCaseResult execute(CreateBookingInput createBookingInput) {
+        if (createBookingInput.isMissingMandatoryFields()) {
+            return UseCaseResult.dataValidationError("Missing mandatory fields");
+        }
 
-		var existingBookings = repository.findBookings(booking.getRoom().getId(), booking.getStartDate(),
-				booking.getEndDate());
+        if (createBookingInput.isStartOrEndDatesBefore(timeHelper.getFirstMinuteOfToday())) {
+            return UseCaseResult.dataValidationError("Bookings with start and end dates in the past are not allowed");
+        }
 
-		if (existingBookings != null && !existingBookings.isEmpty()) {
-			return Result.unprocessableFailure("Booking not available");
-		}
+        if (createBookingInput.isStartDateAfterEndDate()) {
+            return UseCaseResult.dataValidationError("Start date MUST be before end date");
+        }
 
-		var createdBooking = repository.persist(booking);
+        var existingBookings = bookingRepository.findBookings(createBookingInput.roomId(),
+                createBookingInput.startDate(), createBookingInput.endDate());
 
-		return Result.ok(createdBooking.getId().toString(), "Created!");
-	}
+        if (existingBookings != null && !existingBookings.isEmpty()) {
+            return UseCaseResult.dataValidationError("Booking not available");
+        }
+
+        var accommodation = accommodationRepository.findById(createBookingInput.roomId());
+        if (accommodation.isEmpty()) {
+            return UseCaseResult.dataValidationError("The room does not exist");
+        }
+
+        var guest = guestRepository.findById(createBookingInput.guestId());
+        if (guest.isEmpty()) {
+            return UseCaseResult.dataValidationError("The guest does not exist");
+        }
+
+        var createdBooking = persistNewBooking(createBookingInput, accommodation.get(), guest.get());
+
+        return UseCaseResult.ok(createdBooking.getId().toString(), "Created!");
+    }
+
+    private Booking persistNewBooking(CreateBookingInput input,
+                                      Accommodation room,
+                                      Guest guest) {
+        var newBooking = new Booking();
+        newBooking.setRoom(room);
+        newBooking.setGuest(guest);
+        newBooking.setStartDate(input.startDate());
+        newBooking.setEndDate(input.endDate());
+
+        return bookingRepository.persist(newBooking);
+    }
 
 }
